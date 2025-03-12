@@ -3,11 +3,11 @@ from vertexai.language_models import TextGenerationModel
 from google.oauth2 import service_account
 
 # Load your service account credentials
-credentials = service_account.Credentials.from_service_account_file('path/to/your/credentials.json')
+credentials = service_account.Credentials.from_service_account_file('C:/Users/Sharya3/Desktop/vertexai-poc/oidc_token.json')
 
 # Initialize Vertex AI
 import vertexai
-vertexai.init(project='your-gcp-project-id', location='us-central1', credentials=credentials)
+vertexai.init(project='vz-nonit-np-jaov-dev-fpasdo-0', location='us-east4', credentials=credentials)
 
 # Load the Generative model
 model = TextGenerationModel.from_pretrained("text-bison")
