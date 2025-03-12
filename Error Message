@@ -1,0 +1,43 @@
+{
+	"name": "MalformedError",
+	"message": "Service account info was not in the expected format, missing fields client_email, token_uri.",
+	"stack": "---------------------------------------------------------------------------
+MalformedError                            Traceback (most recent call last)
+Cell In[5], line 6
+      3 from google.oauth2 import service_account
+      5 # Load your service account credentials
+----> 6 credentials = service_account.Credentials.from_service_account_file('C:/Users/Sharya3/Desktop/vertexai-poc/oidc_token.json')
+      8 # Initialize Vertex AI
+      9 import vertexai
+
+File c:\\Users\\Sharya3\\.conda\\envs\\py_39\\lib\\site-packages\\google\\oauth2\\service_account.py:260, in Credentials.from_service_account_file(cls, filename, **kwargs)
+    248 @classmethod
+    249 def from_service_account_file(cls, filename, **kwargs):
+    250     \"\"\"Creates a Credentials instance from a service account json file.
+    251 
+    252     Args:
+   (...)
+    258             credentials.
+    259     \"\"\"
+--> 260     info, signer = _service_account_info.from_filename(
+    261         filename, require=[\"client_email\", \"token_uri\"]
+    262     )
+    263     return cls._from_signer_and_info(signer, info, **kwargs)
+
+File c:\\Users\\Sharya3\\.conda\\envs\\py_39\\lib\\site-packages\\google\\auth\\_service_account_info.py:80, in from_filename(filename, require, use_rsa_signer)
+     78 with io.open(filename, \"r\", encoding=\"utf-8\") as json_file:
+     79     data = json.load(json_file)
+---> 80     return data, from_dict(data, require=require, use_rsa_signer=use_rsa_signer)
+
+File c:\\Users\\Sharya3\\.conda\\envs\\py_39\\lib\\site-packages\\google\\auth\\_service_account_info.py:50, in from_dict(data, require, use_rsa_signer)
+     47 missing = keys_needed.difference(data.keys())
+     49 if missing:
+---> 50     raise exceptions.MalformedError(
+     51         \"Service account info was not in the expected format, missing \"
+     52         \"fields {}.\".format(\", \".join(missing))
+     53     )
+     55 # Create a signer.
+     56 if use_rsa_signer:
+
+MalformedError: Service account info was not in the expected format, missing fields client_email, token_uri."
+}
