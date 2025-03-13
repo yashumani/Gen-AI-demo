@@ -34,47 +34,47 @@ Deliver the final output as a structured document with well-defined sections for
 
 Task:
 
-Analyze ALL tables provided in the document and generate a fully detailed and structured Google Doc that includes every table without omission. The document should be business-ready and include the following sections:
+Write a step-by-step instructional document explaining how to use Google Docs and Gemini to generate structured, data-driven reports. The document should be clear, comprehensive, and business-ready for users who want to extract key insights from data tables.
 
-1. Executive Summary
-High-level overview of the key insights from all tables.
-Summarize the most critical trends, risks, and opportunities.
-Potential Business Impact (how these insights affect decision-making).
-Strategic Recommendations (brief suggestions based on key takeaways).
-2. Detailed Analysis of Each Table
-For every table (without skipping any), provide a full breakdown using the following format:
+The document must include the following sections:
 
-Table Name: [Insert Table Name]
-A. Comprehensive Takeaways (No Limit, Capture Every Insight)
-Extract all insights from the data—do not limit to only a few points.
-Identify patterns, outliers, trends, and correlations.
-Use bullet points or structured lists to ensure readability.
-B. Top 5 Critical Highlights (With Data References)
-Pick the 5 most business-critical insights from the table.
-Provide specific numbers, percentages, and trends to back each point.
-Explain why these highlights are important for decision-making.
-C. Insightful Analysis & Commentary
-Provide in-depth reasoning behind the observed trends.
-Compare with historical data, benchmarks, or industry standards if applicable.
-Identify potential causes for any anomalies or patterns.
-D. Potential Business/Market Impact
-Explain how these insights influence business strategy, revenue, market position, and risk management.
-Discuss implications for specific teams (Sales, Finance, Marketing, Operations, etc.).
-Predict potential short-term and long-term effects on the company.
-E. Actionable Recommendations
-Provide clear, data-backed next steps based on findings.
-Suggest any further analysis needed to refine the strategy.
-If required, outline steps for mitigation, optimization, or capitalizing on trends.
-3. Conclusion & Next Steps
-Recap major findings across all tables.
-Outline immediate priorities for business teams.
-Suggest areas for further exploration or data collection.
-Ensure the document is structured for easy decision-making.
-Important Execution Instructions for Gemini:
-✅ Include every single table in the document—DO NOT STOP AT 4 TABLES.
-✅ If there are 10 tables, analyze all 10 (continue listing insights until all tables are processed).
-✅ Use structured formatting (headers, bullet points, bold highlights) for clarity.
-✅ Do not summarize excessively—provide detailed explanations and data references.
-✅ Ensure all business implications and recommendations are fully developed.
+Introduction
 
-This fully detailed document should be complete and directly usable by stakeholders without requiring additional edits or additions.
+Explain the purpose of the guide.
+Highlight the importance of using Gemini for structured data analysis.
+Step 1: Setting Up Google Docs
+
+Provide instructions for opening Google Docs.
+Explain how to create a new document and name it appropriately.
+Step 2: Inputting the Prompt into Gemini
+
+Include a predefined prompt that users must copy-paste into Gemini.
+Ensure the prompt clearly instructs Gemini to analyze data tables and generate a structured report.
+Explain how users can input the prompt into Gemini (either within Google Docs or via the chatbot interface).
+Step 3: Reviewing the Output
+
+Guide users on how to check for completeness and accuracy in Gemini’s response.
+Highlight common errors or omissions and how to fix them.
+Explain how to re-run the prompt if necessary.
+Step 4: Finalizing and Sharing the Document
+
+Provide steps for formatting the document for clarity (headings, bullet points, etc.).
+Explain how to export the document as PDF or Word.
+Offer guidance on sharing the document via Google Drive or email.
+Additional Tips for Best Results
+
+Include best practices for ensuring high-quality outputs.
+Recommend how to handle incomplete or incorrect Gemini responses.
+Conclusion
+
+Summarize the benefits of using Gemini in Google Docs for data analysis.
+Provide final recommendations for maximizing efficiency.
+Tone & Style:
+
+Maintain a professional, instructional, and easy-to-follow tone.
+Use structured sections, bullet points, and clear formatting.
+Avoid unnecessary complexity—make the guide actionable for all users.
+Final Output:
+
+Ensure the document is fully detailed, structured, and requires no additional edits.
+Deliver a Google Docs-ready format so that users can immediately apply the instructions.
