@@ -34,43 +34,47 @@ Deliver the final output as a structured document with well-defined sections for
 
 Task:
 
-Analyze the data tables provided in the document and generate a new, comprehensive Google Doc that contains the following sections:
+Analyze ALL tables provided in the document and generate a fully detailed and structured Google Doc that includes every table without omission. The document should be business-ready and include the following sections:
 
 1. Executive Summary
-Provide a concise overview of the key findings from all tables.
-Highlight the most critical insights that decision-makers need to focus on.
-Summarize potential business impacts and strategic recommendations.
+High-level overview of the key insights from all tables.
+Summarize the most critical trends, risks, and opportunities.
+Potential Business Impact (how these insights affect decision-making).
+Strategic Recommendations (brief suggestions based on key takeaways).
 2. Detailed Analysis of Each Table
-For each table, include:
+For every table (without skipping any), provide a full breakdown using the following format:
 
 Table Name: [Insert Table Name]
-A. Top Takeaways (No Limit)
-Extract all meaningful insights from the data.
-Clearly articulate trends, anomalies, and key performance indicators.
-Use bullet points or numbered lists for readability.
-B. Top 5 Highlights
-Select the five most impactful insights and explain their significance.
-Provide specific metrics and data references.
+A. Comprehensive Takeaways (No Limit, Capture Every Insight)
+Extract all insights from the data—do not limit to only a few points.
+Identify patterns, outliers, trends, and correlations.
+Use bullet points or structured lists to ensure readability.
+B. Top 5 Critical Highlights (With Data References)
+Pick the 5 most business-critical insights from the table.
+Provide specific numbers, percentages, and trends to back each point.
+Explain why these highlights are important for decision-making.
 C. Insightful Analysis & Commentary
-Offer detailed observations and data-driven explanations.
-Compare trends with historical data if applicable.
-Identify potential correlations, seasonality, or unexpected behaviors.
+Provide in-depth reasoning behind the observed trends.
+Compare with historical data, benchmarks, or industry standards if applicable.
+Identify potential causes for any anomalies or patterns.
 D. Potential Business/Market Impact
-Explain how the insights could influence decision-making.
-Discuss implications for growth, revenue, efficiency, risk, or competitive positioning.
-Provide industry or market comparisons if relevant.
+Explain how these insights influence business strategy, revenue, market position, and risk management.
+Discuss implications for specific teams (Sales, Finance, Marketing, Operations, etc.).
+Predict potential short-term and long-term effects on the company.
 E. Actionable Recommendations
-Suggest data-backed strategic actions based on insights.
-Outline possible next steps for different teams (e.g., sales, marketing, finance, operations).
-If applicable, propose further analysis or data enrichment for deeper insights.
+Provide clear, data-backed next steps based on findings.
+Suggest any further analysis needed to refine the strategy.
+If required, outline steps for mitigation, optimization, or capitalizing on trends.
 3. Conclusion & Next Steps
-Recap the most critical takeaways.
-Suggest immediate focus areas and longer-term opportunities.
-Recommend areas for deeper exploration in future reports.
-Formatting Guidelines:
+Recap major findings across all tables.
+Outline immediate priorities for business teams.
+Suggest areas for further exploration or data collection.
+Ensure the document is structured for easy decision-making.
+Important Execution Instructions for Gemini:
+✅ Include every single table in the document—DO NOT STOP AT 4 TABLES.
+✅ If there are 10 tables, analyze all 10 (continue listing insights until all tables are processed).
+✅ Use structured formatting (headers, bullet points, bold highlights) for clarity.
+✅ Do not summarize excessively—provide detailed explanations and data references.
+✅ Ensure all business implications and recommendations are fully developed.
 
-Maintain a structured, professional tone.
-Use bold headers for easy navigation.
-Ensure clarity and depth in explanations—avoid vague or generic statements.
-Include data points and references to support insights.
-This document should be ready for direct business use without further edits.
+This fully detailed document should be complete and directly usable by stakeholders without requiring additional edits or additions.
