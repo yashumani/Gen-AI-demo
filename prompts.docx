@@ -1,1 +1,9 @@
-write a prompt that will use the data from the current file and create a new document with the sentiment analysis, use visuals, use tables, anything that makes it readable and simple to understand.
+Task: Perform sentiment analysis on the provided text data from Verizon Daily Newsletters. Analyze the overall tone, key themes, and categorize sections into Positive, Neutral, or Negative sentiment.
+
+Output Requirements:
+✅ Summarize sentiment trends (e.g., most news is positive/negative, recurring topics).
+✅ Break down sentiment by categories (e.g., Stock Market, Industry News, Competitor News, etc.).
+✅ Highlight key headlines and summarize their sentiment in a table.
+✅ Include visual elements like charts or graphs to represent sentiment distribution.
+✅ Provide insights on what is driving each sentiment trend (e.g., economic events, tech innovations, market shifts).
+✅ End with a recommendation section for executives to quickly understand market sentiment.
