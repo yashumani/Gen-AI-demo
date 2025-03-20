@@ -1,4 +1,4 @@
-function extractVerizonNewsletter() {
+function extractFullNewsletter() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var searchQuery = 'subject:"Verizon Daily Newsletter"'; // Modify as needed
 
@@ -8,19 +8,8 @@ function extractVerizonNewsletter() {
   // Clear the sheet before adding new data (overwrite mode)
   sheet.clear();
 
-  // Define section headers
-  var sections = [
-    "Verizon's Stock",
-    "US Stock Market Closings",
-    "Verizon in the News",
-    "Verizon in the Local News",
-    "Competitor News",
-    "Industry News",
-    "Verizon News"
-  ];
-
-  // Add headers dynamically
-  var headers = ["Timestamp", "Sender", "Recipient", "Subject"].concat(sections);
+  // Define headers
+  var headers = ["Timestamp", "Sender", "Recipient", "Subject", "Email Body"];
   sheet.appendRow(headers);
 
   emails.forEach(thread => {
@@ -29,46 +18,12 @@ function extractVerizonNewsletter() {
       var sender = email.getFrom();
       var recipient = email.getTo();
       var subject = email.getSubject();
-      var body = email.getPlainBody();
-
-      // Parse email body into sections
-      var sectionData = extractSections(body, sections);
-
-      // Create row with extracted data
-      var rowData = [timestamp, sender, recipient, subject];
-      sections.forEach(section => {
-        rowData.push(sectionData[section] || ""); // Fill empty sections with blank
-      });
+      var body = email.getPlainBody(); // Capture the FULL email body (no truncation)
 
       // Append to Google Sheet
-      sheet.appendRow(rowData);
+      sheet.appendRow([timestamp, sender, recipient, subject, body]);
     });
   });
 
-  Logger.log("Verizon Newsletter extracted successfully!");
-}
-
-/**
- * Extracts content under specific section headers
- */
-function extractSections(body, sections) {
-  var data = {};
-  
-  // Create regex pattern to identify headers
-  var pattern = new RegExp(sections.map(s => `(${s})`).join("|"), "g");
-  var matches = [...body.matchAll(pattern)];
-
-  if (matches.length === 0) {
-    return data; // Return empty if no matches
-  }
-
-  for (var i = 0; i < matches.length; i++) {
-    var section = matches[i][0]; // Get matched section name
-    var startIndex = matches[i].index + section.length; // Start of section content
-    var endIndex = i + 1 < matches.length ? matches[i + 1].index : body.length; // End of section
-
-    data[section] = body.substring(startIndex, endIndex).trim(); // Extract content
-  }
-
-  return data;
+  Logger.log("Emails extracted successfully!");
 }
