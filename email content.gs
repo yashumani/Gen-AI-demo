@@ -1,14 +1,14 @@
-function extractNewsletterSections() {
+function extractVerizonNewsletter() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var searchQuery = 'subject:"Your Newsletter Subject"'; // Modify to match your email search criteria
+  var searchQuery = 'subject:"Verizon Daily Newsletter"'; // Modify as needed
 
-  var threads = GmailApp.search(searchQuery); // Fetch ALL matching emails
+  var threads = GmailApp.search(searchQuery);
   var emails = GmailApp.getMessagesForThreads(threads);
 
-  // Clear existing data before each execution (overwrite mode)
+  // Clear the sheet before adding new data (overwrite mode)
   sheet.clear();
-  
-  // Define sections to extract
+
+  // Define section headers
   var sections = [
     "Verizon's Stock",
     "US Stock Market Closings",
@@ -19,7 +19,7 @@ function extractNewsletterSections() {
     "Verizon News"
   ];
 
-  // Add headers dynamically based on sections
+  // Add headers dynamically
   var headers = ["Timestamp", "Sender", "Recipient", "Subject"].concat(sections);
   sheet.appendRow(headers);
 
@@ -45,7 +45,7 @@ function extractNewsletterSections() {
     });
   });
 
-  Logger.log("Emails extracted and saved successfully!");
+  Logger.log("Verizon Newsletter extracted successfully!");
 }
 
 /**
