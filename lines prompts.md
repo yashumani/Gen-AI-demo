@@ -46,6 +46,10 @@ You are tasked with generating a clear, insightful, and contextual commentary fo
   - Include explicit mathematical analysis for insights, clearly showing variances (e.g., \"Phone disconnects missed their forecast by (96.5K), primarily due to the (85.1K) miss in voluntary disconnects\").
   - Explicitly reference benchmarks (forecast vs. prior year).
   - Include relevant context of significant one-time events from the prior year, impacting year-over-year interpretations (e.g., ATT outage from 2/20/24).
+ 
+**Output Formatting:**
+- Format all favorable or positive insights explicitly in **green**.
+- Format all unfavorable or negative insights explicitly in **orange**.
 
 Exclude any commentary on Business Implications from this analysis.
 
