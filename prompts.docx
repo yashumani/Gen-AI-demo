@@ -1,9 +1,54 @@
-Task: Perform sentiment analysis on the provided text data from Verizon Daily Newsletters. Analyze the overall tone, key themes, and categorize sections into Positive, Neutral, or Negative sentiment.
+Lines/Accounts Feedback
+Feedback on the Lines/Accounts section of the CIPB includes the following:
 
-Output Requirements:
-✅ Summarize sentiment trends (e.g., most news is positive/negative, recurring topics).
-✅ Break down sentiment by categories (e.g., Stock Market, Industry News, Competitor News, etc.).
-✅ Highlight key headlines and summarize their sentiment in a table.
-✅ Include visual elements like charts or graphs to represent sentiment distribution.
-✅ Provide insights on what is driving each sentiment trend (e.g., economic events, tech innovations, market shifts).
-✅ End with a recommendation section for executives to quickly understand market sentiment.
+Good:
+Gemini accurately identifies the key metrics we need to focus on. For example, the top takeaways are almost identical to our handmade version (e.g., phone gross adds, phone disconnects, phone net adds, etc.).
+The "key changes and commentary" align with the high-level insights we're trying to deliver.
+Room to Improve:
+The AI lacks the "connective tissue" needed for context - meaning it talks about the what but doesn’t connect the dots between metrics.
+Example: variances in new accounts will affect new phone gross adds; lost accounts are connected to disconnects.  So if one metric is off then it will be correlated with a miss in another - helping us understand the why
+Some statements are unclear, particularly regarding whether an increase/decrease refers to a specific metric or a variance from the forecast. For example, "The increase in disconnects is a major concern, negating the gains from gross adds." requires clarification on whether it refers to an increase in phone disconnects or a gap in the forecast.
+Furthermore clarification is needed to ensure whether we talk about variance to forecast (our primary comparison) or vs prior year (secondary
+May also be nice to be able to link to last years brief for YoY to see if there was a one time even driving up or down prior year values.  Example of this would be 2/20/24 ATT outage which drove a surge in customers over to us (a one time event not reflective of seasonality or normal consumer demand.
+VHI Feedback
+Feedback on theCHI section of the CIPB includes the following:
+
+Top Takeaways:
+While I appreciate the spirit of this section, the output is fairly generic. Although I am unsure how much this could be improved by AI learning over time from repeatedly processing our tables.
+Takeaways should be broken down by product sets (FWA and Fios).
+Output must directly correlate to the five key VHI metrics: Sales, Cancels, Gross Adds, Disconnects, and Net Adds.
+Statements should reference the specific benchmark being used (vs. forecast, vs. prior year, vs. commit view {CV at month end only}).
+Key Changes:
+This section has potential value, but statements should also reference the specific benchmark being used.
+Visual Representation:
+I don't believe this section adds any additional value beyond what the tables already provide if it simply portrays the same data points, just in a different format.
+Detailed Commentary:
+The results for this section are not very helpful if the point is to quickly get me to what this particular Monday's brief needs to highlight. However, I see a benefit where these callouts could point me to related analysis efforts which I could pursue and highlight in a future Monday brief, if still applicable.
+Business Implications:
+While I do not disagree with the output, the content is so basic that I cannot use it in the brief. These are generic conclusions that most would arrive at and therefore I would not include them in the limited space I have for the VHI section.
+I do see ancillary value where it may help me frame considerations in different ways, with different word use (to help break up the monotony of commonly used words/phrases for the reader.)
+
+Value
+Feedback on the Value section of the CIPB includes the following:
+
+NOTE: Please use “Core Value Brands” line as total Value.  We exclude safelink from our figures per business rules.
+
+Top Takeaways:
+The terminology used should not be “increased” or “decreased” but instead favorable/unfavorable or better/worse
+This becomes important especially with disconnects which could be interpreted differently by different people using increase or decrease (does increase meane higher absolute number or more disconnects?)
+I like that it calls out the brands that are primary driver
+It would be better if we could for takeaways have 3 sections with sub bullets - gross adds, disconnects, net adds
+Under each of the above three we have the 1-3 brands that drove the total variance the best
+Key Changes:
+It would be good for this section to be comparitive to prior week’s MTD (which is essentially the orange section with the past weeks results
+This tells us if we saw a shift in momentum, what brands are steady state vs an inflection point driving us better or worse
+Detailed Commentary:
+Gemini needs to understand that net adds are a function of gross adds +/- disconnect and should talk about the piece parts like an equation.  How did the gross adds move, how did the disconnects move, and how did the net of the two drive net adds
+Example -> Gross adds strong performance in the last week drove them to a total MTD favorability fto forecast of 18.0K, while disconnects worsened this past week lowering the month to date favorability to 2.0K.  Due mainly to the strong performance in gross adds and the slight favorability of disconnects our net adds (while negitive/positive) are ahead of forecast by 20.0K
+Business Implications:
+This section didn’t really tell us to much as it is.  Some recommendations:
+Talk about intramonth trend
+Brands of largest contribution to results
+How does last years performance compare to foreecast (eg. forecast of 50.0K is 20% higher than last years 40.0K - so we expected significant growth which we were unable to achieve, despite beating last years numbers….)
+
+
