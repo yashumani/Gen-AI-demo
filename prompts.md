@@ -21,8 +21,9 @@ You are tasked with generating a clear, insightful, and contextual commentary fo
 ### Commentary Requirements:
 
 **Length:**
-- Approximately 150-200 words.
+- Approximately 1500-2000 words.
 - Provide concise yet comprehensive commentary.
+- Bulletize the output by each metric sections.
 
 **Tone:**
 - Professional, analytical, and informative.
