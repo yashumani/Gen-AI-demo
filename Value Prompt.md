@@ -4,20 +4,20 @@ You are tasked with analyzing the Value Segment data tables to generate highly i
 
 ### Metrics for Detailed Analysis (Analyze from top to bottom, prioritizing highly impactful insights):
 
-- **Core Value Brands (Total Value)**
-  - Breakdown by Brands (explicitly excluding Safelink):
-    - Brand-specific Gross Adds
-    - Brand-specific Disconnects
-    - Brand-specific Net Adds (Gross Adds minus Disconnects)
+**1. Core Value Brands (Total Value)**
+- Breakdown by Brands (explicitly excluding Safelink):
+  - Brand-specific Gross Adds
+  - Brand-specific Disconnects
+  - Brand-specific Net Adds (Gross Adds minus Disconnects)
 
-- **Gross Adds**
-  - Identify top-performing brands driving favorable results
+**2. Gross Adds**
+- Identify top-performing brands driving favorable results
 
-- **Disconnects** *(Ensure explicit clarification: Disconnects are inherently negative; comparisons must use \"favorable/unfavorable\" or \"better/worse\" clearly.)*
-  - Highlight brands contributing significantly to disconnect trends
+**3. Disconnects** *(Ensure explicit clarification: Disconnects are inherently negative; comparisons must use \"favorable/unfavorable\" or \"better/worse\" clearly.)*
+- Highlight brands contributing significantly to disconnect trends
 
-- **Net Adds** *(Explicitly calculated as Gross Adds minus Disconnects)*
-  - Clearly identify which brands impacted Net Adds the most significantly
+**4. Net Adds** *(Explicitly calculated as Gross Adds minus Disconnects)*
+- Clearly identify which brands impacted Net Adds the most significantly
 
 ### Commentary Requirements:
 
@@ -33,7 +33,7 @@ You are tasked with analyzing the Value Segment data tables to generate highly i
 - Clearly articulate if the insights pertain to variances against forecast or prior year benchmarks.
 
 **Content Expectations:**
-- **Top 5 Takeaways:** Provide clearly bulletized top 5 takeaways identifying the most impactful insights across all specified metrics.
+- **Top 5 Takeaways:** Provide clearly bulletized top 5 takeaways separately for each table (Core Value Brands, Gross Adds, Disconnects, Net Adds), identifying the most impactful insights.
 - **Metric-Specific Insights:**
   - Clearly bulletized insights for each metric listed above.
   - Explicitly illustrate interdependencies between metrics (e.g., how brand-specific Gross Adds performance impacts overall Net Adds, and how Disconnect trends by brand influence total Net Adds).
