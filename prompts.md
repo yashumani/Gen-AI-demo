@@ -1,6 +1,7 @@
-**Prompt for Lines Table Commentary Generation:**
 
-You are tasked with analyzing the Lines data table to generate highly impactful insights clearly and contextually. Use the data provided in the Lines table from this Google Doc: [Insert Google Doc Link - Data Tables], and reference the corresponding business logic definitions from this Data Dictionary: [Insert Google Doc Link - Data Dictionary].
+
+You are tasked with generating a clear, insightful, and contextual commentary for the Lines data table. Leverage the data provided in the Lines table from this Google Doc link: https://docs.google.com/document/d/1f2mQTrQNaIpQhvfEU0cbN2u4pK0Kgi4G-NZ4sb7tHJk/edit?tab=t.0#heading=h.myyew2fi9cgy and the corresponding business logic definitions provided in this Data Dictionary: https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit?tab=t.0
+
 
 ### Metrics for Detailed Analysis (Analyze from top to bottom, prioritizing highly impactful insights):
 
