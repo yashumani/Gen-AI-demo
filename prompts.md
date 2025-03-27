@@ -52,3 +52,6 @@ Exclude any commentary on Business Implications from this analysis.
 - Include references to any significant one-time events from the prior year that could influence year-over-year interpretations (e.g., ATT outage from 2/20/24).
 
 
+
+
+Phone disconnects missed their forecast by (96.5K), primarily due to the (85.1K) miss in voluntary disconnects
