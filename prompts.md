@@ -35,7 +35,7 @@ You are tasked with generating a clear, insightful, and contextual commentary fo
 - Explicit clarity in defining comparisons and implications.
 
 **Vocabulary:**
-- Use terms \"favorable/unfavorable\" or \"better/worse\" exclusively instead of ambiguous terms like \"increase/decrease,\" especially for disconnect metrics.
+- Use terms \"favorable/unfavorable\" or \"better/worse\" or \"gained/missed\"  exclusively instead of ambiguous terms like \"increase/decrease,\" especially for disconnect metrics.
 - Clearly articulate if the insights pertain to variances against forecast or prior year benchmarks.
 
 **Content Expectations:**
