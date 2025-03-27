@@ -1,25 +1,23 @@
-**Prompt for Lines/Accounts Table Analysis:**
+**Prompt for Lines Table Commentary Generation:**
 
-Using the provided Lines/Accounts table data:
+You are tasked with generating a clear, insightful, and contextual commentary for the Lines data table. Leverage the data provided in the Lines table from this Google Doc link: [Insert Google Doc Link - Data Tables] and the corresponding business logic definitions provided in this Data Dictionary: [Insert Google Doc Link - Data Dictionary].
 
-1. **Top Takeaways:**
-   - Clearly summarize the top 3-5 key insights, focusing explicitly on Phone Gross Adds, Phone Disconnects, and Phone Net Adds.
-   - Ensure each takeaway clearly states if the variance discussed is against the forecast (primary comparison) or prior year (secondary comparison).
+### Commentary Requirements:
 
-2. **Key Changes and Contextual Commentary:**
-   - Provide detailed commentary connecting changes in key metrics to underlying reasons, explicitly highlighting relationships between metrics. For instance, correlate changes in New Accounts with their direct impact on Gross Adds, or Lost Accounts with Disconnects.
-   - Clarify explicitly whether increases or decreases refer to absolute metric changes or variances from forecast.
+**Length:**
+- Approximately 150-200 words.
+- Provide concise yet comprehensive commentary.
 
-3. **Year-over-Year (YoY) Analysis:**
-   - Identify and comment on any notable YoY variances, explicitly referencing significant one-time events from the previous year that may affect interpretation (e.g., outages or unusual consumer demand).
+**Tone:**
+- Professional, analytical, and informative.
+- Maintain clarity in explanations and avoid jargon without context.
 
-4. **Business Implications:**
-   - Offer insightful, actionable commentary on the business implications of the highlighted variances, clearly indicating what strategic considerations or adjustments might be necessary.
+**Content Expectations:**
+- Highlight top takeaways clearly identifying key metrics (e.g., Phone Gross Adds, Phone Disconnects, Phone Net Adds).
+- Clearly articulate the relationships and connections between metrics (e.g., how variances in new accounts impact new phone gross adds; how lost accounts correlate with disconnects).
+- Specify clearly when referencing an increase/decrease in a metric versus a variance to forecast or prior year.
+- Clearly differentiate and explicitly state benchmarks used (forecast vs. prior year).
+- If referencing year-over-year variances, identify any notable one-time events from the prior year that could impact current interpretation (e.g., ATT outage from 2/20/24).
 
-**Requirements:**
-- Length: Concise (approx. 150-300 words)
-- Tone: Clear, Insightful, Action-oriented
-- Content Expectations: Direct, context-aware, and explicitly relational between metrics.
-
-Ensure the output matches the commentary style, depth, and clarity as defined in the provided expected output example.
+Exclude the "Business Implications" section entirely from this commentary.
 
