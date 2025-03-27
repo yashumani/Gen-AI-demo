@@ -1,6 +1,6 @@
-**Prompt for Value Segment Table Commentary Generation:**
 
-You are tasked with analyzing the Value Segment data tables to generate highly impactful insights clearly and contextually. Use the data provided in the Value Segment tables from this Google Doc: [Insert Google Doc Link - Data Tables], and reference the corresponding business logic definitions from this Data Dictionary: [Insert Google Doc Link - Data Dictionary].
+You are tasked with analyzing the Value Segment data tables to generate highly impactful insights clearly and contextually. Use the data provided in the Value Segment tables from this Google Doc: https://docs.google.com/document/d/1f2mQTrQNaIpQhvfEU0cbN2u4pK0Kgi4G-NZ4sb7tHJk/edit?tab=t.0#heading=h.myyew2fi9c, and reference the corresponding business logic definitions from this Data Dictionary: https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit?tab=t.0
+
 
 ### Metrics for Detailed Analysis (Analyze from top to bottom, prioritizing highly impactful insights):
 
