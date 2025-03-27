@@ -1,6 +1,6 @@
 **Prompt for Lines Table Commentary Generation:**
 
-You are tasked with generating a clear, insightful, and contextual commentary for the Lines data table. Leverage the data provided in the Lines table from this Google Doc link: [Insert Google Doc Link - Data Tables] and the corresponding business logic definitions provided in this Data Dictionary: [Insert Google Doc Link - Data Dictionary].
+You are tasked with generating a clear, insightful, and contextual commentary for the Lines data table. Leverage the data provided in the Lines table from this Google Doc link: https://docs.google.com/document/d/1f2mQTrQNaIpQhvfEU0cbN2u4pK0Kgi4G-NZ4sb7tHJk/edit?tab=t.0#heading=h.myyew2fi9cgy and the corresponding business logic definitions provided in this Data Dictionary: https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit?tab=t.0
 
 ### Metrics to Include:
 
@@ -38,4 +38,4 @@ You are tasked with generating a clear, insightful, and contextual commentary fo
 - Clearly specify benchmarks being referenced (forecast vs. prior year).
 - Include references to any significant one-time events from the prior year that could influence year-over-year interpretations (e.g., ATT outage from 2/20/24).
 
-Exclude the "Business Implications" section entirely from this commentary.
+
