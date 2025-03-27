@@ -101,3 +101,86 @@ Based on your detailed feedback, here's a structured synthesis of areas to addre
 ---
 
 Implementing these structured enhancements within your Zero-Shot prompts will address the critical feedback points and significantly increase the quality, clarity, and strategic usefulness of your generated insights.
+
+
+
+
+Absolutely, separating prompts by each table is a strategic approach. Doing so allows you to:
+
+### ✅ **Benefits of Creating Separate Prompts per Table:**
+1. **Focused Analysis:**  
+   Each table has unique metrics, business implications, and required context. Isolated prompts ensure precision and accuracy in AI outputs.
+
+2. **Contextual Accuracy:**  
+   Clearly defining criteria per table ensures each commentary specifically aligns with its related metrics and business rules.
+
+3. **Clear Accountability & Troubleshooting:**  
+   Easier to trace issues, feedback, or iterative improvements back to a specific prompt/table rather than a large, generalized prompt.
+
+4. **Enhanced Flexibility:**  
+   Easier to modify or adapt prompts if data, priorities, or reporting criteria change for one table without affecting others.
+
+---
+
+### 🚀 **Recommended Structure for Separate Prompts:**
+
+**For Each Table (Lines/Accounts, VHI, Value):**
+
+1. **Objective:** Clearly define the specific insights you want.
+2. **Metrics Covered:** Explicitly state metrics included in that table.
+3. **Comparisons & Benchmarks:** Clearly specify primary (Forecast) and secondary benchmarks (PY, PW, CV).
+4. **Expected Output Structure:** Clearly define required sections (Top Takeaways, Key Changes, Detailed Commentary, Business Implications).
+5. **Analytical Connections:** Clearly state if specific metrics should be connected analytically (e.g., New Accounts ↔ Gross Adds ↔ Disconnects).
+6. **Tone & Language:** Clearly define terms (favorable/unfavorable) to standardize interpretations.
+7. **Historical Context:** State explicitly if historical context (e.g., last year's events) should be considered if available.
+
+---
+
+### 📋 **Example Template for Each Table Prompt:**
+
+> **Prompt Template (Sample - Lines/Accounts):**
+>
+> **Objective:**  
+> Generate detailed commentary highlighting insights on Lines and Accounts, explicitly connecting performance metrics.
+>
+> **Metrics Covered:**  
+> - Phone Gross Adds  
+> - Phone Disconnects  
+> - Phone Net Adds  
+> - New Accounts  
+> - Lost Accounts  
+>
+> **Comparison Benchmarks:**  
+> - Primary: Forecast  
+> - Secondary: Prior Year (PY), Prior Week (PW)
+>
+> **Expected Structure:**  
+> 1. **Top Takeaways:**  
+>    Concise insights connecting metrics directly (100-150 words).  
+> 2. **Key Changes:**  
+>    Explicit commentary on week-over-week shifts, clearly stating the benchmark used (Forecast, PY, PW).  
+> 3. **Detailed Commentary:**  
+>    Clearly describe how changes in Accounts directly influenced Gross Adds and Disconnects (100-150 words).  
+> 4. **Business Implications:**  
+>    Actionable insights clearly linking immediate results to potential longer-term impacts (50-75 words).
+>
+> **Tone & Language:**  
+> - Clearly indicate favorable/unfavorable or better/worse (avoid increased/decreased).  
+> - Explicitly state cause-effect relationships between metrics.
+>
+> **Historical Context:**  
+> If available, reference notable historical anomalies impacting year-over-year comparisons (e.g., 2/20/24 ATT outage).
+
+---
+
+### ⚙️ **Suggested Action Plan:**
+- **Create separate prompts** for:
+  - **Lines/Accounts**
+  - **VHI (FWA & Fios)**
+  - **Value Segment**
+- **Test each prompt individually**, incorporating feedback loops.
+- **Iterate based on user feedback**, ensuring continuous alignment with expectations.
+
+By following this structured method, your prompt engineering will yield clearer, highly relevant, actionable insights. 
+
+Let me know if you want assistance in crafting these separate prompts!
