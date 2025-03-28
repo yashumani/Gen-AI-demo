@@ -1,26 +1,24 @@
 const PROJECT_ID = 'your-project-id';
 const REGION = 'us-central1';
 const MODEL_NAME = 'gemini-1.0-pro';
-const VERTEX_AI_API_KEY = 'YOUR_VERTEX_AI_API_KEY';
 
-// Vertex AI endpoint construction
-const GEMINI_ENDPOINT = `https://${REGION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/${REGION}/publishers/google/models/${MODEL_NAME}:generateContent?key=${VERTEX_AI_API_KEY}`;
+// Gemini API Endpoint URL
+const GEMINI_ENDPOINT = `https://${REGION}-aiplatform.googleapis.com/v1/projects/${PROJECT_ID}/locations/${REGION}/publishers/google/models/${MODEL_NAME}:generateContent`;
 
 /**
- * Calls Gemini API via Vertex AI using API key
+ * Calls Gemini API via OAuth authentication (no API key needed)
  */
-function callGeminiAPI(prompt) {
+function callGeminiWithOAuth(prompt) {
   const payload = {
-    contents: [
-      {
-        parts: [{ text: prompt }]
-      }
-    ]
+    contents: [{ parts: [{ text: prompt }] }]
   };
 
   const options = {
-    method: "POST",
-    contentType: "application/json",
+    method: 'POST',
+    contentType: 'application/json',
+    headers: {
+      Authorization: `Bearer ${ScriptApp.getOAuthToken()}`
+    },
     payload: JSON.stringify(payload),
     muteHttpExceptions: true
   };
@@ -36,9 +34,9 @@ function callGeminiAPI(prompt) {
 }
 
 /**
- * Reads prompts from "PromptInput" sheet, calls Gemini, and writes responses to "GeminiResponses"
+ * Automate Gemini API calls from sheet input and write outputs to another sheet
  */
-function runGeminiPromptAutomation() {
+function runGeminiPromptAutomationOAuth() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const inputSheet = ss.getSheetByName('PromptInput');
   const outputSheetName = 'GeminiResponses';
@@ -56,7 +54,7 @@ function runGeminiPromptAutomation() {
   prompts.forEach(prompt => {
     if (prompt) {
       try {
-        const response = callGeminiAPI(prompt);
+        const response = callGeminiWithOAuth(prompt);
         results.push([prompt, response]);
       } catch (e) {
         results.push([prompt, `Error: ${e.message}`]);
