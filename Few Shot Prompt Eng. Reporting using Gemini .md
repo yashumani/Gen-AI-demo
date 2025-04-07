@@ -1,6 +1,4 @@
-Got it! Here's your updated documentation with the additional emphasis on how the **solution provides a summarized "heads-up"** that allows the **reporting team to spend more time on deeper/root cause analysis**.
 
----
 
 ## **USE CASE DOCUMENTATION**
 
