@@ -1,169 +1,99 @@
-Advanced Data-Driven Reporting using few shots prompting with Google Docs and Gemini
+Got it! Here's your updated documentation with the additional emphasis on how the **solution provides a summarized "heads-up"** that allows the **reporting team to spend more time on deeper/root cause analysis**.
 
+---
 
-This document explains how to generate data-driven reports using Google Docs and Gemini. 
+## **USE CASE DOCUMENTATION**
 
-Few-shot prompting is a technique where you provide a few examples of the desired output format or analysis in your prompt, allowing the AI to quickly grasp the context and generate responses that align with your requirements. 
+### **Title:**  
+**Advanced Data-Driven Reporting using Few-Shot Prompting with Google Docs and Gemini**
 
-By crafting detailed prompts, users can leverage Gemini's AI capabilities to analyze and interpret data, streamlining the reporting process. The guide provides step-by-step instructions, including prompt examples for different types of analysis, to help users create clear, insightful, and well-structured reports. 
+---
 
-Additionally, by utilizing Gemini's capabilities for detailed data analysis and interpretation, you can streamline the process of extracting key insights from data tables. This document will provide step-by-step instructions to help you create comprehensive, business-ready reports efficiently, incorporating specific prompts for detailed analysis.
+### **Problem Statement**
 
-Step 1: Setting Up Google Docs
-Open your web browser and navigate to Google Docs. Go to docs.google.com.
-If you are not already logged in, sign in with your Google account.
-To create a new document, click on the "File" button → "New" → "Document".
-Click on "Create a document" button that appears on the blank document.
+Business reporting is often manual, time-consuming, and inconsistent in quality, especially when analyzing complex datasets across various metrics and dimensions. Analysts frequently spend excessive time:
 
-Step 2: Crafting Detailed Prompts for Gemini
-To get the most insightful analysis, you will need to use specific prompts that guide Gemini in its analysis. Here are some example prompts incorporating sections from the provided documents:
-Prompt 1: General Business Report Analysis
-Prompt:
+- Interpreting tabular data from multiple sources.
+- Writing detailed, insightful narratives.
+- Structuring professional-grade reports for executive audiences.
 
+In addition, tracking changes over time and understanding the implications of those changes require significant effort. With the increasing volume of data and frequency of reporting cycles, it becomes challenging for teams to consistently and quickly answer key questions such as **"What changed?"**, let alone spend enough time understanding **why it changed** and **how to act on it**.
 
-**Prompt:**
+---
 
-You are an expert business analyst and AI assistant specializing in summarizing and extracting key insights from business reports. I will provide you with the text of a "[Document Name]" Your task is to:
+### **Solution**
 
-1.  **Summarize Top 5 Takeaways:** Concisely summarize the top takeaways from each section of the brief. Use bullet points for clarity.
-2.  **Identify Key Changes:** Pinpoint significant changes or trends compared to previous periods or forecasts. Highlight areas of improvement, decline, or unexpected performance.
-3.  **Create Visual Representation:** Where possible and relevant, create simple tables to visually represent key data points and changes (e.g., changes in new accounts, net adds, disconnects).
-4.  **Provide Detailed Commentary:** For each major takeaway or change, provide a brief commentary explaining the context and significance.
-5.  **Analyze Business Implications:** Analyze the business implications of the identified trends. What actions or strategies might be needed in response to these insights?
-6.  **Organize and Format:** Organize the output into a well-structured document with clear section headings, bullet points, tables, and concise language. Use bold text for emphasis. Format the text for easy readability.
+To address these challenges, we developed a **prompt engineering–based framework** using **Few-Shot Prompting with Google Docs and Gemini**, enabling the rapid generation of contextual, structured business reports directly from data tables.
 
-Here is the document: = [Google Document Link]
+This solution **reduces the Level of Effort (LoE)** in daily reporting tasks by automating the summarization and formatting of data-driven insights. It acts as a **"summarized heads-up"**, providing an immediate understanding of key changes and trends across datasets.
 
-Your output should be a new document that is well-organized, formatted, and provides a clear, concise, and insightful summary of the key information in the brief.
+#### ⚡ **Key Benefits:**
+- **Provides Instant Answers to “What Changed?”**
+- **Eliminates Manual Narrative Writing**
+- **Offers Executive-Level Reporting in Minutes**
+- **Frees Up Analyst Time for Deeper Analysis**
 
-Prompt 2: Lines Table Analysis
+By shifting the initial workload of data summarization and insight formatting to Gemini, reporting teams are now empowered to spend more time on **deep-dive investigations, root cause analysis**, and **strategic recommendations**, instead of getting bogged down by routine report generation.
 
+---
 
-You are tasked with generating a clear, insightful, and contextual commentary for the Lines data table. Leverage the data provided in the Lines table from this Google Doc link: [Lines Table Google Doc Link] and the corresponding business logic definitions provided in this Data Dictionary: [Data Dictionary Google Doc Link]
+### **Level of Effort (LoE) Reduction**
 
-Metrics for Detailed Analysis (Analyze from top to bottom, prioritizing highly impactful insights):
+#### **Before Implementation**
+- Analysts manually comb through data to extract insights.
+- Writing detailed narratives for each metric took hours.
+- Multiple rounds of formatting and review before finalizing executive reports.
+- Limited time available for meaningful root cause analysis.
 
--   Phone Gross Adds
-    -   Breakdown by Price Plans:
-        -   Unlimited Welcome
-        -   Unlimited Plus
-        -   Unlimited Ultimate
-        -   Other Premium
-        -   Other Unlimited/Metered
-    -   Premium Unlimited Mix%
-    -   Components:
-        -   New Phone Lines
-        -   Add a Line Phone
--   Phone Upgrades
--   Phone Disconnects *(Ensure explicit clarification: Disconnects are inherently negative; comparisons must use "favorable/unfavorable" or "better/worse" clearly.)*
-    -   Voluntary Disconnects
-    -   Involuntary Disconnects
--   Phone Net Adds *(Explicitly calculated as Phone Gross Adds minus Phone Disconnects)*
+#### **After Implementation**
+- Gemini instantly summarizes key changes and top takeaways using well-crafted prompts.
+- Pre-formatted commentary and variance tables reduce the time spent preparing reports.
+- Analysts are freed from the repetitive task of “what happened” and can instead focus on “why it happened” and “what to do about it.”
 
-Commentary Requirements:
+✅ **Estimated Time Saved:**  
+~60–70% reduction in daily/weekly report prep effort  
+🔍 **Increased Focus On:**  
+- Deep-dive metric analysis  
+- Root cause identification  
+- Scenario simulation and forecasting  
+- Strategic action planning
 
-Length:
--   Be as detailed as possible, ensuring thorough coverage of critical insights without restricting word count.
+---
 
-Tone:
--   Professional, analytical, and insightful.
--   Explicit clarity in defining comparisons and implications.
+### **Answering “What Changed?” to Enable Deeper “Why” and “How”**
 
-Vocabulary:
--   Use terms "favorable/unfavorable" or "better/worse" or "gained/missed" exclusively instead of ambiguous terms like "increase/decrease," especially for disconnect metrics.
--   Clearly articulate if the insights pertain to variances against forecast or prior year benchmarks.
+The Gemini-powered framework directly addresses the **“What changed?”** question by:
 
-Content Expectations:
--   Top 5 Takeaways: Provide clearly bulletized top 5 takeaways identifying the most impactful insights across all specified metrics.
--   Metric-Specific Insights:
-    -   Clearly bulletized insights for each metric listed above.
-    -   Explicitly illustrate interdependencies between metrics (e.g., how Price Plan performance impacts Phone Gross Adds, how variations in Gross Adds affect Phone Disconnects, and consequently Net Adds).
-    -   Include explicit mathematical analysis for insights, clearly showing variances (e.g., "Phone disconnects missed their forecast by (96.5K), primarily due to the (85.1K) miss in voluntary disconnects").
-    -   Explicitly reference benchmarks (forecast vs. prior year).
-    -   Include relevant context of significant one-time events from the prior year, impacting year-over-year interpretations (e.g., ATT outage from 2/20/24).
+- **Summarizing Top 5 Takeaways** across any dataset or table.
+- **Highlighting Variances vs. Forecast, Prior Week, and Prior Year.**
+- **Automatically Generating Commentary** using business-specific vocabulary like *favorable/unfavorable*, *missed/gained*, etc.
+- **Providing Table Views of Key Metrics** for fast visual understanding.
 
-Exclude any commentary on Business Implications from this analysis.
-Prompt 3: Value Segment Tables Analysis
+By automating the **“What changed?”**, Gemini enables analysts and reporting teams to move faster and go deeper into:
 
+- **Why did this happen?** (e.g., customer behavior shifts, plan performance issues, external market events)
+- **How can we fix or capitalize on this?** (e.g., pricing updates, product mix adjustments, customer segmentation)
 
-You are tasked with analyzing the Value Segment data tables to generate highly impactful insights clearly and contextually. Use the data provided in the Value Segment tables from this Google Doc: [Value Segment Table Google Doc Link], and reference the corresponding business logic definitions from this Data Dictionary: [Data Dictionary Google Doc Link]
+---
 
-Input Data Table Structure:
--   Column 1: Row Headers (Metrics)
--   Columns 2 to 6: Prior Weeks Trend
--   Column 7: Current Week-To-Date (WTD)
--   Column 8: Mix % (Contribution %) for Value Brands
--   Column 9: Current Week vs Forecast
--   Column 10: Current Week vs Prior Year
--   Column 11: Month-to-Date (MTD)
--   Column 12: Mix % (Contribution %) for Value Brands
--   Columns 13 to 16: Current MTD vs Forecast, vs CV (Committed Value), vs Prior Year, and vs PY %
+### **Summarized Heads-Up for Strategic Focus**
 
-Metrics for Detailed Analysis (Analyze from top to bottom, prioritizing highly impactful insights):
-1.  Gross Adds
-    -   Identify top-performing brands driving favorable results
-2.  Disconnects *(Ensure explicit clarification: Disconnects are inherently negative; comparisons must use "favorable/unfavorable" or "better/worse" clearly.)*
-    -   Highlight brands contributing significantly to disconnect trends
-3.  Net Adds *(Explicitly calculated as Gross Adds minus Disconnects)*
-    -   Clearly identify which brands impacted Net Adds the most significantly
+This solution transforms how reporting teams operate:
 
-Commentary Requirements:
-Length:
--   Be as detailed as possible, ensuring thorough coverage of critical insights without restricting word count. Ensure the document is completely written.
+> **From**: Spending time creating reports and writing basic analysis  
+> **To**: Starting each day with a **ready-to-review summary** of key changes and trends—so time can be spent on **deep thinking, problem-solving, and strategy development**.
 
-Tone:
--   Professional, analytical, and insightful.
--   Explicit clarity in defining comparisons and implications.
+It ensures that:
+- **Executives are instantly aligned on the headlines.**
+- **Analysts are unblocked and empowered to dig deeper.**
+- **Business decisions are based on faster, clearer insights.**
 
-Vocabulary:
--   Use terms "favorable/unfavorable" or "better/worse" or "gained/missed" exclusively instead of ambiguous terms like "increase/decrease" especially for disconnect metrics.
--   Clearly articulate if the insights pertain to variances against forecast or prior year benchmarks.
+---
 
-Content Expectations:
--   Top 5 Takeaways: Provide clearly bulletized top 5 takeaways separately for each table (Gross Adds, Disconnects, Net Adds), identifying the most impactful insights.
--   Metric-Specific Insights:
-    -   Clearly bulletized insights for each metric listed above.
-    -   Explicitly illustrate interdependencies between metrics (e.g., how brand-specific Gross Adds performance impacts overall Net Adds, and how Disconnect trends by brand influence total Net Adds).
-    -   Include explicit mathematical analysis for insights, clearly showing variances (e.g., "Disconnects missed their forecast by (20.0K), driven primarily by Brand X’s unfavorable variance of (15.0K)").
-    -   Explicitly reference benchmarks (forecast vs. prior year).
-    -   Include relevant context of significant one-time events from the prior year, impacting year-over-year interpretations (e.g., promotional events, market disruptions).
+### **Conclusion**
 
-Exclude any commentary on Business Implications from this analysis.
+By combining **few-shot prompting** with **Gemini’s AI capabilities** inside **Google Docs**, this solution provides a powerful and scalable way to generate high-quality, data-driven business reports.
 
-Step 3: Inputting the Prompt into Gemini
-Replace the [Google Document Link], [Lines Table Google Doc Link], [Data Dictionary Google Doc Link], and [Value Segment Table Google Doc Link] in the prompts with the actual document links that include the data tables for input and [Document Name] with the new document name.
-Input the chosen prompt into Gemini. You can do this in two ways:
-Document Creation: If Gemini is integrated into your Google Docs, paste the prompt directly into the document creation window.
+It significantly **reduces the level of effort** required for routine reporting tasks and provides a **summarized heads-up** on key changes, enabling reporting teams to shift their focus toward **root cause analysis, strategic decision-making**, and **impactful storytelling**.
 
-Setting Up Document Creation
-Open your web browser and navigate to Google Docs. You can do this by going to docs.google.com.
-If you are not already logged in, sign in with your Google account.
-To create a new document, click on the “File” button → “New” → “Document”
-
-Click on “Create a document” button that appears on the blank document
-			
-
-Via the Chatbot Interface: Open Gemini and start a new conversation. Paste the prompt into the chat window.
-
-
-Step 4: Executing the Analysis
-Initiate the Analysis:
-Document Creation: If using the document creation window, look for a button like "Generate" or "Run" to start the analysis.
-Chatbot Interface: Press Enter or click on the "Send" button to submit the prompt to Gemini.
-Processing Time: Gemini will take a few moments to process your prompt and analyze the data. The processing time may vary depending on the complexity of the prompt and the size of the data table.
-
-Step 5: Reviewing and Refining the Output
-Review the Results: Once Gemini has finished processing, carefully review the generated output. Check for accuracy, completeness, and clarity.
-Refine the Prompts: If the output is not satisfactory, refine your prompts and re-run the analysis. You may need to experiment with different phrasings or specify additional details to guide Gemini toward the desired insights.
-Iterate: Continue refining your prompts and re-running the analysis until you achieve the desired level of detail and insight. You may also provide additional guidance to Gemini on the specific vocabulary or terminology to include in the output. For example, if you're analyzing customer feedback, you might ask Gemini to focus on specific terms like "price," "quality," or "customer service." Or, if you're working on a medical research project, you might provide Gemini with a list of relevant medical terms.
-
-Step 6: Incorporating the Output into Your Report
-Copy and Paste: Copy the relevant sections of the Gemini output and paste them into your Google Doc report.
-Formatting: Adjust the formatting of the pasted content to match the style of your report.
-Add Context: Provide additional context or commentary as needed to integrate the Gemini insights seamlessly into your report narrative.
-Visualizations: If Gemini has generated tables or charts, consider incorporating them into your report for enhanced visual appeal and clarity.
-
-Conclusion
-
-Through crafting detailed prompts and an iterative refinement process, users can harness the power of Google Docs and Gemini to generate advanced, data-driven reports. This synergy allows for the extraction of valuable insights from data, presented in a clear, concise, and impactful manner, ultimately enhancing business decision-making and reporting efficiency.
-
+This approach not only increases efficiency but also drives **better business outcomes** through faster and more focused reporting workflows.
