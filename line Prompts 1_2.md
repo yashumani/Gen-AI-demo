@@ -1,4 +1,4 @@
-**Prompt for Lines Table Commentary Generation:**
+
 
 You are tasked with generating a comprehensive, contextual, and insight-driven commentary for the **Lines** data table. This task should follow a structured analytical journey — beginning with the summary-level data provided in the Lines table, and progressively uncovering root causes of changes by referencing supporting business documentation.
 
@@ -10,6 +10,8 @@ Use the following documents as sources:
 - Price Plans Tracker: https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit?tab=t.0
 - Business Knowledge for Lines: https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
 - News Headlines Table : https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit?gid=0#gid=0
+
+
 
 ---
 
@@ -27,7 +29,7 @@ Then, for each major movement or variance:
 
 ---
 
-### Metrics for Detailed Analysis (Analyze top to bottom, prioritizing highly impactful drivers):
+### Metrics for Detailed Analysis (Restrict all further analysis only to those metrics that appear in the Top 5 Takeaways):
 
 - **Phone Gross Adds**
   - Breakdown by Price Plans (*only those with largest positive/negative impact*):
@@ -75,18 +77,19 @@ Then, for each major movement or variance:
 - Highlight the most critical changes in the week and MTD.
 
 **2. Metric-Specific Insights:**
-- Bulletized commentary per metric.
+- Provide commentary only for metrics referenced in the Top 5 Takeaways.
+- Bulletized insights per applicable metric.
 - Highlight only largest drivers or movers (positive/negative).
 - Use explicit math to describe impact (e.g., "missed forecast by 9.5K, driven by 6.3K shortfall in Unlimited Plus").
 - Support insights with the appropriate benchmark reference.
 
 **3. Interdependency Section:**
-- Identify and explain causal relationships between metrics.
+- Identify and explain causal relationships between the Top 5 metrics.
 - Example: "Gross Adds softness led to Net Adds decline, amplified by steady Disconnect volume."
 - Draw reasoning from Data Dictionary and Business Knowledge documents.
 
 **4. Correlation Section:**
-- Present 5 logical connections across metrics, supported by:
+- Present 5 logical connections across metrics in the Top 5 Takeaways, supported by:
   - Promotions (e.g., impact of $200 trade-in on Upgrades)
   - Price Plans (e.g., shift from Premium to Entry-level)
   - News Events (e.g., traffic surge due to competitor outage)
