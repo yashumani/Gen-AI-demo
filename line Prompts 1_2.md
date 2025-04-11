@@ -3,12 +3,13 @@
 You are tasked with generating a comprehensive, contextual, and insight-driven commentary for the **Lines** data table. This task should follow a structured analytical journey — beginning with the summary-level data provided in the Lines table, and progressively uncovering root causes of changes by referencing supporting business documentation.
 
 Use the following documents as sources:
-- Lines Table: [Insert Google Doc Link - Lines Table]
-- Source Spreadsheet: [Insert Google Sheets Link - Raw Data]
-- Data Dictionary: [Insert Google Doc Link - Data Dictionary]
-- Promotions Tracker: [Insert Google Doc Link - Promotions]
-- Business Knowledge for Lines: [Insert Google Sheets Link - Business Context]
-- News Event Tracker: [Insert Google Sheets Link - News Impacts]
+- Lines Table: https://docs.google.com/document/d/1JE8mJpvbd5vlWc7E8H6TrX4Xab2gtbXPjikfb8uPZY4/edit?tab=t.0
+- Source Spreadsheet: https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit?gid=1313153917#gid=1313153917
+- Data Dictionary: https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit?tab=t.0
+- Promotions Tracker: https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit?tab=t.0
+- Price Plans Tracker: https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit?tab=t.0
+- Business Knowledge for Lines: https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
+- News Headlines Table : https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit?gid=0#gid=0
 
 ---
 
