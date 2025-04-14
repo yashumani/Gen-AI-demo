@@ -12,16 +12,16 @@ GOOGLE_API_KEY = "AIzaSyBzKOM5LQpkvCjyA3Yzyf1NLcg4Jlcjcds"
 client = genai.Client(api_key=GOOGLE_API_KEY)
 
 # Read data from a CSV file into a Pandas DataFrame
-csv_file_path = "path/to/your/input.csv"  # Replace with the path to your CSV file
+csv_file_path = "C:/Users/Sharya3/Desktop/GenAI/source_data.csv"  # Replace with the path to your CSV file
 df = pd.read_csv(csv_file_path)
 
 # Perform analysis on the data
 # Example: Calculate week-over-week (WoW) and month-to-date (MTD) changes
-# Replace 'metric_column' and 'date_column' with actual column names
-df['date_column'] = pd.to_datetime(df['date_column'])
-df = df.sort_values(by='date_column')
-df['WoW_change'] = df['metric_column'].diff(7)  # Assuming daily data
-df['MTD_change'] = df['metric_column'] - df.groupby(df['date_column'].dt.to_period('M'))['metric_column'].transform('first')
+# Replace 'ML_ACTUALS' and 'RPT_DT' with actual column names
+df['RPT_DT'] = pd.to_datetime(df['RPT_DT'])
+df = df.sort_values(by='RPT_DT')
+df['WoW_change'] = df['ML_ACTUALS'].diff(7)  # Assuming daily data
+df['MTD_change'] = df['ML_ACTUALS'] - df.groupby(df['RPT_DT'].dt.to_period('M'))['ML_ACTUALS'].transform('first')
 
 # Few-shot prompt with dynamic data
 few_shot_prompt = f"""
@@ -37,13 +37,17 @@ You are tasked with generating a comprehensive, contextual, and insight-driven c
 
 --- Additional Context ---
 Use the following documents as reference inputs:
-- Lines Table: [Insert Google Doc Link - Lines Table]
-- Source Spreadsheet: [Insert Google Sheets Link - Raw Data]
-- Data Dictionary: [Insert Google Doc Link - Data Dictionary]
-- Promotions Tracker: [Insert Google Doc Link - Promotions]
-- Business Knowledge for Lines: [Insert Google Sheets Link - Business Context]
-- News Event Tracker: [Insert Google Sheets Link - News Impacts]
-- Historical Reports Archive: [Insert Link to Folder with Past CIPB Reports]
+Lines Table: https://docs.google.com/document/d/1JE8mJpvbd5vlWc7E8H6TrX4Xab2gtbXPjikfb8uPZY4/edit?tab=t.0
+Source Spreadsheet: https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit?gid=1313153917#gid=1313153917
+Data Dictionary: https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit?tab=t.0
+Channel data table:
+https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit?gid=2117838166#gid=2117838166
+Promotions Tracker: https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit?tab=t.0
+Price Plans Tracker: https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit?tab=t.0
+Business Knowledge for Lines: https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
+News Headlines Table : https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit?gid=0#gid=0
+Historical Reports Archive: https://docs.google.com/document/d/134jbf090H3C56QTDpDEbLmTT1CrMRbuDhXY612Cw10o/edit?tab=t.0#heading=h.osfntl5foqzj
+
 
 --- Instructions ---
 1. Begin with a high-level summary of the Lines table data, highlighting key metrics and trends.
