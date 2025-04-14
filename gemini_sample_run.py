@@ -15,25 +15,58 @@ client = genai.Client(api_key=GOOGLE_API_KEY)
 csv_file_path = "C:/Users/Sharya3/Desktop/GenAI/source_data.csv"  # Replace with the path to your CSV file
 df = pd.read_csv(csv_file_path)
 
-# Perform analysis on the data
-# Example: Calculate week-over-week (WoW) and month-to-date (MTD) changes
-# Replace 'ML_ACTUALS' and 'RPT_DT' with actual column names
-df['RPT_DT'] = pd.to_datetime(df['RPT_DT'])
-df = df.sort_values(by='RPT_DT')
-df['WoW_change'] = df['ML_ACTUALS'].diff(7)  # Assuming daily data
-df['MTD_change'] = df['ML_ACTUALS'] - df.groupby(df['RPT_DT'].dt.to_period('M'))['ML_ACTUALS'].transform('first')
+# Identify measure columns (numerical) and dimension columns (categorical or date)
+measure_columns = df.select_dtypes(include=['number']).columns.tolist()
+dimension_columns = df.select_dtypes(exclude=['number']).columns.tolist()
 
-# Few-shot prompt with dynamic data
+# Check if any date columns exist and convert them to datetime
+for col in dimension_columns:
+    if pd.api.types.is_string_dtype(df[col]):
+        try:
+            df[col] = pd.to_datetime(df[col])
+            print(f"Identified date column: {col}")
+        except (ValueError, TypeError):
+            pass
+
+# Update dimension columns after identifying date columns
+dimension_columns = [col for col in dimension_columns if not pd.api.types.is_datetime64_any_dtype(df[col])]
+
+print("Measure columns:", measure_columns)
+print("Dimension columns:", dimension_columns)
+
+# Perform analysis on the data
+if 'RPT_DT' in df.columns:
+    df['RPT_DT'] = pd.to_datetime(df['RPT_DT'])
+    df = df.sort_values(by='RPT_DT')
+    grouped = df.groupby(df['RPT_DT'].dt.to_period('M'))  # Group by month once to avoid redundant calculations
+    for measure in measure_columns:
+        df[f'{measure}_WoW_change'] = df[measure].diff(7)  # Assuming daily data
+        df[f'{measure}_MTD_change'] = df[measure] - grouped[measure].transform('first')
+
+# Prepare the few-shot prompt with dynamic data
+data_summary = df.describe().to_string()
+top_5_observations = (
+    df.nlargest(5, f'{measure_columns[0]}_WoW_change').to_string(index=False)
+    if f'{measure_columns[0]}_WoW_change' in df.columns
+    else "WoW_change not calculated"
+)
+
 few_shot_prompt = f"""
 Enhanced Prompt for Lines Table Commentary Generation:
 
 You are tasked with generating a comprehensive, contextual, and insight-driven commentary for the **Lines** data table. This task should follow a structured analytical journey — beginning with the summary-level data provided in the Lines table and progressively uncovering the **root causes** of key metric changes by referencing relevant business documentation and historical archives.
 
 --- Data Summary ---
-{df.describe().to_string()}
+{data_summary}
+
+--- Measure Columns ---
+{measure_columns}
+
+--- Dimension Columns ---
+{dimension_columns}
 
 --- Top 5 Observations ---
-{df.nlargest(5, 'WoW_change').to_string(index=False)}
+{top_5_observations}
 
 --- Additional Context ---
 Use the following documents as reference inputs:
@@ -41,13 +74,12 @@ Lines Table: https://docs.google.com/document/d/1JE8mJpvbd5vlWc7E8H6TrX4Xab2gtbX
 Source Spreadsheet: https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit?gid=1313153917#gid=1313153917
 Data Dictionary: https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit?tab=t.0
 Channel data table:
-https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit?gid=2117838166#gid=2117838166
+https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit?gid=2117838166#gid=1313153917
 Promotions Tracker: https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit?tab=t.0
 Price Plans Tracker: https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit?tab=t.0
 Business Knowledge for Lines: https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
 News Headlines Table : https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit?gid=0#gid=0
 Historical Reports Archive: https://docs.google.com/document/d/134jbf090H3C56QTDpDEbLmTT1CrMRbuDhXY612Cw10o/edit?tab=t.0#heading=h.osfntl5foqzj
-
 
 --- Instructions ---
 1. Begin with a high-level summary of the Lines table data, highlighting key metrics and trends.
