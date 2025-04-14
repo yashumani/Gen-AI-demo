@@ -1,8 +1,7 @@
-import gspread
+import pandas as pd
 from google import genai
 from google.genai import types
 from google.api_core import retry
-import pandas as pd
 
 # Define a retry mechanism for API calls
 is_retriable = lambda e: (isinstance(e, genai.errors.APIError) and e.code in {429, 503})
@@ -12,15 +11,9 @@ genai.models.Models.generate_content = retry.Retry(predicate=is_retriable)(genai
 GOOGLE_API_KEY = "AIzaSyBzKOM5LQpkvCjyA3Yzyf1NLcg4Jlcjcds"
 client = genai.Client(api_key=GOOGLE_API_KEY)
 
-# Google Sheets API setup
-gc = gspread.service_account(filename='path_to_service_account.json')  # Replace with your service account JSON file
-sheet_url = "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit"  # Replace with your Google Sheet URL
-sh = gc.open_by_url(sheet_url)
-worksheet = sh.sheet1  # Access the first sheet
-
-# Fetch data from Google Sheets into a Pandas DataFrame
-data = worksheet.get_all_records()
-df = pd.DataFrame(data)
+# Read data from a CSV file into a Pandas DataFrame
+csv_file_path = "path/to/your/input.csv"  # Replace with the path to your CSV file
+df = pd.read_csv(csv_file_path)
 
 # Perform analysis on the data
 # Example: Calculate week-over-week (WoW) and month-to-date (MTD) changes
