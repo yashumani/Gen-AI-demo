@@ -45,7 +45,23 @@ Use the following documents as reference inputs:
 - News Event Tracker: [Insert Google Sheets Link - News Impacts]
 - Historical Reports Archive: [Insert Link to Folder with Past CIPB Reports]
 
-... (rest of the prompt remains unchanged)
+--- Instructions ---
+1. Begin with a high-level summary of the Lines table data, highlighting key metrics and trends.
+2. Identify and explain the top 5 week-over-week (WoW) changes in the data, providing potential reasons for these changes.
+3. Use the provided reference documents to contextualize the changes and identify root causes.
+4. Incorporate historical data and business knowledge to provide a deeper understanding of the trends.
+5. Ensure the commentary is structured, concise, and actionable, with clear insights and recommendations.
+
+--- Example Commentary ---
+"Over the past week, the Lines table data reveals a significant increase in metric X, driven primarily by [reason]. This change aligns with the recent promotion campaign outlined in the Promotions Tracker. Additionally, metric Y has shown a decline, which can be attributed to [reason], as indicated in the News Event Tracker. Historical data from the CIPB Reports suggests that similar trends were observed during [specific period], highlighting the impact of [factor]."
+
+--- Output Format ---
+The output should be a well-structured and professional commentary, suitable for presentation to stakeholders. Use bullet points or numbered lists where appropriate to enhance readability.
+
+--- Notes ---
+- Ensure the commentary is data-driven and supported by evidence from the provided documents.
+- Avoid generic statements; focus on actionable insights and specific observations.
+- Maintain a professional tone throughout the commentary.
 """
 
 # Generate content using the enhanced prompt
