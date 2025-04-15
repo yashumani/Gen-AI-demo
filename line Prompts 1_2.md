@@ -1,9 +1,8 @@
+
 You are tasked with generating a comprehensive, contextual, and insight-driven commentary for the **Lines** data table. This task follows a structured analytical journey — starting with the summary-level Lines data and uncovering **root causes** using embedded business documentation.
 
-**Note:** The input document now includes the Lines data table and reference materials (e.g., Promotions, Price Plans, Business Knowledge, News Events). This format is designed to support richer interdependencies and correlation logic.
+**Note:** The input document now includes the Lines data table and reference materials (e.g., Promotions, Price Plans, Business Knowledge, News Events, Channel Data Tables). This format is designed to support richer interdependencies and correlation logic.
 
-Use this consolidated document as your reference:
-- **Lines Table + References**: [Insert Google Doc Link – Combined Input]
 
 Use the following documents as sources:
 - Lines Table: https://docs.google.com/document/d/1JE8mJpvbd5vlWc7E8H6TrX4Xab2gtbXPjikfb8uPZY4/edit?tab=t.0
@@ -17,84 +16,90 @@ Use the following documents as sources:
 
 
 
-
 ---
 
 ### Analytical Framework
-Apply a **Tree-of-Thoughts** reasoning strategy:
-1. Branch into **possible causes** using the embedded references.
-2. Explore context across promotions, news, price plan shifts, and benchmarks.
-3. Consolidate insights into the most logical narrative path.
+Apply a **Chain-of-Thoughts** and **Tree-of-Thoughts** reasoning strategy:
+- Use a sequential problem-solving approach to articulate what changed, why it changed, and how different variables contributed.
+- Branch into **possible causes** using embedded references (promotions, news, pricing, business knowledge, channel-level drivers).
+- Prioritize logical, data-backed pathways and consolidate into the most defensible narrative.
 
 ---
 
 ### Step-by-Step Flow
 
 1. **Start with Summary Data:**
-   - Identify largest WoW and MTD changes.
+   - Identify largest WoW and MTD changes from the Lines Table.
 
 2. **Prioritize Top 5 Takeaways:**
-   - Focus only on **Top 5 observations** with the highest impact.
+   - Focus only on **Top 5 observations** with the highest material impact (positive or negative).
 
-3. **Deep Dive on Top 5 Metrics Only:**
-   - Analyze only metrics listed in Top 5 using the reference sections.
-
-4. **Explain Root Causes Using Embedded References:**
-   - Use:
+3. **Metric-Specific Root Cause Analysis (Only for Top 5 Metrics):**
+   - Perform deep dives using:
      - Business Logic (Data Dictionary)
      - Promotions
-     - Price Plans
+     - Price Plan Tracker
+     - Channel Tables (within the document)
      - News Events
      - Business Knowledge
+   - Apply analytical breakdown: clarify which sub-drivers caused the change, how each element contributed, and why it matters.
+
+4. **Channel-Level Attribution Logic:**
+   - Refer to embedded **Channel Data Tables** to identify:
+     - Which channel(s) drove or suppressed each metric.
+     - Whether a trend was channel-specific or universal.
+   - Attribute key variances to appropriate channels with logic (e.g., FWA, Retail, Digital, Indirect).
 
 5. **Establish Interdependencies & Correlations:**
-   - Explain how one metric’s movement caused others (e.g., Gross Adds vs Disconnects).
-   - Validate findings with at least two sources where possible.
+   - Describe how shifts in one metric (e.g., Gross Adds) influenced others (e.g., Disconnects, Net Adds).
+   - Correlate across reference sections to validate observations.
 
 ---
 
 ### Commentary Requirements
 
 **Length:**
-- No word count limit. Be detailed and substantiated.
+- No word count limit. Be comprehensive, insight-rich, and fully substantiated.
 
 **Tone:**
-- Professional, executive-facing, and analytical.
+- Professional, analytical, and suitable for executive reporting.
 
 **Vocabulary:**
 - Use: "favorable/unfavorable," "better/worse," "gained/missed."
-- Specify comparisons: Forecast, Prior Year, Commit View (CV).
+- Always clarify benchmarks: Forecast, Prior Year, Commit View (CV).
 
 ---
 
 ### Output Structure
 
 **1. Top 5 Takeaways:**
-- Bulletized.
-- Highlight impactful WoW and MTD changes.
+- Bulletized list.
+- Emphasize most significant WoW and MTD movements.
 
-**2. Metric-Specific Analysis (Only for Top 5):**
-- Describe drivers.
-- Quantify deviations (e.g., missed forecast by 9.5K).
-- Justify using relevant embedded sections.
+**2. Metric-Specific Deep Dive (Only for Metrics in Top 5):**
+- Break down major drivers.
+- Include variance math (e.g., missed forecast by 9.5K).
+- Explain impact using at least two reference sources.
 
 **3. Interdependency Section:**
-- Describe metric-to-metric relationships.
-- Use reference support (e.g., promo impacts on net adds).
+- Show relationships between Top 5 metrics.
+- Reference data dictionary and channel tables as support.
 
 **4. Correlation Section:**
-- 5 bullet points:
+- Provide five bullet points across:
   - Promotions
   - Price Plans
   - News Events
-- Grouped by source.
+  - Business Knowledge
+  - Channel Table
+- Grouped by source to show multi-dimensional insights.
 
 ---
 
 **Exclude:**
-- No Business Implications.
-- Do not analyze metrics outside Top 5.
+- Business Implications section.
+- Analysis of metrics outside the Top 5.
 
-**Note:**
-- Your narrative should guide the reader through each insight logically, validating claims through embedded business context.
+**Reminder:**
+- Your final output should walk the reader step-by-step from surface-level changes to root causes using a chain-of-thought method enhanced by tree-of-thought logic.
 
