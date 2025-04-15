@@ -1,6 +1,9 @@
-**Enhanced Prompt for Lines Table Commentary Generation:**
+You are tasked with generating a comprehensive, contextual, and insight-driven commentary for the **Lines** data table. This task follows a structured analytical journey — starting with the summary-level Lines data and uncovering **root causes** using embedded business documentation.
 
-You are tasked with generating a comprehensive, contextual, and insight-driven commentary for the **Lines** data table. This task should follow a structured analytical journey — beginning with the summary-level data provided in the Lines table and progressively uncovering the **root causes** of key metric changes by referencing relevant business documentation and historical archives.
+**Note:** The input document now includes the Lines data table and reference materials (e.g., Promotions, Price Plans, Business Knowledge, News Events). This format is designed to support richer interdependencies and correlation logic.
+
+Use this consolidated document as your reference:
+- **Lines Table + References**: [Insert Google Doc Link – Combined Input]
 
 Use the following documents as sources:
 - Lines Table: https://docs.google.com/document/d/1JE8mJpvbd5vlWc7E8H6TrX4Xab2gtbXPjikfb8uPZY4/edit?tab=t.0
@@ -14,94 +17,84 @@ Use the following documents as sources:
 
 
 
----
-
-### Analytical Framework:
-This prompt applies a **Tree-of-Thoughts** reasoning strategy. For each metric insight:
-1. Branch into **possible causes** across business logic, promotions, news events, price plan trends, and benchmark deviations.
-2. Explore each branch with supporting context.
-3. Consolidate into the most logical insight pathway.
-4. Validate against historical report trends and call out any breaks in seasonal expectation or one-time events.
 
 ---
 
-### Step-by-Step Flow:
-
-1. **Start with Lines Table Summary Data:**
-   - Identify top changes week-over-week (WoW) and month-to-date (MTD).
-
-2. **Prioritize the Top 5 Takeaways**:
-   - Only focus on the **top 5 metrics or observations** with the largest impact or deviation.
-
-3. **Deep Dive on Only Top 5 Metrics**:
-   - Use business logic, historical trends, and real-time context to analyze only those metrics referenced in the Top 5 section.
-
-4. **Use Relevant Sources to Explain Root Causes:**
-   - Business Logic (Data Dictionary)
-   - Promotional Influence (Promo Tracker)
-   - External Events (News Tracker)
-   - Business Strategy (Business Context)
-   - Seasonal and historical expectations (Historical Reports)
-
-5. **Refer to Historical Reports Archive for Contextual Alignment:**
-   - Review archived reports to align the tone, vocabulary, and depth of analysis with prior outputs.
-   - Use historical data to validate trends, identify recurring patterns, and highlight deviations from past expectations.
-   - Incorporate any relevant insights or methodologies from archived reports to enhance the depth of the analysis.
-
-6. **Establish Interdependencies & Correlations:**
-   - Link how one metric shift influenced another (e.g., upgrades suppressing disconnects, or gross adds driving net adds).
-   - Validate logic through cross-source triangulation.
+### Analytical Framework
+Apply a **Tree-of-Thoughts** reasoning strategy:
+1. Branch into **possible causes** using the embedded references.
+2. Explore context across promotions, news, price plan shifts, and benchmarks.
+3. Consolidate insights into the most logical narrative path.
 
 ---
 
-### Commentary Requirements:
+### Step-by-Step Flow
+
+1. **Start with Summary Data:**
+   - Identify largest WoW and MTD changes.
+
+2. **Prioritize Top 5 Takeaways:**
+   - Focus only on **Top 5 observations** with the highest impact.
+
+3. **Deep Dive on Top 5 Metrics Only:**
+   - Analyze only metrics listed in Top 5 using the reference sections.
+
+4. **Explain Root Causes Using Embedded References:**
+   - Use:
+     - Business Logic (Data Dictionary)
+     - Promotions
+     - Price Plans
+     - News Events
+     - Business Knowledge
+
+5. **Establish Interdependencies & Correlations:**
+   - Explain how one metric’s movement caused others (e.g., Gross Adds vs Disconnects).
+   - Validate findings with at least two sources where possible.
+
+---
+
+### Commentary Requirements
 
 **Length:**
-- Be as detailed as possible with no word count restrictions.
-- Ensure all sections are fully developed with supporting evidence.
+- No word count limit. Be detailed and substantiated.
 
 **Tone:**
-- Professional, analytical, and executive-focused.
-- Align with the tone used in historical reports from the archive.
+- Professional, executive-facing, and analytical.
 
 **Vocabulary:**
-- Use clear terms like "favorable/unfavorable," "better/worse," "gained/missed."
-- Clarify if the comparison is to Forecast, Prior Year, or Commit View (CV).
-- Ensure consistency with vocabulary used in archived reports.
+- Use: "favorable/unfavorable," "better/worse," "gained/missed."
+- Specify comparisons: Forecast, Prior Year, Commit View (CV).
 
 ---
 
-### Output Structure:
+### Output Structure
 
 **1. Top 5 Takeaways:**
-- Clearly bulletized.
-- Highlight the most critical WoW and MTD observations.
-- Only select observations with meaningful business movement.
+- Bulletized.
+- Highlight impactful WoW and MTD changes.
 
-**2. Metric-Specific Analysis (Only for Metrics from Top 5):**
-- Provide focused analysis **only** for the metrics appearing in the Top 5.
-- For each metric:
-  - Highlight the major drivers (positive or negative).
-  - Quantify the variance (e.g., missed forecast by 9.5K).
-  - Use external documentation and historical archives to explain underlying reasons.
+**2. Metric-Specific Analysis (Only for Top 5):**
+- Describe drivers.
+- Quantify deviations (e.g., missed forecast by 9.5K).
+- Justify using relevant embedded sections.
 
 **3. Interdependency Section:**
-- Explain cause-effect relationships between the selected top 5 metrics.
-- Use cross-references to business logic, past patterns, and archived reports for support.
+- Describe metric-to-metric relationships.
+- Use reference support (e.g., promo impacts on net adds).
 
 **4. Correlation Section:**
-- Present 5 logical connections across the top 5 metrics, drawing from:
+- 5 bullet points:
   - Promotions
   - Price Plans
   - News Events
-  - Historical Comparisons
-- Group bullet points by document source.
+- Grouped by source.
 
 ---
 
 **Exclude:**
-- Do not include a Business Implications section.
-- Do not analyze any metrics that were not in the Top 5 Takeaways.
+- No Business Implications.
+- Do not analyze metrics outside Top 5.
 
-**Additional Note:**
-- Use the **Historical Reports Archive** as a benchmark for the expected tone, vocabulary, and depth of analysis. Ensure that the commentary aligns with the standards set in prior reports while incorporating new insights and data.
+**Note:**
+- Your narrative should guide the reader through each insight logically, validating claims through embedded business context.
+
