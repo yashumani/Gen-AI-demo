@@ -60,25 +60,35 @@ Output Structure (Use this exact format): Top 10 Takeaways Summary
 ** PROMPT 3**
 
 
+Root Cause Analysis – Metric Deep Dives
 You are a Verizon data analyst.
-Use the Top 10 metrics already written above in this document (from the takeaways summary) to perform a root cause analysis.
+Use the Top 10 Takeaways already documented in this file as the foundation for this next phase.
+Your task is to perform a Root Cause Analysis (RCA) for each metric listed, based specifically on:
 
-Do not analyze any metrics not mentioned in the previous section.
+The Lines Table data
 
-Now analyze only those 10 metrics by using the following reference sources to identify causes and contributors to their performance:
+Weekly and MTD performance benchmarks
 
+Supporting reference documentation
 
-Lines Source Data:
+The goal is to analytically explain why each change occurred — identifying the main drivers, quantifying the variance, and linking the insight to business context where applicable.
+
+Use the following reference documents to support your RCA:
+
+ruby
+Copy
+Edit
+Lines Table Source Data:
 https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
 
 Data Dictionary:
 https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit
 
-Promotions Docs:
+Promotions:
 https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit  
 https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
 
-Price Plans Docs:
+Price Plans:
 https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit  
 https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
 
@@ -87,31 +97,20 @@ https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
 
 News Tracker:
 https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit
-📌 Additional Guidance:
-Focus on variance explanations (vs Forecast / Prior Year / CV).
-
-Match logic to prior patterns in business knowledge or promotions.
-
-Link each metric’s change back to specific root drivers (price plan, promotion, news, etc.).
-
-Do not restate summary from Prompt 2 — build upon it.
-
-Keep all responses grounded in the Top 10 list above.
-
-✍️ Output Format (Repeat Per Metric):
+✍️ RCA Output Format for Each Metric:
 [Metric Name]
 
-Movement Summary: Favorable/unfavorable vs. Forecast / PY / CV. Total variance: [X].
+Movement Summary: [Favorable/unfavorable] vs [Forecast / Prior Year / CV].
+Total variance: [X].
 
-Root Cause Analysis:
+Analytical Root Cause:
 
-Main driver: [Sub-metric or plan], delta: [X].
+Main driver: [Sub-metric or channel], contributing [X].
 
-Supported by: [Promo / Price Plan / News / Channel trend].
+Supporting source: [Promo / Price Plan / Business Knowledge / News].
 
-Cross-referenced in Data Dictionary as: [logic].
+Reference logic: As defined in Data Dictionary – [short summary].
 
-Reference Documents Used:
+Relevant References Used:
 
-[Tracker URL or relevant evidence]
-
+[Paste applicable links]
