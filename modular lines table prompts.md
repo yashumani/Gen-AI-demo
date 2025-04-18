@@ -60,35 +60,58 @@ Output Structure (Use this exact format): Top 10 Takeaways Summary
 ** PROMPT 3**
 
 
-You are a Verizon data analyst. Use the existing content about Line Data Table already in this document (which includes summary-level analysis and Top 10 takeaways). For each metric identified in the Top 10, perform a detailed root cause analysis to explain what contributed to the movement.
+You are a Verizon data analyst.
+Use the Top 10 metrics already written above in this document (from the takeaways summary) to perform a root cause analysis.
 
-In addition to what’s already written, reference the following supporting materials to explain the drivers of change:
+Do not analyze any metrics not mentioned in the previous section.
 
-Lines Source Data: https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
-Data Dictionary: https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit
-Promo Docs: https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit
-Promo Data: https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
-Price Plans Docs: https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit
-Price Plan Data: https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
-Business Knowledge: https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
-News Events: https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit
-What to Consider: Use data-backed and contextual reasoning only.
-Reference related metrics (e.g., Gross Adds → Disconnects → Net Adds).
-Include channel-specific influences when applicable.
-Pull in promo, pricing, or event-related causes if relevant.
-Focus on largest drivers per metric.
-Rank the Takeaways from Most to least impacting.
-Be specific (e.g., “Voluntary Disconnects drove 85.1K of the 96.5K forecast miss in total Disconnects”).
+Now analyze only those 10 metrics by using the following reference sources to identify causes and contributors to their performance:
 
-✍️ Output Format (Repeat for Each Top 5 Metric): [Metric Name]
+
+Lines Source Data:
+https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
+
+Data Dictionary:
+https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit
+
+Promotions Docs:
+https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit  
+https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
+
+Price Plans Docs:
+https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit  
+https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
+
+Business Knowledge:
+https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
+
+News Tracker:
+https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit
+📌 Additional Guidance:
+Focus on variance explanations (vs Forecast / Prior Year / CV).
+
+Match logic to prior patterns in business knowledge or promotions.
+
+Link each metric’s change back to specific root drivers (price plan, promotion, news, etc.).
+
+Do not restate summary from Prompt 2 — build upon it.
+
+Keep all responses grounded in the Top 10 list above.
+
+✍️ Output Format (Repeat Per Metric):
+[Metric Name]
+
 Movement Summary: Favorable/unfavorable vs. Forecast / PY / CV. Total variance: [X].
-Root Cause Analysis:
-Main driver: [Sub-metric or price plan], variance: [X].
-This aligns with context from [Promotion/Price Plan/Channel/News/Event].
-Business Dictionary confirms such patterns are expected due to [logic].
-Additional supporting signals: [News headline/channel table shifts].
-Supporting References Used:
-[Raw URL to relevant tracker]
-[Raw URL to supporting promo/event/business doc]
 
+Root Cause Analysis:
+
+Main driver: [Sub-metric or plan], delta: [X].
+
+Supported by: [Promo / Price Plan / News / Channel trend].
+
+Cross-referenced in Data Dictionary as: [logic].
+
+Reference Documents Used:
+
+[Tracker URL or relevant evidence]
 
