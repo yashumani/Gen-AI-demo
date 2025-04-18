@@ -85,3 +85,76 @@ Top 5 Takeaways Summary
 [Metric Name] had the largest variance vs Forecast among all metrics, missing/exceeding expectations by [X].
 
 [Metric Name] continues a [2/3]-week trend and is now [up/down] by [X] YoY, signaling a shift in customer behavior / channel performance / pricing response.
+
+
+
+
+** PROMPT 3**
+
+
+Deep Dive Analysis for Top 5 Metrics (Plain URLs Version)
+You are a Verizon data analyst.
+Use the existing content already in this document (which includes summary-level analysis and Top 5 takeaways).
+For each metric identified in the Top 5, perform a detailed root cause analysis to explain what contributed to the movement.
+
+In addition to what’s already written, reference the following supporting materials to explain the drivers of change:
+
+bash
+Copy
+Edit
+Lines Table + Channel Tables (Source Doc):
+https://docs.google.com/document/d/1yvRtixQ0sCV2_XUK_tpYbq1P8O-BatEM5-cjNKd5zEA/edit?tab=t.0
+
+Lines Table Data Sheet (Raw Source):
+https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit?gid=1313153917
+
+Data Dictionary for Metric Definitions:
+https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit
+
+Promotions Tracker (Doc):
+https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit
+
+Promotions Tracker Sheet (Detailed):
+https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc/edit#gid=181065931
+
+Price Plan Tracker (Doc):
+https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit
+
+Business Knowledge for Lines (Strategic Context):
+https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
+
+News Headlines Tracker:
+https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit#gid=0
+🧠 What to Consider:
+Use data-backed and contextual reasoning only.
+
+Reference related metrics (e.g., Gross Adds → Disconnects → Net Adds).
+
+Include channel-specific influences when applicable.
+
+Pull in promo, pricing, or event-related causes if relevant.
+
+Focus on largest drivers per metric. Be specific (e.g., “Voluntary Disconnects drove 85.1K of the 96.5K forecast miss in total Disconnects”).
+
+✍️ Output Format (Repeat for Each Top 5 Metric):
+[Metric Name]
+
+Movement Summary: Favorable/unfavorable vs. Forecast / PY / CV. Total variance: [X].
+
+Root Cause Analysis:
+
+Main driver: [Sub-metric or price plan], variance: [X].
+
+This aligns with context from [Promotion/Price Plan/Channel/News/Event].
+
+Business Dictionary confirms such patterns are expected due to [logic].
+
+Additional supporting signals: [News headline/channel table shifts].
+
+Supporting References Used:
+
+[Raw URL to relevant tracker]
+
+[Raw URL to supporting promo/event/business doc]
+
+
