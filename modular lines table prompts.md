@@ -1,52 +1,52 @@
 **PROMPT 1**
 
 You are a Verizon Business Analyst.
-Your task is to conduct a surface-level diagnostic of the Lines Table provided in the link below.
+Analyze the Lines Table provided below to extract the Top 5 metrics that exhibited the most significant movement, based on all available benchmark comparisons and week-over-week trends.
 
-🔽 Lines Table Document:
+📄 Lines Table Document:
 https://docs.google.com/document/d/1yvRtixQ0sCV2_XUK_tpYbq1P8O-BatEM5-cjNKd5zEA/edit?tab=t.0
 
-🔽 Instructions:
-
-Focus on both Week-over-Week (WoW) and Month-to-Date (MTD) movements.
-
-Use the following columns in the table:
+🔽 What to Analyze:
 
 Current Week vs Forecast
 
 Current Week vs Prior Year
 
-MTD vs Forecast
+Current Week vs Commit View (CV)
+
+Month-to-Date (MTD) vs Forecast
+
+MTD vs CV
 
 MTD vs Prior Year
 
-Apply basic business logic:
+Weekly Trend (movement from previous weeks)
 
-Disconnects (Voluntary & Involuntary) are negative contributors by default.
+🔽 What to Consider:
 
-Interpret "favorable/unfavorable" instead of "increase/decrease".
+Focus on the absolute size of the variance across all benchmarks.
 
-Favorability is judged against forecast first, then PY.
+Prioritize metrics that appear to have consistent trend movement or sudden spikes/reversals.
 
-Group metrics by their material movement – e.g., >10K is high, <2K is low.
+Avoid redundancy — if multiple rows represent the same driver (e.g., disaggregated price plans), summarize them under the most representative metric.
 
-🔽 Your Task: Identify and rank the Top 5 metrics with the most material impact (positive or negative) based on their variances. Use both WoW and MTD comparisons.
+Disconnect metrics are inherently negative. Fewer disconnects is favorable; more is unfavorable.
 
-🔽 Output Format:
+🔽 Output Format (Bullet Style):
 
-Top 5 Metrics with Largest Variance (Ranked):
+📌 [Metric Name] — Missed Forecast by 87K and CV by 75K; WoW reversal observed from last 3-week decline.
 
-Metric 1: Favorable/Unfavorable | WoW Δ: X | MTD Δ: Y
+📌 [Metric Name] — MTD variance against PY is +45K; double-digit mix growth in recent trend.
 
-Metric 2: ...
+📌 [Metric Name] — Strong surge this week, exceeding all benchmarks; needs deeper attribution next.
 
-...
+⚠️ Do not include:
 
-🔽 Clarify:
+Root cause
 
-Use only metrics where variance is materially large and meaningful for executive reporting.
+Channel impact
 
-No need for root cause or commentary yet. This step is purely “What Changed?”.
+Business implications
 
 
 
