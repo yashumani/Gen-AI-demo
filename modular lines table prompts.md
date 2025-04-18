@@ -50,5 +50,38 @@ Business implications
 
 
 
-*PROMPT 2*
+**PROMPT 2**
 
+
+Prompt 2 – Top 5 Takeaways Summary (Contextual Continuation)
+You are a Verizon business analyst.
+Use the existing content already written in this document, which includes Lines Table trends and surface-level benchmarking summaries.
+Your task now is to:
+
+Extract and summarize the Top 5 most impactful takeaways based on:
+
+WoW changes
+
+MTD vs Forecast
+
+MTD vs Commit View (CV)
+
+MTD vs Prior Year (PY)
+
+Focus on takeaways that exhibit the highest material movement, either favorable or unfavorable.
+You may consider Weekly trends separately if impactful.
+
+Ensure the takeaways are written in a professional, executive-ready tone with clear quantification and context.
+
+Output Structure (Use this exact format):
+Top 5 Takeaways Summary
+
+[Metric Name] showed a favorable/unfavorable shift of [X] when compared to [Forecast / PY / CV], contributing to the overall movement in the Lines Table this week.
+
+[Metric Name] experienced a WoW change of [X], indicating an acceleration / deceleration / reversal from previous trends.
+
+[Metric Name] was better/worse than CV by [X], driven by consistent gains / unexpected drop observed across multiple channels.
+
+[Metric Name] had the largest variance vs Forecast among all metrics, missing/exceeding expectations by [X].
+
+[Metric Name] continues a [2/3]-week trend and is now [up/down] by [X] YoY, signaling a shift in customer behavior / channel performance / pricing response.
