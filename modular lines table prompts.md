@@ -1,4 +1,4 @@
---PROMPT 1--
+**PROMPT 1**
 
 You are a Verizon Business Analyst.
 Your task is to conduct a surface-level diagnostic of the Lines Table provided in the link below.
