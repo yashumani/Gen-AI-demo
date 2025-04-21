@@ -252,3 +252,88 @@ Channel Tables
 [Metric] gain/loss was mostly driven by [Channel Name], with [X]% of the movement isolated to that channel in the source data.
 
 Be specific, use actual variance figures where applicable, and group by document type. Only include the most defensible and material relationships.
+
+
+**PROMPT 6**
+
+Title: Executive Summary Assembly – Final Reporting Output
+You are a Verizon business analyst assembling the final executive-ready report using the already generated content within this document. This includes:
+
+Top 10 Takeaways Summary
+
+Root Cause Analysis (RCA) for each takeaway
+
+Channel Attribution findings
+
+Interdependencies and Correlations
+
+Your goal is to stitch these insights together into a polished final output that reads as a cohesive, analytical report suitable for business leadership.
+
+🧠 What to Use as Context:
+All previously written content in this document (no external sources required)
+
+The output of:
+
+Top 10 Takeaways
+
+Root Cause Analysis
+
+Channel Attribution Logic
+
+Metric Interdependencies and Cross-Reference Correlations
+
+📌 What to Do:
+Create Clean Sections: Organize the final report into the following labeled segments:
+
+Top 10 Takeaways
+
+Root Cause Deep Dive (Top 10 Metrics Only)
+
+Channel Attribution Summary
+
+Interdependency Highlights
+
+Correlation Insights
+
+Ensure Logical Flow:
+
+Reorder content only if necessary to preserve clarity and eliminate redundancy.
+
+Avoid restating content verbatim — instead, format and clean it up.
+
+Maintain tight narrative continuity between sections.
+
+Language Guidelines:
+
+Keep tone professional, analytical, and executive-appropriate.
+
+Ensure consistent use of benchmark terminology (Forecast, CV, PY).
+
+Use terminology like “favorable/unfavorable,” “gained/missed,” and “driven by…” for consistency.
+
+When math or attribution is stated, ensure numbers and references are retained clearly.
+
+✅ Final Output Format:
+less
+Copy
+Edit
+Executive Summary – Lines Table Performance
+
+Section 1: Top 10 Takeaways  
+(Bulletized, concise, impactful movement highlights)
+
+Section 2: Root Cause Deep Dive  
+(One paragraph per metric with RCA logic, references, and sub-driver callouts)
+
+Section 3: Channel Attribution  
+(Breakdown of channel-driven variances – e.g., Retail vs. Indirect)
+
+Section 4: Interdependency Highlights  
+(Bulletized causal links between metrics, e.g., Gross Adds ↔ Disconnects)
+
+Section 5: Correlation Insights  
+(Grouped into: Promotions, Price Plans, Channel Tables, News, Business Logic)
+
+Optional Closing Statement:  
+(1–2 lines summarizing overall health or risks based on all observations)
+Do not add any new insights. Do not summarize again. Focus only on formatting, organizing, and polishing the content already in this document into a final deliverable.
