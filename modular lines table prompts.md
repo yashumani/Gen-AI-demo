@@ -75,9 +75,6 @@ The goal is to analytically explain why each change occurred — identifying the
 
 Use the following reference documents to support your RCA:
 
-ruby
-Copy
-Edit
 Lines Table Source Data:
 https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
 
@@ -114,3 +111,55 @@ Reference logic: As defined in Data Dictionary – [short summary].
 Relevant References Used:
 
 [Paste applicable links]
+
+
+
+**PROMPT 4**
+
+
+Title: Channel Attribution Analysis (Based on Top 10 Takeaways)
+
+You are a Verizon data analyst. This document already includes the Lines Table data, summary-level analysis, and the Top 10 Takeaways. Your task now is to analyze those Top 10 metrics and determine which sales channels were responsible for the performance changes.
+
+Use the following references for attribution insights:
+
+Lines Table & Channel-Level Tables:
+https://docs.google.com/document/d/1yvRtixQ0sCV2_XUK_tpYbq1P8O-BatEM5-cjNKd5zEA/edit?tab=t.0
+
+Source Data Sheet (Channel Views Tab):
+https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
+
+Business Knowledge – Channel Strategy Notes:
+https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
+
+What to do:
+
+For each metric in the Top 10 Takeaways:
+
+Attribute the movement to the appropriate channel(s): Retail, Indirect, Digital, FWA.
+
+Identify which channel(s) performed above or below forecast or trend.
+
+Clarify whether the performance was consistent across all channels or driven by a few.
+
+Pull in any relevant data from the business knowledge tracker for deeper context.
+
+What to consider:
+
+Compare Week-over-Week and MTD changes by channel.
+
+Include variance math if available (e.g., "Retail channel exceeded forecast by 18.4K").
+
+Highlight trends that differ between channels (e.g., “FWA declined, while Retail improved”).
+
+Output Format (Repeat for each relevant Top 10 metric):
+
+[Metric Name] — Channel Attribution Summary
+
+• Primary channel contributor: [Retail / Indirect / Digital / FWA]
+• Movement vs Forecast: [Favorable/Unfavorable] by [X]
+• Channel disparities: [Example — Digital underperformed, while Retail drove gains]
+• Supporting channel-level insight: [Quote trend or delta]
+• Interpretation: [Summarize why the movement occurred, e.g., promo traction, digital lag]
+
+Do not restate Top 10 summaries. Instead, enhance the analysis with channel-level context using the references above.
