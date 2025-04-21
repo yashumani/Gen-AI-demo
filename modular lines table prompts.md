@@ -163,3 +163,92 @@ Output Format (Repeat for each relevant Top 10 metric):
 • Interpretation: [Summarize why the movement occurred, e.g., promo traction, digital lag]
 
 Do not restate Top 10 summaries. Instead, enhance the analysis with channel-level context using the references above.
+
+
+
+**PROMPT 5**
+
+
+Title: Interdependency & Correlation Mapping
+
+Use the existing content already present in this document, which includes:
+
+The Top 10 Takeaways Summary
+
+Detailed Root Cause Analyses (RCA) for each of the top metrics
+
+Now, perform a cross-metric and cross-reference correlation analysis using the context from the Lines Table and the following support documents:
+
+Lines Source Data: https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
+
+Data Dictionary: https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit
+
+Promotions Tracker: https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit
+
+Price Plans Data: https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
+
+Business Knowledge: https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
+
+News Headlines Table: https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit
+
+Channel-Level Tables (included in source data document)
+
+Instructions:
+
+Review the Top 10 metrics that were analyzed in the RCA section.
+
+Identify how those metrics influenced or were influenced by each other.
+
+Use supporting documents to find correlation signals, triggers, or event-based anomalies.
+
+Apply business logic to validate each relationship.
+
+Focus on highlighting cause-effect insights backed by evidence.
+
+What to Include:
+
+Interdependencies between metrics (e.g., Gross Adds drove Net Adds; Upgrades may have suppressed Disconnects).
+
+Correlation logic across the following reference categories:
+
+Promotions
+
+Price Plans
+
+News Events
+
+Business Knowledge
+
+Channel Performance
+
+Output Format:
+
+Interdependency Mapping
+
+[Metric A] is strongly linked to [Metric B] due to [reason], which aligns with patterns explained in [data dictionary or business logic reference].
+
+[Metric X] and [Metric Y] showed simultaneous variance due to [channel impact or promo effect], confirming directional influence.
+
+Cross-Source Correlation Summary
+
+Promotions
+
+[Metric] was impacted by [Promo Name], launched in [week], which aligned with performance spikes in [channel or metric].
+
+Price Plans
+
+[Metric] shift was associated with [Price Plan] movement, supported by share of mix increase in [Lines Table].
+
+News
+
+[Metric] trend may relate to the [Event/Headline] reported on [Date], suggesting reactive customer behavior.
+
+Business Knowledge
+
+[Metric] performance followed an expected seasonal pattern as documented in [Business Knowledge tab].
+
+Channel Tables
+
+[Metric] gain/loss was mostly driven by [Channel Name], with [X]% of the movement isolated to that channel in the source data.
+
+Be specific, use actual variance figures where applicable, and group by document type. Only include the most defensible and material relationships.
