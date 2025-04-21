@@ -1,32 +1,46 @@
 **PROMPT 1**
 
-You are a Verizon Data Analyst.
-Analyze the Lines Table provided below to extract the Top 10 metrics that exhibited the most significant movement, based on all available benchmark comparisons and week-over-week trends.
-Lines Source Data: https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
-What to Analyze:
-Current Week vs Forecast
-Current Week vs Prior Year
-Current Week vs Commit View (CV)
-Month-to-Date (MTD) vs Forecast
-MTD vs CV
-MTD vs Prior Year
-Weekly Trend (movement from previous weeks)
-What to Consider:
-Focus on the absolute size of the variance across all benchmarks.
-Prioritize metrics that appear to have consistent trend movement or sudden spikes/reversals.
-Avoid redundancy — if multiple rows represent the same driver (e.g., disaggregated price plans), summarize them under the most representative metric.
-Disconnect metrics are inherently negative. Fewer disconnects is favorable; more is unfavorable.
-Rank the Takeaways from Most to least impacting.
-Output Format (Bullet Style):
+Title: Surface-Level Benchmark Analysis (Initial Discovery)
+You are a Verizon Data Analyst. Analyze the Lines Table data (Weekly and MTD) using the Google Sheet provided below:
+Lines Source Data:
+https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
 
-For Example:-
+🎯 Objective:
+Identify Top 10 metrics exhibiting the most significant movement by comparing against all relevant benchmarks:
+
+Current Week vs Forecast
+
+Current Week vs Prior Year (PY)
+
+Current Week vs Commit View (CV)
+
+Month-to-Date (MTD) vs Forecast
+
+MTD vs CV
+
+MTD vs PY
+
+Week-over-Week (WoW) trend change (3-week patterns if applicable)
+
+🧠 What to Consider:
+Prioritize material movement (positive or negative).
+
+Highlight strongest variance deltas across any benchmark.
+
+Avoid redundancy – group similar metrics (e.g., plan-level splits under one header).
+
+Treat Disconnect metrics as inherently negative – fewer is better, more is worse.
+
+Look for sustained trends, reversals, or unexpected surges.
+
+Ensure WoW changes are given space to stand alone if compelling.
+
+📝 Output Format (Bullet Style):
 [Metric Name] — Missed Forecast by 87K and CV by 75K; WoW reversal observed from last 3-week decline.
+
 [Metric Name] — MTD variance against PY is +45K; double-digit mix growth in recent trend.
+
 [Metric Name] — Strong surge this week, exceeding all benchmarks; needs deeper attribution next.
-Do not include:
-Root cause
-Channel impact
-Business implications
 
 
 
@@ -35,23 +49,57 @@ Business implications
 **PROMPT 2**
 
 
-Top 10 Takeaways Summary (Contextual Continuation) You are a Verizon business analyst. Use the existing content already written in this document, which includes Lines Table trends and surface-level benchmarking summaries. 
-Source Data: https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
+Title: Top 10 Takeaways Summary (Contextual Insights)
+You are a Verizon business analyst. Using the already-present content in this document (i.e., the Surface-Level Benchmark Analysis section), summarize the Top 10 most impactful takeaways based on directional performance across the following benchmarks:
+
+Reference:
+
+Lines Source Data: https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
+
 Data Dictionary: https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit
-Your task now is to:
-Extract and summarize the Top 10 most impactful takeaways based on:
-WoW changes
+
+🎯 Objective:
+Provide a contextual and executive-level summary of the Top 10 Metrics identified previously.
+
+Prioritize the largest deltas, regardless of benchmark.
+
+Benchmark types to consider (no hierarchy among them):
+
+WoW
+
 MTD vs Forecast
-MTD vs Commit View (CV)
-MTD vs Prior Year (PY)
-Focus on takeaways that exhibit the highest material movement, either favorable or unfavorable. You may consider Weekly trends separately if impactful.
-Ensure the takeaways are written in a professional, executive-ready tone with clear quantification and context.
-Output Structure (Use this exact format): Top 10 Takeaways Summary
-[Metric Name] showed a favorable/unfavorable shift of [X] when compared to [Forecast / PY / CV], contributing to the overall movement in the Lines Table this week.
-[Metric Name] experienced a WoW change of [X], indicating an acceleration / deceleration / reversal from previous trends.
-[Metric Name] was better/worse than CV by [X], driven by consistent gains / unexpected drop observed across multiple channels.
-[Metric Name] had the largest variance vs Forecast among all metrics, missing/exceeding expectations by [X].
-[Metric Name] continues a [2/3]-week trend and is now [up/down] by [X] YoY, signaling a shift in customer behavior / channel performance / pricing response.
+
+MTD vs CV
+
+MTD vs PY
+
+Include WoW trend context as a separate highlight if it adds insight.
+
+🧠 What to Consider:
+Only use metrics surfaced in the Surface-Level Analysis section.
+
+Each takeaway must explain:
+
+What changed?
+
+How much did it move?
+
+Compared to what?
+
+What is the trend direction?
+
+📝 Output Structure (Use this Format Exactly):
+Top 10 Takeaways Summary
+
+[Metric Name] showed a favorable/unfavorable shift of [X] vs [Forecast / PY / CV], contributing to the overall movement in the Lines Table this week.
+
+[Metric Name] experienced a WoW change of [X], indicating a [sustained surge / drop / reversal] from the recent trend.
+
+[Metric Name] was better/worse than CV by [X], driven by [sudden shift / consistent trend / sub-metric behavior].
+
+[Metric Name] had the largest variance vs Forecast, missing/exceeding expectations by [X].
+
+[Metric Name] continues a [2/3]-week trend and is now [up/down] by [X] YoY, signaling a [shift in customer behavior / channel impact / plan adoption].
 
 
 
@@ -60,156 +108,149 @@ Output Structure (Use this exact format): Top 10 Takeaways Summary
 ** PROMPT 3**
 
 
-Root Cause Analysis – Metric Deep Dives
-You are a Verizon data analyst.
-Use the Top 10 Takeaways already documented in this file as the foundation for this next phase.
-Your task is to perform a Root Cause Analysis (RCA) for each metric listed, based specifically on:
+ Title: Root Cause Analysis for Top 10 Metrics
+You are a Verizon Data Analyst. Based on the previously identified Top 10 Takeaways Summary, perform a metric-by-metric Root Cause Analysis (RCA) for each item listed.
 
-The Lines Table data
+This RCA must:
 
-Weekly and MTD performance benchmarks
+Be data-driven.
 
-Supporting reference documentation
+Use only the metrics included in the Top 10 Summary.
 
-The goal is to analytically explain why each change occurred — identifying the main drivers, quantifying the variance, and linking the insight to business context where applicable.
+Reference and cross-check supporting documents to validate explanations.
 
-Use the following reference documents to support your RCA:
-
-Lines Table Source Data:
+📊 Supporting Data Sources:
+Lines Source Data:
 https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
 
 Data Dictionary:
 https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit
 
-Promotions:
-https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit  
+Promo Docs:
+https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit
+
+Promo Data:
 https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
 
-Price Plans:
-https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit  
+Price Plans Docs:
+https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit
+
+Price Plan Data:
 https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
 
 Business Knowledge:
 https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
 
-News Tracker:
+News Events:
 https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit
-✍️ RCA Output Format for Each Metric:
-[Metric Name]
 
-Movement Summary: [Favorable/unfavorable] vs [Forecast / Prior Year / CV].
-Total variance: [X].
+🧠 What to Consider:
+Your analysis must only cover the 10 metrics listed in the prior section.
 
-Analytical Root Cause:
+Each RCA should include:
 
-Main driver: [Sub-metric or channel], contributing [X].
+A variance summary
 
-Supporting source: [Promo / Price Plan / Business Knowledge / News].
+Quantification of root drivers
 
-Reference logic: As defined in Data Dictionary – [short summary].
+Attribution to one or more of:
 
-Relevant References Used:
+Promotions
 
-[Paste applicable links]
+Price Plan shifts
+
+Channel behavior
+
+Business logic (dictionary)
+
+External events (News)
+
+Validate with raw data and dictionary logic.
+
+Avoid repetition or general statements. Use specific values and references.
+
+📝 Output Structure (Repeat This Format for Each Metric):
+[Metric Name] – RCA Summary
+Movement: Favorable/Unfavorable vs [Forecast / CV / PY]
+Variance: [X value]
+
+Root Cause Analysis:
+
+Primary Driver: [Sub-component or channel], contributed [X] to total movement.
+
+Supporting Explanation: Based on [Promo / Price Plan / Channel table / News], the shift corresponds to [Event / Campaign / Behavior].
+
+Data Dictionary Alignment: This change aligns with historical behavior expected when [logic from dictionary].
+
+Additional Signals: [Mention any corroborating news headlines, business doc references, or data anomalies].
+
+References Used:
+
+[Paste raw URL of tracker or document used]
+
+[Paste raw URL if multiple]
 
 
 
 **PROMPT 4**
 
 
-Title: Channel Attribution Analysis (Based on Top 10 Takeaways)
+Title: Channel Attribution Analysis for Top 10 Metrics
+You are a Verizon Data Analyst. Using the Top 10 metrics already analyzed in the summary and root cause sections, your task is now to attribute the performance shifts to specific sales or service channels, where applicable.
 
-You are a Verizon data analyst. This document already includes the Lines Table data, summary-level analysis, and the Top 10 Takeaways. Your task now is to analyze those Top 10 metrics and determine which sales channels were responsible for the performance changes.
+📊 Use the Following Data Source for Attribution:
+Lines by Channel Table (Embedded in Lines Doc)
+https://docs.google.com/document/d/1yvRtixQ0sCV2_XUK_tpYbq1P8O-BatEM5-cjNKd5zEA/edit
 
-Use the following references for attribution insights:
+📌 Objective:
+Identify whether the movement of each Top 10 metric was:
 
-Lines Table & Channel-Level Tables:
-https://docs.google.com/document/d/1yvRtixQ0sCV2_XUK_tpYbq1P8O-BatEM5-cjNKd5zEA/edit?tab=t.0
+Driven by a specific channel (e.g., Retail, Digital, FWA, Indirect), OR
 
-Source Data Sheet (Channel Views Tab):
-https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
+Consistent across channels (broad systemic trend)
 
-Business Knowledge – Channel Strategy Notes:
-https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
+🧠 What to Consider:
+Use channel-specific breakdowns from the Lines by Channel table to isolate patterns.
 
-What to do:
+Attribute performance to the most material channel variance (positive or negative).
 
-For each metric in the Top 10 Takeaways:
+Distinguish between:
 
-Attribute the movement to the appropriate channel(s): Retail, Indirect, Digital, FWA.
+Channel-exclusive movements (e.g., "Retail drove +65% of GA variance")
 
-Identify which channel(s) performed above or below forecast or trend.
+Broad movements across multiple channels (systemic)
 
-Clarify whether the performance was consistent across all channels or driven by a few.
+Explain if a known channel campaign (from business docs or promos) aligns with the observed change.
 
-Pull in any relevant data from the business knowledge tracker for deeper context.
+📝 Output Format (Repeat for Each of the Top 10 Metrics):
+[Metric Name] – Channel Attribution Summary
+Primary Driver Channel: [Retail / Digital / FWA / Indirect]
+Impact Magnitude: Contributed [X] of total variance (e.g., 65K of 102K MTD change)
+Observed Channel Pattern:
 
-What to consider:
+[Channel Name] saw [X]% shift compared to forecast
 
-Compare Week-over-Week and MTD changes by channel.
+[Brief narrative if other channels remained flat or opposed the trend]
 
-Include variance math if available (e.g., "Retail channel exceeded forecast by 18.4K").
+Explanation:
+This suggests that the overall change in [Metric] was primarily [channel-driven / systemic], influenced by [optional context: business push, promo strategy, seasonal shift].
 
-Highlight trends that differ between channels (e.g., “FWA declined, while Retail improved”).
+Data Source:
 
-Output Format (Repeat for each relevant Top 10 metric):
-
-[Metric Name] — Channel Attribution Summary
-
-• Primary channel contributor: [Retail / Indirect / Digital / FWA]
-• Movement vs Forecast: [Favorable/Unfavorable] by [X]
-• Channel disparities: [Example — Digital underperformed, while Retail drove gains]
-• Supporting channel-level insight: [Quote trend or delta]
-• Interpretation: [Summarize why the movement occurred, e.g., promo traction, digital lag]
-
-Do not restate Top 10 summaries. Instead, enhance the analysis with channel-level context using the references above.
+Lines by Channel Table – https://docs.google.com/document/d/1yvRtixQ0sCV2_XUK_tpYbq1P8O-BatEM5-cjNKd5zEA/edit
 
 
 
 **PROMPT 5**
 
 
-Title: Interdependency & Correlation Mapping
+Title: Interdependency & Correlation Mapping Across Top 10 Metrics
+You are a Verizon Data Analyst. Using the insights already developed in the Top 10 Takeaways, Root Cause Analysis, and Channel Attribution, your task now is to map interdependencies between the metrics and uncover correlations driven by cross-source references.
 
-Use the existing content already present in this document, which includes:
+🔍 Objective:
+Highlight metric-to-metric dependencies (e.g., Gross Adds ↔ Disconnects ↔ Net Adds).
 
-The Top 10 Takeaways Summary
-
-Detailed Root Cause Analyses (RCA) for each of the top metrics
-
-Now, perform a cross-metric and cross-reference correlation analysis using the context from the Lines Table and the following support documents:
-
-Lines Source Data: https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
-
-Data Dictionary: https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit
-
-Promotions Tracker: https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit
-
-Price Plans Data: https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
-
-Business Knowledge: https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
-
-News Headlines Table: https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit
-
-Channel-Level Tables (included in source data document)
-
-Instructions:
-
-Review the Top 10 metrics that were analyzed in the RCA section.
-
-Identify how those metrics influenced or were influenced by each other.
-
-Use supporting documents to find correlation signals, triggers, or event-based anomalies.
-
-Apply business logic to validate each relationship.
-
-Focus on highlighting cause-effect insights backed by evidence.
-
-What to Include:
-
-Interdependencies between metrics (e.g., Gross Adds drove Net Adds; Upgrades may have suppressed Disconnects).
-
-Correlation logic across the following reference categories:
+Identify cross-document correlations between metric movements and:
 
 Promotions
 
@@ -217,123 +258,169 @@ Price Plans
 
 News Events
 
-Business Knowledge
+Channel-Level Patterns
 
-Channel Performance
+Business Logic
 
-Output Format:
+🧠 What to Consider:
+Validate interdependencies using the actual data values from:
 
-Interdependency Mapping
+Lines Table
 
-[Metric A] is strongly linked to [Metric B] due to [reason], which aligns with patterns explained in [data dictionary or business logic reference].
+Lines by Channel
 
-[Metric X] and [Metric Y] showed simultaneous variance due to [channel impact or promo effect], confirming directional influence.
+Reference supporting documents to justify each correlation:
 
-Cross-Source Correlation Summary
+Promotions Tracker (Docs + Data)
+https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit
+https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
 
-Promotions
-
-[Metric] was impacted by [Promo Name], launched in [week], which aligned with performance spikes in [channel or metric].
-
-Price Plans
-
-[Metric] shift was associated with [Price Plan] movement, supported by share of mix increase in [Lines Table].
-
-News
-
-[Metric] trend may relate to the [Event/Headline] reported on [Date], suggesting reactive customer behavior.
+Price Plan Tracker (Docs + Data)
+https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit
+https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
 
 Business Knowledge
+https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
 
-[Metric] performance followed an expected seasonal pattern as documented in [Business Knowledge tab].
+News Events
+https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit
 
-Channel Tables
+📌 Instructions:
+Use business logic to link how a shift in one metric likely influenced another.
 
-[Metric] gain/loss was mostly driven by [Channel Name], with [X]% of the movement isolated to that channel in the source data.
+Support correlations with concrete observations from source material.
 
-Be specific, use actual variance figures where applicable, and group by document type. Only include the most defensible and material relationships.
+Create bullet points grouped by reference category.
+
+📝 Output Format:
+Interdependencies (Metric-to-Metric):
+
+📈 [Metric A] influenced [Metric B] due to [reason from table or RCA].
+e.g., "Gross Adds dropped by 85K, leading to lower Net Adds (down 79K) due to unchanged Disconnects."
+
+📈 [Metric C] inversely impacted [Metric D], visible in week X where [supporting data logic].
+
+Correlation Mapping (Grouped by Source):
+
+Promotions:
+
+Promo "[Title]" boosted [Metric] by [X], visible across [Channel]
+→ Source: [promo doc URL or spreadsheet link]
+
+Price Plans:
+
+Surge in [Plan] adoption (Premium Mix +5%) linked to spike in [Gross Adds]
+→ Source: [price plan data link]
+
+News Events:
+
+Coverage on [Event Name] aligns with week-over-week drop in [Metric]
+→ Source: [news tracker link]
+
+Channel Patterns:
+
+Retail drove spike in [Metric] during same week Indirect flatlined
+→ Validated via Lines by Channel Table
+
+Business Logic:
+
+Disconnect softness during upgrade surge is typical (per dictionary logic for “Upgrade Shielding Effect”)
+→ Source: Data Dictionary or Business Knowledge Tracker
 
 
 **PROMPT 6**
 
-Title: Executive Summary Assembly – Final Reporting Output
-You are a Verizon business analyst assembling the final executive-ready report using the already generated content within this document. This includes:
+You are a Verizon Reporting Analyst. Your task is to compile and format a final executive-ready report using the outputs generated in the previous steps. The commentary should walk the reader logically from surface-level changes to analytical root causes, then into metric-level attribution, interdependencies, and final correlations — all drawn from structured prompt stages and supporting reference materials.
+
+🎯 Goal:
+Deliver a well-organized, data-backed commentary that explains:
+
+What changed in the Lines data this week
+
+Why those changes occurred
+
+Which business drivers and reference documents contributed to those shifts
+
+How different metrics and sources are interlinked
+
+🔍 What to Use:
+You must consolidate the insights already written in this document from:
 
 Top 10 Takeaways Summary
 
-Root Cause Analysis (RCA) for each takeaway
+Root Cause Analysis (RCA)
 
-Channel Attribution findings
+Channel Attribution
 
-Interdependencies and Correlations
+Interdependency & Correlation Mapping
 
-Your goal is to stitch these insights together into a polished final output that reads as a cohesive, analytical report suitable for business leadership.
+These have been created using the following data and business resources:
 
-🧠 What to Use as Context:
-All previously written content in this document (no external sources required)
+Lines Table Data: https://docs.google.com/spreadsheets/d/1T4j07mZWPVpq_K3dbAP77W3mejfMBlMNSKe_f10gJcA/edit
 
-The output of:
+Lines by Channel: embedded within document or dataset
 
-Top 10 Takeaways
+Data Dictionary: https://docs.google.com/document/d/1h9HFsWp1xJm4s8Ibiui2LcJA2RpN3aLhN9wFCD4anmo/edit
 
-Root Cause Analysis
+Promotions Tracker:
 
-Channel Attribution Logic
+Doc: https://docs.google.com/document/d/1YVZLbA7zxfwyzW5eNIZl9Bc4UfwruOJZB2sCS1aJ670/edit
 
-Metric Interdependencies and Cross-Reference Correlations
+Data: https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
 
-📌 What to Do:
-Create Clean Sections: Organize the final report into the following labeled segments:
+Price Plan Tracker:
 
-Top 10 Takeaways
+Doc: https://docs.google.com/document/d/1fdtnMTwcKuiUK0nWjCOIpphIwLbKINRN7yMwhD6rNn4/edit
 
-Root Cause Deep Dive (Top 10 Metrics Only)
+Data: https://docs.google.com/spreadsheets/d/1uMUwBS7SyQiWMbpasQXDix5-sBFBXxNL2ar-4OZRQIc
 
-Channel Attribution Summary
+News Tracker: https://docs.google.com/spreadsheets/d/1X2kUhOYtaIdkCnptDPAYbu6AYdCwHYhsqsdEB3QEsXM/edit
 
-Interdependency Highlights
+Business Knowledge for Lines: https://docs.google.com/spreadsheets/d/1UHvpzD3DDegkqiY4reM6hPgH4mfrLR5Z/edit
 
-Correlation Insights
+📝 Output Structure:
+1. Executive Summary: Top 10 Takeaways
+Bulletized list
 
-Ensure Logical Flow:
+Contextual, quantified, prioritized
 
-Reorder content only if necessary to preserve clarity and eliminate redundancy.
+2. Root Cause Analysis (Top 10 Metrics)
+Individual deep dives
 
-Avoid restating content verbatim — instead, format and clean it up.
+Data-driven explanations with references
 
-Maintain tight narrative continuity between sections.
+Clear breakdown of sub-metrics or drivers
 
-Language Guidelines:
+3. Channel Attribution Summary
+Attribution by FWA, Retail, Digital, Indirect
 
-Keep tone professional, analytical, and executive-appropriate.
+Channel-specific impacts for each relevant metric
 
-Ensure consistent use of benchmark terminology (Forecast, CV, PY).
+4. Interdependency Mapping
+Metric-to-metric logical chains (e.g., Gross Adds → Disconnects → Net Adds)
 
-Use terminology like “favorable/unfavorable,” “gained/missed,” and “driven by…” for consistency.
+Derived from actual table relationships and business logic
 
-When math or attribution is stated, ensure numbers and references are retained clearly.
+5. Cross-Source Correlation Insights
+Grouped by:
 
-✅ Final Output Format:
-less
-Copy
-Edit
-Executive Summary – Lines Table Performance
+Promotions
 
-Section 1: Top 10 Takeaways  
-(Bulletized, concise, impactful movement highlights)
+Price Plans
 
-Section 2: Root Cause Deep Dive  
-(One paragraph per metric with RCA logic, references, and sub-driver callouts)
+News Events
 
-Section 3: Channel Attribution  
-(Breakdown of channel-driven variances – e.g., Retail vs. Indirect)
+Channel Patterns
 
-Section 4: Interdependency Highlights  
-(Bulletized causal links between metrics, e.g., Gross Adds ↔ Disconnects)
+Business Knowledge
 
-Section 5: Correlation Insights  
-(Grouped into: Promotions, Price Plans, Channel Tables, News, Business Logic)
+Show directional causality, not just coincidence
 
-Optional Closing Statement:  
-(1–2 lines summarizing overall health or risks based on all observations)
-Do not add any new insights. Do not summarize again. Focus only on formatting, organizing, and polishing the content already in this document into a final deliverable.
+✅ Final Notes:
+Do not add new assumptions.
+
+Focus on clarity, evidence-based analysis, and executive-level tone.
+
+Avoid restating summary lines without adding depth.
+
+Ensure that every insight is tied back to data, logic, or documentation.
