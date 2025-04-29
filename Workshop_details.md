@@ -69,8 +69,162 @@
 
 ---
 
-Would you like me to also prepare a **matching very simple Slide Deck** you can use for these two sessions? 🎯  
-(One slide per 15 min block, so you just follow the slides naturally!)  
-If yes, I can draft that too! 🚀  
+**Prompt Engineering for Enterprise Operations using Gemini & Gemini Advanced**
 
-Would you like me to prepare that? 📄✨
+---
+
+# 💡 Instructor-Led Training (ILT) Documentation
+
+**Program Title:** Prompt Engineering for Enterprise Daily Operations  
+**Instructor:** [Your Name] - Senior Prompt Engineer, Verizon  
+**Duration:** 2 Sessions (2 Hours each)
+
+---
+
+# 📚 Session Overview
+
+This 2-session workshop will introduce participants to:
+- Fundamentals of Prompt Engineering
+- Practical Prompting Techniques for Daily Work
+- Using Gemini across Workspace Apps (Gmail, Docs, Sheets)
+- Creating and Managing "Gems" for scaled solutions
+
+**Training Style:** Conversational, Collaborative, Hands-on Practice
+
+---
+
+# 🎓 Session 1: Foundations of Prompt Engineering (2 Hours)
+
+## 0:00 - 0:15 | Welcome and Icebreaker
+- Introduce yourself and the agenda.
+- Icebreaker Question: "Where would you like AI to assist you today?"
+- Emphasize: Open discussion is encouraged.
+
+## 0:15 - 0:30 | What is Prompt Engineering?
+- Definition: Prompting is the art of guiding AI output through clear instructions.
+- Why It Matters:
+  - Better Prompts = Better Business Outputs
+  - Saves Time and Rework
+  - Increases Process Efficiency
+- Example Discussion: "When did AI not understand you correctly?"
+
+## 0:30 - 0:45 | Types of Prompting Techniques
+- Zero-shot prompting: No examples, straight instruction.
+- Few-shot prompting: Provide examples to guide.
+- Chain-of-thought prompting: Force reasoning step-by-step.
+
+**Discussion:** Ask for real-world examples where each style might help.
+
+## 0:45 - 1:00 | Activity: Playing with Zero-Shot Prompting
+- Hands-on: In Gemini, ask to summarize a simple paragraph.
+- Discuss output: What worked? What didn't?
+
+## 1:00 - 1:15 | Anatomy of a Good Prompt
+- Components:
+  - Clear Task
+  - Context (Role, Domain, Audience)
+  - Formatting / Output Constraints
+- Show: Bad vs Good prompt example.
+
+## 1:15 - 1:30 | Activity: Build Better Prompts Together
+- Give a "bad" prompt.
+- Collaboratively improve it as a group.
+
+## 1:30 - 1:45 | Common Prompting Patterns for Enterprise
+- Instruction-only prompt
+- Role-based prompt
+- Step-by-Step reasoning prompt
+
+## 1:45 - 2:00 | Group Discussion: Real-World Enterprise Use Cases
+- Where in daily operations could prompting make life easier?
+- Capture ideas collaboratively.
+
+**End of Session 1 Takeaway:** Participants can define a prompt, understand types of prompting, and write basic effective prompts.
+
+---
+
+# 🎓 Session 2: Applying and Scaling Prompt Engineering (2 Hours)
+
+## 0:00 - 0:15 | Quick Recap + Warm-up Prompt
+- Ask: "One thing you remember from Session 1?"
+- Mini-exercise: Summarize your favorite TV show in 5 lines.
+
+## 0:15 - 0:30 | Gemini and Gemini Advanced Overview
+- Where Gemini is integrated:
+  - Gmail: Smart Compose, email drafting
+  - Docs: Summarization, content generation
+  - Sheets: Data analysis assistance
+- Introduction to Gems Manager:
+  - Personalizable reusable mini-tools (Gems)
+
+## 0:30 - 0:45 | Demo: Create Your First Gem
+- Walk through:
+  - Open Gems Manager
+  - Choose Template
+  - Customize Instructions
+  - Save Draft
+
+**Example:** Create "Meeting Minutes Summarizer"
+
+## 0:45 - 1:00 | Activity: Build Your Own Gem
+- Participants choose a daily task.
+- Build a simple custom Gem.
+
+## 1:00 - 1:15 | Advanced Prompting Techniques
+- Combining Few-shot and Constraints
+- Using Role + Chain-of-Thought together
+- Handling ambiguity in input data
+
+## 1:15 - 1:30 | Activity: Few-shot Prompting Practice
+- Provide 2 examples of a task.
+- Ask them to create a third prompt following the same structure.
+
+## 1:30 - 1:45 | Best Practices for Enterprise Prompting
+- Always give context.
+- Break down large asks.
+- Validate outputs.
+- Be careful with confidential or sensitive data.
+
+## 1:45 - 2:00 | Final Discussion + Q&A
+- Open Forum:
+  - Where are you planning to use Gemini?
+  - What challenges do you anticipate?
+- Provide Study Resources:
+  - Gemini Help Center
+  - Prompt Engineering Cheat Sheet
+
+**End of Session 2 Takeaway:** Participants can apply prompting in real scenarios, build reusable tools, and follow best practices for enterprise use.
+
+---
+
+# 🔹 Instructor Reminders
+- Keep the session conversational: Teach → Discuss → Practice (every 15 min).
+- Encourage mistakes: learning happens through experimentation.
+- Celebrate participation and sharing.
+- Focus on how Gemini can *practically* save time and improve operations.
+
+---
+
+# 🌐 Suggested Tools for Hands-on Practice
+- Google Gemini Chat (Docs, Gmail, Sheets)
+- Gemini Advanced (Gems Manager)
+
+---
+
+# 🏆 Success Criteria
+By the end of the sessions, participants should:
+- Understand prompt engineering basics.
+- Confidently write structured prompts.
+- Know how to build and deploy simple Gems.
+- Apply AI prompting to improve daily enterprise workflows.
+
+---
+
+# 🔗 References and Study Resources
+- Google Gemini Workspace Help Center
+- Stanford CS224N: Prompt Engineering Notes
+- Prompt Engineering Cheatsheet (OpenAI Guide)
+
+---
+
+**End of Documentation**
