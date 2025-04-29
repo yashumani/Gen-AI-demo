@@ -1,12 +1,4 @@
-Absolutely!  
-You want a **detailed curriculum** broken into **two 2-hour sessions** (total 4 hours) with **15-minute blocks**, including:
 
-- Concepts to teach  
-- Discussion points  
-- Activities or demos at each step  
-- Keeping it easy for a **first-time instructor** to run!
-
----
 
 # 📚 Detailed Curriculum — Prompt Engineering for Enterprise (Gemini Focus)  
 **Session 1:** Foundations + Basic Prompting  
