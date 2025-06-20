@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <?!= include('Stylesheet'); ?>
+</head>
+<body>
+
+    <div id="app-container">
+        
+        <div id="welcome-screen" class="screen active">
+            <div class="welcome-content">
+                <h1 class="ml12">Gemini Analytics Engine</h1>
+                <p class="ml14">A smart workspace to understand and chat with your data. Start by building your knowledge base or running an automated report.</p>
+                <div class="button-group">
+                  <button id="build-dict-button" class="action-button">Scan Data & Build Dictionary</button>
+                  <button id="analysis-button" class="action-button">Generate Automated Report</button>
+                  <a href="<?= ScriptApp.getService().getUrl(); ?>?page=project" class="action-button primary">Start New Analysis Project</a>
+                </div>
+                <div id="status-message" class="status-message"></div>
+            </div>
+        </div>
+
+        <div id="chat-screen" class="screen">
+            <header class="app-header">
+                <h2>Analytics Conversation</h2>
+                <a href="<?= ScriptApp.getService().getUrl(); ?>" class="action-button">End Session</a>
+            </header>
+            <div id="chat-window">
+                </div>
+            <div id="suggestion-banner"></div>
+            <div id="input-area">
+                <textarea id="user-input" placeholder="Ask a follow-up question..." rows="1"></textarea>
+                <button id="send-button" class="send-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                        <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="loading-overlay">
+            <div class="loader-content">
+                <div class="spinner"></div>
+                <p id="loading-text">Processing...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // ===============================================================
+    // |         Intelligent Analytics Template - Frontend JS          |
+    // ===============================================================
+
+    let conversationHistory = "";
+    let lastUserQuery = "";
+    let dictionaryProposal = []; // To hold proposed dictionary updates
+
+    // --- DOM ELEMENT REFERENCES ---
+    const welcomeScreen = document.getElementById('welcome-screen');
+    const chatScreen = document.getElementById('chat-screen');
+    const buildDictButton = document.getElementById('build-dict-button');
+    const analysisButton = document.getElementById('analysis-button');
+    const statusMessage = document.getElementById('status-message');
+    const sendButton = document.getElementById('send-button');
+    const userInput = document.getElementById('user-input');
+    const chatWindow = document.getElementById('chat-window');
+    const suggestionBanner = document.getElementById('suggestion-banner');
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const loadingText = document.getElementById('loading-text');
+
+    // --- INITIALIZE GOOGLE CHARTS ---
+    google.charts.load('current', {'packages':['corechart', 'table']});
+
+    // --- EVENT LISTENERS ---
+    document.addEventListener('DOMContentLoaded', runWelcomeAnimation);
+    buildDictButton.addEventListener('click', handleBuildDictionary);
+    analysisButton.addEventListener('click', handleAutomatedAnalysis);
+    sendButton.addEventListener('click', handleSendMessage);
+    userInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSendMessage(); }
+    });
+
+    // --- HANDLER FUNCTIONS ---
+    function handleBuildDictionary() {
+        showLoading('Scanning sheets & analyzing data...');
+        google.script.run
+            .withSuccessHandler(onProposalSuccess)
+            .withFailureHandler(onFailure)
+            .generateDictionaryProposal();
+    }
+
+    function handleAutomatedAnalysis() {
+        showLoading('Performing Automated Analysis...');
+        google.script.run
+            .withSuccessHandler(onInsightSuccess)
+            .withFailureHandler(onFailure)
+            .generateAutomatedAnalysis();
+    }
+    
+    function handleSendMessage() {
+        const query = userInput.value.trim();
+        if (!query) return;
+
+        lastUserQuery = query;
+        addMessageToChat('user', query);
+        clearSuggestions();
+        
+        const queryForHistory = userInput.value;
+        userInput.value = '';
+        userInput.style.height = 'auto';
+        showLoading('Thinking...');
+
+        google.script.run
+            .withSuccessHandler(onInsightSuccess)
+            .withFailureHandler(onFailure)
+            .getGeminiInsight(query, conversationHistory);
+        
+        conversationHistory += `\nUSER: ${queryForHistory}`;
+    }
+
+    function handleSuggestionClick(suggestionText) {
+      userInput.value = suggestionText;
+      handleSendMessage();
+    }
+    
+    function handleApproveDictionary() {
+        showLoading('Saving new Data Dictionary...');
+        google.script.run
+            .withSuccessHandler(onUpdateSuccess)
+            .withFailureHandler(onFailure)
+            .updateDataDictionary(dictionaryProposal);
+    }
+
+    // --- SUCCESS & FAILURE HANDLERS for google.script.run ---
+    function onProposalSuccess(response) {
+        hideLoading();
+        if(response.status === 'success') {
+            dictionaryProposal = response.proposal;
+            if (!dictionaryProposal || dictionaryProposal.length === 0) {
+                onFailure({ message: "No new columns were found to analyze." });
+                return;
+            }
+            moveToChatScreen(); // This will now be called the first time
+            
+            // This part is mostly the same, just displays the proposal
+            let tableHtml = `
+                <p>I've analyzed the sheet: <strong>${dictionaryProposal[0].sheetName}</strong>. Here is my proposed Data Dictionary for its columns. Review and click 'Approve' to save.</p>
+                <div class="table-container">
+                  <table>
+                      <thead>
+                          <tr><th>Column Header</th><th>Proposed Data Type</th><th>Proposed Description</th></tr>
+                      </thead>
+                      <tbody>
+            `;
+            dictionaryProposal.forEach(col => {
+                tableHtml += `<tr><td>${col.columnHeader}</td><td>${col.dataType}</td><td>${col.description}</td></tr>`;
+            });
+            tableHtml += '</tbody></table></div>';
+            addMessageToChat('gemini', tableHtml);
+
+            const approveButton = document.createElement('button');
+            approveButton.id = 'approve-dict-button';
+            approveButton.classList.add('action-button', 'primary');
+            approveButton.textContent = `Approve & Add to Dictionary`;
+            approveButton.onclick = handleApproveDictionary;
+            addHtmlElementToChat(approveButton);
+
+        } else if (response.status === 'complete') {
+            // This is the new case for when all sheets are done
+            moveToChatScreen(response.message);
+        } else {
+            onFailure({ message: response.message });
+        }
+    }
+
+/**
+     * This function intelligently handles multiple different response types from Gemini.
+     */
+    function onInsightSuccess(response) {
+        hideLoading();
+        if (response.status === 'success') {
+            moveToChatScreen(); // Make sure we are on the chat screen
+            let insightObject;
+
+            // First, try to parse the response as JSON
+            if (typeof response.insight === 'string') {
+                try {
+                    insightObject = JSON.parse(response.insight);
+                } catch (e) {
+                    // If parsing fails, it's a regular markdown string
+                    insightObject = null;
+                }
+            } else {
+                // It's already an object (from the dictionary proposal workflow)
+                insightObject = response.insight;
+            }
+
+            // ---- THIS IS THE CRITICAL LOGIC BLOCK ----
+            // Check for the specific structure of an automated report
+            if (insightObject && insightObject.analysis_summary && insightObject.chart) {
+                
+                // 1. Render the Markdown summary from the 'analysis_summary' key
+                addMessageToChat('gemini', insightObject.analysis_summary);
+
+                // 2. Render the chart from the 'chart' object
+                const chartContainerId = 'chart-' + Date.now();
+                const chartContainer = document.createElement('div');
+                chartContainer.id = chartContainerId;
+                chartContainer.classList.add('chart-container');
+                // Add the chart container to a NEW, separate chat bubble for clean formatting
+                addHtmlElementToChat(chartContainer); 
+                
+                setTimeout(() => renderChart(chartContainerId, JSON.stringify(insightObject.chart)), 100);
+
+            } else {
+                // This is the fallback for all other simple Markdown/text responses
+                const message = response.insight;
+                addMessageToChat('gemini', message);
+                conversationHistory += `\nGEMINI: ${message}`;
+                const query = lastUserQuery || "the last response";
+                google.script.run.withSuccessHandler(onSuggestionsSuccess).getSuggestedActions(query, message);
+            }
+            
+        } else {
+            onFailure({ message: response.message });
+        }
+    }
+    /**
+     * NEW: This function builds the HTML for the rich suggestion cards.
+     */
+    function displaySuggestionCards(suggestions) {
+        const cardContainer = document.createElement('div');
+        cardContainer.classList.add('suggestion-card-container');
+
+        suggestions.forEach(cardData => {
+            const card = document.createElement('div');
+            card.classList.add('suggestion-card');
+            
+            card.innerHTML = `
+                <h3>${cardData.title}</h3>
+                <p>${cardData.description}</p>
+                <div class="card-question" onclick="handleSuggestionClick('${cardData.question.replace(/'/g, "\\'")}')">
+                    <span class="play-icon">&#9654;</span>
+                    <span>${cardData.question}</span>
+                </div>
+            `;
+            
+            cardContainer.appendChild(card);
+        });
+
+        chatWindow.appendChild(cardContainer);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        anime({
+            targets: '.suggestion-card',
+            opacity: [0, 1],
+            translateY: [20, 0],
+            delay: anime.stagger(100, {start: 200})
+        });
+    }
+    function onUpdateSuccess(response) {
+        hideLoading();
+        if(response.status === 'success') {
+            document.getElementById('approve-dict-button').closest('.chat-message-wrapper').remove();
+            
+            // NEW: Automatically check for the next sheet to analyze
+            addMessageToChat('system', 'Knowledge Base Updated! Checking for more sheets to analyze...');
+            handleBuildDictionary(); // This creates the loop!
+        } else {
+            onFailure({ message: response.message });
+        }
+    }
+
+    function onSuggestionsSuccess(suggestions) {
+      if (suggestions && suggestions.length > 0) {
+        displaySuggestions(suggestions);
+      }
+    }
+
+    function onFailure(error) {
+        hideLoading();
+        statusMessage.textContent = `Error: ${error.message}`;
+        statusMessage.style.color = '#fca5a5';
+        addMessageToChat('system', `Error: ${error.message}`);
+    }
+
+    // --- UI & ANIMATION FUNCTIONS ---
+    function moveToChatScreen(initialMessage) {
+        if (chatScreen.classList.contains('active')) {
+            if (initialMessage) { addMessageToChat('gemini', initialMessage); }
+            return;
+        };
+
+        anime({
+            targets: '#welcome-screen', opacity: 0, duration: 800, easing: 'easeInOutQuad',
+            complete: () => {
+                welcomeScreen.classList.remove('active');
+                chatScreen.classList.add('active');
+                anime({ targets: '#chat-screen', opacity: [0, 1], translateY: [20, 0], duration: 800, easing: 'easeOutExpo' });
+                if (initialMessage) {
+                    addMessageToChat('gemini', initialMessage);
+                } else {
+                    addMessageToChat('system', 'I am ready for your questions. Your data dictionary is loaded.');
+                }
+            }
+        });
+    }
+
+    function displaySuggestions(suggestions) {
+      clearSuggestions();
+      suggestions.forEach(text => {
+        const button = document.createElement('button');
+        button.classList.add('suggestion-button');
+        button.textContent = text;
+        button.onclick = () => handleSuggestionClick(text);
+        suggestionBanner.appendChild(button);
+      });
+      anime({ targets: '.suggestion-button', opacity: [0, 1], translateY: [10, 0], delay: anime.stagger(100) });
+    }
+
+    function clearSuggestions() {
+      suggestionBanner.innerHTML = '';
+    }
+    
+    function addMessageToChat(sender, message) {
+        const messageWrapper = document.createElement('div');
+        messageWrapper.classList.add('chat-message-wrapper', `${sender}-wrapper`);
+        const messageBubble = document.createElement('div');
+        messageBubble.classList.add('chat-message', sender);
+
+        if (sender === 'gemini') {
+            const chartRegex = /```google_chart\n([\s\S]+?)\n```/;
+            const chartMatch = message.match(chartRegex);
+            const mainContent = message.replace(chartRegex, '').trim();
+            messageBubble.innerHTML = marked.parse(mainContent);
+
+            if (chartMatch) {
+                const chartConfigJson = chartMatch[1];
+                const chartContainer = document.createElement('div');
+                chartContainer.classList.add('chart-container');
+                const chartId = 'chart-' + Date.now();
+                chartContainer.id = chartId;
+                messageBubble.appendChild(chartContainer);
+                setTimeout(() => renderChart(chartId, chartConfigJson), 100);
+            }
+        } else {
+            messageBubble.textContent = message;
+        }
+        
+        messageWrapper.appendChild(messageBubble);
+        chatWindow.appendChild(messageWrapper);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        anime({ targets: messageWrapper, opacity: [0, 1], translateY: [20, 0], duration: 600, easing: 'easeOutExpo' });
+    }
+
+    function addHtmlElementToChat(element) {
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('chat-message-wrapper', 'system-wrapper');
+        wrapper.style.maxWidth = '100%';
+        wrapper.appendChild(element);
+        chatWindow.appendChild(wrapper);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+    
+    function renderChart(elementId, configJson) {
+        try {
+            const config = JSON.parse(configJson);
+            const data = google.visualization.arrayToDataTable(config.data);
+            const options = {
+                backgroundColor: 'transparent',
+                legend: {textStyle: {color: '#d1d5db'}},
+                titleTextStyle: {color: '#f9fafb'},
+                hAxis: {textStyle: {color: '#d1d5db'}, titleTextStyle: {color: '#d1d5db'}},
+                vAxis: {textStyle: {color: '#d1d5db'}, titleTextStyle: {color: '#d1d5db'}},
+                ...config.options
+            };
+            
+            let chart;
+            switch(config.type) {
+                case 'BarChart': chart = new google.visualization.BarChart(document.getElementById(elementId)); break;
+                case 'LineChart': chart = new google.visualization.LineChart(document.getElementById(elementId)); break;
+                case 'PieChart': chart = new google.visualization.PieChart(document.getElementById(elementId)); break;
+                case 'ColumnChart': default: chart = new google.visualization.ColumnChart(document.getElementById(elementId)); break;
+            }
+            chart.draw(data, options);
+        } catch (e) {
+            console.error("Failed to render chart:", e);
+            // NEW: Display the broken data for debugging
+            const errorContainer = document.getElementById(elementId);
+            errorContainer.innerHTML = `
+                <div class="render-error">
+                    <p><strong>Chart Rendering Failed</strong></p>
+                    <p>The model returned a chart configuration that could not be drawn. This is usually due to a formatting error in the data.</p>
+                    <pre>${configJson}</pre>
+                </div>
+            `;
+        }
+    }
+    
+    function showLoading(text) {
+        loadingText.textContent = text;
+        loadingOverlay.style.display = 'flex';
+        anime({ targets: loadingOverlay, opacity: [0, 1], duration: 300, easing: 'easeInOutQuad' });
+    }
+    
+    function hideLoading() {
+        anime({ targets: loadingOverlay, opacity: [1, 0], duration: 300, easing: 'easeInOutQuad', complete: () => { loadingOverlay.style.display = 'none'; } });
+    }
+    
+    function runWelcomeAnimation() {
+      const textWrapper = document.querySelector('.ml12');
+      textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+      anime.timeline({loop: false}).add({ targets: '.ml12 .letter', translateX: [40,0], translateZ: 0, opacity: [0,1], easing: "easeOutExpo", duration: 1200, delay: (el, i) => 500 + 30 * i });
+      anime({ targets: ['.ml14', '.button-group', '.project-link-container'], opacity: [0, 1], translateY: [20, 0], easing: 'easeOutExpo', duration: 1400, delay: 1500 });
+    }
+
+    userInput.addEventListener('input', () => {
+        userInput.style.height = 'auto';
+        userInput.style.height = (userInput.scrollHeight) + 'px';
+    });
+
+    </script>
+</body>
+</html>
