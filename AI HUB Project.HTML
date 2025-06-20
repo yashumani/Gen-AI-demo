@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <?!= include('Stylesheet'); ?>
+</head>
+<body>
+
+    <div id="app-container">
+        
+        <div id="goal-screen" class="screen active">
+            <div class="welcome-content">
+                <h1 class="ml12">New Analysis Project</h1>
+                <p class="ml14">Define the high-level objective for this analysis. The AI will work step-by-step to achieve this goal, remembering the context of each step.</p>
+                <textarea id="project-goal-input" placeholder="Example: Perform a full Exploratory Data Analysis on all datasets, identify the top 3 anomalies, and then create a data dictionary based on your findings." rows="4"></textarea>
+                <button id="start-project-button" class="action-button primary">Start Project</button>
+            </div>
+        </div>
+
+        <div id="chat-screen" class="screen">
+            <header class="app-header">
+                <div id="project-title-display">
+                    <h2>Analysis Project</h2>
+                    <p id="project-goal-display">Loading goal...</p>
+                </div>
+                <a href="<?= ScriptApp.getService().getUrl(); ?>" class="action-button">End Project</a>
+            </header>
+            <div id="chat-window">
+                </div>
+            <div id="input-area">
+                <textarea id="user-input" placeholder="Provide your next instruction or type 'continue'..." rows="1"></textarea>
+                <button id="send-button" class="send-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                        <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="loading-overlay">
+            <div class="loader-content">
+                <div class="spinner"></div>
+                <p id="loading-text">Processing...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // ===============================================================
+    // |         Conversational Analysis - Frontend JS             |
+    // ===============================================================
+
+    let projectHistory = "";
+    let projectGoal = "";
+
+    // --- DOM ELEMENT REFERENCES ---
+    const goalScreen = document.getElementById('goal-screen');
+    const chatScreen = document.getElementById('chat-screen');
+    const projectGoalInput = document.getElementById('project-goal-input');
+    const startProjectButton = document.getElementById('start-project-button');
+    const projectGoalDisplay = document.getElementById('project-goal-display');
+    const sendButton = document.getElementById('send-button');
+    const userInput = document.getElementById('user-input');
+    const chatWindow = document.getElementById('chat-window');
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const loadingText = document.getElementById('loading-text');
+
+    // --- INITIALIZE LIBRARIES ---
+    google.charts.load('current', {'packages':['corechart', 'table']});
+    
+    // --- EVENT LISTENERS ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // Animation for the goal screen
+        const textWrapper = document.querySelector('.ml12');
+        textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+        anime.timeline({loop: false}).add({ targets: '.ml12 .letter', translateX: [40,0], translateZ: 0, opacity: [0,1], easing: "easeOutExpo", duration: 1200, delay: (el, i) => 500 + 30 * i });
+        anime({ targets: ['.ml14', '#project-goal-input', '#start-project-button'], opacity: [0, 1], translateY: [20, 0], easing: 'easeOutExpo', duration: 1400, delay: 1500 });
+    });
+
+    startProjectButton.addEventListener('click', handleStartProject);
+    sendButton.addEventListener('click', handleSendMessage);
+    userInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSendMessage(); }
+    });
+
+    // --- HANDLER FUNCTIONS ---
+    function handleStartProject() {
+        projectGoal = projectGoalInput.value.trim();
+        if (!projectGoal) {
+            alert("Please define a project goal.");
+            return;
+        }
+        
+        projectGoalDisplay.textContent = `Goal: ${projectGoal}`;
+        moveToChatScreen();
+        
+        // Add user goal to chat history and send the first command
+        const firstMessage = `**New Project Started**\n\n**Goal:** ${projectGoal}\n\nBeginning first step...`;
+        addMessageToChat('system', firstMessage);
+        projectHistory += `USER: Start project. Goal: ${projectGoal}`;
+        
+        showLoading('Performing first analysis step...');
+        google.script.run
+            .withSuccessHandler(onStepSuccess)
+            .withFailureHandler(onFailure)
+            .executeAnalysisStep(projectGoal, projectHistory);
+    }
+
+    function handleSendMessage() {
+        const userInstruction = userInput.value.trim();
+        if (!userInstruction) return;
+
+        addMessageToChat('user', userInstruction);
+        projectHistory += `\n\nUSER: ${userInstruction}`; // Add extra newline for spacing in the prompt
+        userInput.value = '';
+        userInput.style.height = 'auto';
+        
+        showLoading('Executing next step...');
+        google.script.run
+            .withSuccessHandler(onStepSuccess)
+            .withFailureHandler(onFailure)
+            .executeAnalysisStep(projectGoal, projectHistory);
+    }
+
+    // --- SUCCESS & FAILURE HANDLERS ---
+    function onStepSuccess(response) {
+        hideLoading();
+        if (response.status === 'success') {
+            addMessageToChat('gemini', response.insight);
+            projectHistory += `\n\nAI:\n${response.insight}`; // Add the AI's full response to the history
+        } else {
+            onFailure({ message: response.message });
+        }
+    }
+
+    function onFailure(error) {
+        hideLoading();
+        addMessageToChat('system', `Error: ${error.message}`);
+    }
+
+    // --- UI & ANIMATION FUNCTIONS ---
+    function moveToChatScreen() {
+        anime({
+            targets: '#goal-screen', opacity: 0, duration: 800, easing: 'easeInOutQuad',
+            complete: () => {
+                goalScreen.classList.remove('active');
+                chatScreen.classList.add('active');
+                anime({ targets: '#chat-screen', opacity: [0, 1], translateY: [20, 0], duration: 800, easing: 'easeOutExpo' });
+            }
+        });
+    }
+
+    function addMessageToChat(sender, message) {
+        const messageWrapper = document.createElement('div');
+        messageWrapper.classList.add('chat-message-wrapper', `${sender}-wrapper`);
+        const messageBubble = document.createElement('div');
+        messageBubble.classList.add('chat-message', sender);
+
+        if (sender === 'gemini' || sender === 'system') {
+            const chartRegex = /```google_chart\n([\s\S]+?)\n```/;
+            const chartMatch = message.match(chartRegex);
+            const mainContent = message.replace(chartRegex, '').trim();
+            messageBubble.innerHTML = marked.parse(mainContent);
+
+            if (chartMatch) {
+                const chartConfigJson = chartMatch[1];
+                const chartContainer = document.createElement('div');
+                chartContainer.classList.add('chart-container');
+                const chartId = 'chart-' + Date.now();
+                chartContainer.id = chartId;
+                messageBubble.appendChild(chartContainer);
+                setTimeout(() => renderChart(chartId, chartConfigJson), 100);
+            }
+        } else {
+            messageBubble.textContent = message;
+        }
+        
+        messageWrapper.appendChild(messageBubble);
+        chatWindow.appendChild(messageWrapper);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        anime({ targets: messageWrapper, opacity: [0, 1], translateY: [20, 0], duration: 600, easing: 'easeOutExpo' });
+    }
+    
+    function renderChart(elementId, configJson) {
+        try {
+            const config = JSON.parse(configJson);
+            const options = {
+                backgroundColor: 'transparent',
+                legend: {textStyle: {color: '#d1d5db'}},
+                titleTextStyle: {color: '#f9fafb'},
+                hAxis: {textStyle: {color: '#d1d5db'}, titleTextStyle: {color: '#d1d5db'}},
+                vAxis: {textStyle: {color: '#d1d5db'}, titleTextStyle: {color: '#d1d5db'}},
+                ...config.options
+            };
+            const data = google.visualization.arrayToDataTable(config.data);
+            
+            let chart;
+            switch(config.type) {
+                case 'BarChart': chart = new google.visualization.BarChart(document.getElementById(elementId)); break;
+                case 'LineChart': chart = new google.visualization.LineChart(document.getElementById(elementId)); break;
+                case 'PieChart': chart = new google.visualization.PieChart(document.getElementById(elementId)); break;
+                case 'ColumnChart': default: chart = new google.visualization.ColumnChart(document.getElementById(elementId)); break;
+            }
+            chart.draw(data, options);
+        } catch (e) {
+            console.error("Failed to render chart:", e);
+            document.getElementById(elementId).innerText = "Error rendering chart.";
+        }
+    }
+    
+    function showLoading(text) {
+        loadingText.textContent = text;
+        loadingOverlay.style.display = 'flex';
+        anime({ targets: loadingOverlay, opacity: [0, 1], duration: 300, easing: 'easeInOutQuad' });
+    }
+    
+    function hideLoading() {
+        anime({ targets: loadingOverlay, opacity: [1, 0], duration: 300, easing: 'easeInOutQuad', complete: () => { loadingOverlay.style.display = 'none'; } });
+    }
+
+    userInput.addEventListener('input', () => {
+        userInput.style.height = 'auto';
+        userInput.style.height = (userInput.scrollHeight) + 'px';
+    });
+    </script>
+</body>
+</html>
