@@ -1,10 +1,57 @@
-Question on this Data Provacy, if we train the model and use it for any Program Aided tool, how is it different than use other documents as a reference in the context.
+Goal — Automate and Optimize High-Impact Reporting by Year-End
+Description (manager) – Black Friday 2024, Contra GA NUNP, CFO KPI WD1 & WD2, etc. 
 
-For example:
+Employee Comment
+Automation for Black Friday 2024 and Contra GA NUNP reports is now live, cutting manual prep time by ~30 %. A new pipeline converts unstructured inputs into Frank’s Weekly Report, delivering consistent insights for leadership each Monday. Data-validation logic was added to CFO KPI WD1, catching anomalies before distribution. These wins reduce rework, improve timeliness, and free capacity for H2 GenAI pilots.
 
-A Model trained on historical data and used for running prompts vs a model running prompts  using the reference of historical data.
+Goal — Build Our Brand – Brand & Partnership Feed a Culture of Problem Solvers
+Description 
 
-How are they different?
+Employee Comment
+Offshore analysts were ramped through documented DTP playbooks and weekly Q&A calls, enabling them to close requests 15 % faster. Presented a Prompt-Engineering use case at the FPAS “AI Café” and hosted two knowledge-sharing sessions on GenAI starter kits, broadening technical fluency across FPAS, BU FP&A, and CSG. These efforts strengthened our data brand and fostered a learning culture.
+
+Goal — Finance Transformation
+Description 
+
+Employee Comment
+Collaborated with FPAS Transformation leads to prototype GenAI text-summaries for month-end decks, trimming slide prep by an estimated 4 hours per cycle. Intake triage for ad-hoc asks was streamlined, enabling SLA compliance on 96 % of requests YTD. Continuous automation—most recently the Daily Monetization Report—is easing manual workload and positioning the team for 2025 zero-touch objectives.
+
+Goal — Innovator via Advanced Analytics
+Description 
+
+Employee Comment
+Explored LLM-driven anomaly detection using EPM planning data; proof-of-concept flagged forecast deltas with 25 % greater sensitivity than current rules. Shared findings and reusable prompt templates with AI&D, accelerating cross-team experimentation. Next steps: embed the model into Daily Executive reporting once EPM feeds stabilize, and quantify time saved per exception triaged.
+
+Goal — Insights to Action
+Description 
+
+Employee Comment
+Zero-touch scripts now refresh Frank’s Weekly and other monthly packs without analyst intervention, saving ~10 hours/month. Partnered with BU FP&A to layer quick “insight blurbs” (via prompt engineering) atop KPI tables, giving decision-makers narrative context within the same distribution. Focus for H2: migrate remaining manual DTPs to automated workflows and expand KPI-Store sourcing.
+
+Goal — One Verizon Data
+Description 
+
+Employee Comment
+Enhanced CFO KPI WD1 reliability by aligning metrics to OneVZData canonical definitions and adding automated cross-checks to flag out-of-sync totals. Participated in the Run-&-Operate workstream to scope GCP pipeline migrations slated for Q4. Communication touchpoints with Finance partners moved to a bi-weekly cadence, keeping stakeholders updated on dataset readiness.
+
+Goal — Service Delivery Partner for Finance
+Description 
+
+Employee Comment
+Maintained 99 % on-time delivery across daily/weekly/monthly reports. Informal feedback from FPAS reporting leads highlights quicker turnaround on ad-hoc analyses due to reusable GenAI prompts. For H2, priority is to integrate BV data into the Executive Flash suite and pilot GenAI-based narrative generation to elevate insight delivery.
+
+Recognition (Jan–Jun 2025)
+Although no formal awards were recorded this half, positive stakeholder feedback on the AI Café presentation and SLA improvements confirms the value delivered. Goal is to translate upcoming GCP migration and GenAI use-case wins into measurable business impact and renewed recognition in the next review cycle.
+
+Focus for July–December 2025
+
+Complete GCP migration for KPI-Store datasets and decommission legacy pipelines.
+
+Operationalize two GenAI use cases (narrative generation & anomaly triage) in production reports.
+
+Finish zero-touch automation for remaining DTPs, targeting an additional 20 % effort reduction.
+
+Feel free to tweak wording or add exact percentages/dates where you have final numbers.
 
 
-AIzaSyBpWkXoWKe48Krv_ViYSsU4aDmgZUOXkVo
+Sources
