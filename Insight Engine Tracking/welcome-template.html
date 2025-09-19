@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Document Access Portal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,12 +8,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <style>
         /* --- Base Styles --- */
-        * { box-sizing: border-box; }
-        body { 
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: "Verizon NHG TX", Arial, Helvetica, sans-serif;
-            line-height: 1.5; 
-            margin: 0; 
-            background-color: #F6F6F6; 
+            line-height: 1.5;
+            margin: 0;
+            background-color: #F6F6F6;
             color: #333333;
             display: flex;
             align-items: center;
@@ -22,22 +26,24 @@
         }
 
         /* --- Main Layout Container --- */
-        .document-container { 
-            background-color: #FFFFFF; 
-            padding: 20px; 
+        .document-container {
+            background-color: #FFFFFF;
+            padding: 20px;
             max-width: 1400px;
             width: 100%;
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             display: grid;
             grid-template-columns: 320px 1fr 300px;
             gap: 25px;
             height: calc(100vh - 40px);
             max-height: 800px;
         }
-        
+
         /* --- Column Styles --- */
-        .sidebar, .whats-inside, .main-content {
+        .sidebar,
+        .whats-inside,
+        .main-content {
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -47,13 +53,14 @@
             padding: 0 15px;
         }
 
-        .sidebar, .whats-inside {
+        .sidebar,
+        .whats-inside {
             background: #f8f9fa;
             border: 1px solid #dee2e6;
             border-radius: 8px;
             padding: 20px;
         }
-        
+
         .column-header {
             display: flex;
             align-items: center;
@@ -63,44 +70,96 @@
             border-bottom: 3px solid #EE0000;
             flex-shrink: 0;
         }
-        
+
         .column-header h4 {
             margin: 0;
             font-size: 14px;
             font-weight: bold;
             color: #000000;
         }
-        
+
         .scrollable-content {
             overflow-y: auto;
             height: 100%;
-            padding-right: 10px; /* For scrollbar spacing */
+            padding-right: 10px;
+            /* For scrollbar spacing */
         }
-        
+
         /* --- Header in Main Column --- */
-        .header { 
-            background-color: #000000; 
-            color: #FFFFFF; 
+        .header {
+            background-color: #000000;
+            color: #FFFFFF;
             padding: 25px 30px;
-            text-align: center; 
+            text-align: center;
             border-radius: 8px;
             margin-bottom: 20px;
         }
-        
-        .header h1 { margin: 0; font-size: 22px; font-weight: bold; }
-        .header p { margin: 5px 0 0; opacity: 0.9; }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: bold;
+            animation: titlePulse 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titlePulse {
+            0% {
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            }
+            100% {
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(238, 0, 0, 0.3);
+            }
+        }
+
+        .header p {
+            margin: 5px 0 0;
+            opacity: 0.9;
+        }
 
         /* --- "What's Inside" Specifics --- */
-        .info-section { margin: 20px 0; }
-        .info-section h5 { margin: 0 0 8px 0; font-size: 13px; font-weight: bold; color: #000000; }
-        .info-section p, .info-section li { font-size: 12px; color: #333333; }
-        .info-section strong { color: #EE0000; }
-        .toc-list { padding-left: 20px; margin: 10px 0 0 0; }
-        
+        .info-section {
+            margin: 20px 0;
+        }
+
+        .info-section h5 {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .info-section p,
+        .info-section li {
+            font-size: 12px;
+            color: #333333;
+        }
+
+        .info-section strong {
+            color: #EE0000;
+        }
+
+        .toc-list {
+            padding-left: 20px;
+            margin: 10px 0 0 0;
+        }
+
         /* --- Main Content Specifics --- */
-        .file-info-section { text-align: center; margin-bottom: 20px; }
-        .file-info-section h2 { font-size: 20px; margin: 0 0 5px 0; word-wrap: break-word; }
-        .file-info-section p { font-size: 14px; color: #555; margin: 0; }
+        .file-info-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .file-info-section h2 {
+            font-size: 20px;
+            margin: 0 0 5px 0;
+            word-wrap: break-word;
+        }
+
+        .file-info-section p {
+            font-size: 14px;
+            color: #555;
+            margin: 0;
+        }
 
         .insight-engine-overview {
             background: #eef2ff;
@@ -110,57 +169,109 @@
             padding: 20px;
             margin-bottom: 20px;
         }
-        .insight-engine-overview h4 { margin: 0 0 10px 0; font-size: 16px; color: #3730a3; }
-        .insight-engine-overview p { font-size: 13px; line-height: 1.6; }
-        
-        .action-buttons-section { display: flex; flex-direction: column; gap: 15px; }
-        .access-btn, .prompt-generator-btn {
-            padding: 15px 30px; 
-            border-radius: 8px; 
+
+        .insight-engine-overview h4 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            color: #3730a3;
+        }
+
+        .insight-engine-overview p {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .action-buttons-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .access-btn,
+        .prompt-generator-btn {
+            padding: 15px 30px;
+            border-radius: 8px;
             font-weight: bold;
-            font-size: 16px; 
-            text-decoration: none; 
+            font-size: 16px;
+            text-decoration: none;
             transition: all 0.3s ease;
             cursor: pointer;
             border: none;
             text-align: center;
         }
-        .access-btn { 
-            background-color: #CD040B; 
+
+        .access-btn {
+            background-color: #CD040B;
             color: #FFFFFF;
         }
-        .access-btn:hover { 
+
+        .access-btn:hover {
             background-color: #a70409;
             transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
+
         .prompt-generator-btn {
             background-color: #333333;
             color: #FFFFFF;
         }
+
         .prompt-generator-btn:hover {
             background-color: #000000;
             transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
-        
+
         /* --- News Sidebar Specifics --- */
-        .news-item { margin-bottom: 20px; }
-        .news-item strong { display: block; font-size: 13px; color: #000; }
-        .news-item em { font-size: 11px; color: #555; }
-        
-        /* --- Animations & Responsiveness --- */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .document-container { animation: fadeIn 0.8s ease-out; }
-        
-        @media (max-width: 1200px) {
-            .document-container { grid-template-columns: 1fr 1.5fr; }
-            .sidebar { display: none; } /* Hide right sidebar on medium screens */
+        .news-item {
+            margin-bottom: 20px;
         }
-        
+
+        .news-item strong {
+            display: block;
+            font-size: 13px;
+            color: #000;
+        }
+
+        .news-item em {
+            font-size: 11px;
+            color: #555;
+        }
+
+        /* --- Animations & Responsiveness --- */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .document-container {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @media (max-width: 1200px) {
+            .document-container {
+                grid-template-columns: 1fr 1.5fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            /* Hide right sidebar on medium screens */
+        }
+
         @media (max-width: 768px) {
-            body { padding: 0; align-items: flex-start; }
-            .document-container { 
+            body {
+                padding: 0;
+                align-items: flex-start;
+            }
+
+            .document-container {
                 grid-template-columns: 1fr;
                 height: 100vh;
                 max-height: 100vh;
@@ -168,28 +279,51 @@
                 padding: 15px;
                 gap: 15px;
             }
-            .whats-inside { order: 2; } /* Move to bottom */
-            .main-content { order: 1; }
+
+            .whats-inside {
+                order: 2;
+            }
+
+            /* Move to bottom */
+            .main-content {
+                order: 1;
+            }
         }
 
         /* Custom Scrollbar */
-        .scrollable-content::-webkit-scrollbar { width: 8px; }
-        .scrollable-content::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-        .scrollable-content::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
-        .scrollable-content::-webkit-scrollbar-thumb:hover { background: #aaa; }
+        .scrollable-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 4px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
     </style>
 </head>
+
 <body>
     <div class="document-container">
         <!-- "What's Inside" Column -->
         <div class="whats-inside">
             <div class="column-header">
-                <span>📋</span><h4>What's Inside</h4>
+                <span>📋</span>
+                <h4>What's Inside</h4>
             </div>
             <div class="scrollable-content">
                 <div class="info-section">
                     <h5>What's New</h5>
-                    <p>This weekly report now includes <strong>Fixed Wireless Access (FWA)</strong> and updated <strong>Second Line Activity</strong> metrics.</p>
+                    <p>This weekly report now includes <strong>Fixed Wireless Access (FWA)</strong> and updated
+                        <strong>Second Line Activity</strong> metrics.</p>
                 </div>
                 <div class="info-section">
                     <h5>Key Sections</h5>
@@ -210,27 +344,28 @@
         <!-- Main Content Column -->
         <div class="main-content">
             <div class="header">
-                <h1>Secure Document Portal</h1>
-                <p>An intelligent gateway for your enterprise reports.</p>
+                <h1>{{DOCUMENT_NAME}}</h1>
+                <p>Welcome to Insight Engine</p>
             </div>
             <div class="file-info-section">
-                <h2>{{FILE_NAME}}</h2>
-                <p>Owned by: {{FILE_OWNER}}</p>
+                <h2>Document Overview</h2>
+                <p>Last updated: {{LAST_MODIFIED}}</p>
             </div>
             <div class="insight-engine-overview">
-                <h4>About the Insight Engine</h4>
-                <p>This portal is your entry point to the Insight Engine. After opening the report, use the Gemini Sidebar in Google Workspace and the Prompt Generator to get instant, AI-powered analysis of the data.</p>
+                <h4>🚀 About the Insight Engine</h4>
+                <p>The Insight Engine is your AI-powered document analysis platform. After opening your report, leverage the integrated Gemini Sidebar in Google Workspace and our advanced Prompt Generator to unlock instant, intelligent insights from your data. Transform static reports into interactive, actionable intelligence.</p>
             </div>
             <div class="action-buttons-section">
-                <button class="access-btn" id="accessBtn" onclick="openDocument('{{FILE_URL_DIRECT}}')">Open Report & Continue</button>
-                <a href="#" class="prompt-generator-btn">Launch Prompt Generator</a>
+                <button class="access-btn" id="accessBtn" onclick="openDocument('{{FILE_URL_DIRECT}}')">🚀 Launch Document & Start Analysis</button>
+                <a href="#" class="prompt-generator-btn">⚡ Open AI Prompt Generator</a>
             </div>
         </div>
 
         <!-- News Sidebar Column -->
         <div class="sidebar">
             <div class="column-header">
-                <span>📰</span><h4>Latest Headlines</h4>
+                <span>📰</span>
+                <h4>Latest Headlines</h4>
             </div>
             <div class="scrollable-content">
                 <div id="newsContainer">
@@ -239,11 +374,11 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         // Template data injection point - DO NOT MODIFY THIS LINE
         eval('window.templateData = {{TEMPLATE_DATA_JSON}};');
-        
+
         // --- Document Access Function ---
         function openDocument(url) {
             if (url) {
@@ -251,7 +386,7 @@
                 if (window.templateData && window.templateData.TRACKING_ENABLED) {
                     console.log('Document access tracked:', window.templateData.FILE_NAME);
                 }
-                
+
                 // Open the document
                 window.open(url, '_blank');
             } else {
@@ -263,7 +398,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Load news data from template data or use mock data
             let newsItems = [];
-            
+
             if (window.templateData && window.templateData.NEWS_HEADLINES) {
                 newsItems = window.templateData.NEWS_HEADLINES;
             } else {
@@ -287,25 +422,121 @@
             });
             newsContainer.innerHTML = newsHtml;
 
-            // Animate elements on load
+            // Animate elements on load with enhanced anime.js effects
             if (typeof anime !== 'undefined') {
+                // Header animation with scale and bounce
                 anime({
-                    targets: ['.header', '.file-info-section', '.insight-engine-overview', '.action-buttons-section'],
-                    translateY: [20, 0],
+                    targets: '.header',
+                    scale: [0.8, 1],
                     opacity: [0, 1],
-                    delay: anime.stagger(100),
-                    easing: 'easeOutExpo'
+                    duration: 1000,
+                    easing: 'easeOutElastic(1, .6)',
+                    delay: 100
                 });
+
+                // File info section with slide up
                 anime({
-                    targets: ['.whats-inside', '.sidebar'],
-                    translateX: (el) => el.classList.contains('whats-inside') ? [-20, 0] : [20, 0],
+                    targets: '.file-info-section',
+                    translateY: [30, 0],
                     opacity: [0, 1],
                     duration: 800,
+                    easing: 'easeOutExpo',
+                    delay: 300
+                });
+
+                // Insight engine overview with pulse effect
+                anime({
+                    targets: '.insight-engine-overview',
+                    scale: [0.9, 1],
+                    opacity: [0, 1],
+                    duration: 1000,
+                    easing: 'easeOutBack',
+                    delay: 500
+                });
+
+                // Buttons with staggered animation and hover prep
+                anime({
+                    targets: '.action-buttons-section .access-btn, .action-buttons-section .prompt-generator-btn',
+                    translateY: [40, 0],
+                    opacity: [0, 1],
+                    scale: [0.8, 1],
+                    duration: 800,
+                    delay: anime.stagger(200, {start: 700}),
+                    easing: 'easeOutBack'
+                });
+
+                // Sidebar animations
+                anime({
+                    targets: '.whats-inside',
+                    translateX: [-50, 0],
+                    opacity: [0, 1],
+                    duration: 1000,
                     delay: 200,
                     easing: 'easeOutExpo'
+                });
+
+                anime({
+                    targets: '.sidebar',
+                    translateX: [50, 0],
+                    opacity: [0, 1],
+                    duration: 1000,
+                    delay: 400,
+                    easing: 'easeOutExpo'
+                });
+
+                // News items individual animation
+                anime({
+                    targets: '.news-item',
+                    translateY: [20, 0],
+                    opacity: [0, 1],
+                    duration: 600,
+                    delay: anime.stagger(100, {start: 800}),
+                    easing: 'easeOutExpo'
+                });
+
+                // Column headers with rotation effect
+                anime({
+                    targets: '.column-header',
+                    rotateY: [90, 0],
+                    opacity: [0, 1],
+                    duration: 800,
+                    delay: anime.stagger(150, {start: 600}),
+                    easing: 'easeOutExpo'
+                });
+            }
+
+            // Add enhanced button interactions with anime.js
+            const accessBtn = document.getElementById('accessBtn');
+            if (accessBtn && typeof anime !== 'undefined') {
+                accessBtn.addEventListener('mouseenter', () => {
+                    anime({
+                        targets: accessBtn,
+                        scale: 1.05,
+                        duration: 200,
+                        easing: 'easeOutQuad'
+                    });
+                });
+
+                accessBtn.addEventListener('mouseleave', () => {
+                    anime({
+                        targets: accessBtn,
+                        scale: 1,
+                        duration: 200,
+                        easing: 'easeOutQuad'
+                    });
+                });
+
+                accessBtn.addEventListener('click', () => {
+                    anime({
+                        targets: accessBtn,
+                        scale: [1, 0.95, 1],
+                        duration: 300,
+                        easing: 'easeOutElastic(1, .6)'
+                    });
                 });
             }
         });
     </script>
 </body>
+
 </html>

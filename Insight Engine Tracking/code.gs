@@ -281,7 +281,6 @@ function doGet(e) {
       DOCUMENT_NAME: fileName || 'Executive Report Document',
       DOCUMENT_TYPE: documentDetails.documentType || 'Executive Report',
       LAST_MODIFIED: documentDetails.lastModified || new Date().toLocaleDateString(),
-      FILE_OWNER: documentDetails.fileOwner || 'Document Owner',
       FILE_ID: fileId,
       FILE_URL: finalFileUrl,
       FILE_URL_DIRECT: fileUrls.direct,
@@ -472,14 +471,21 @@ function loadTemplateSimple(templateName, data) {
 
       if (matches > 0) {
         simpleReplacements += matches;
+        // For URLs and most content, don't escape HTML
+        // Only escape if the value contains potentially dangerous HTML
+        let safeValue = '';
         if (typeof value === 'string') {
-          // Escape HTML special characters to prevent issues
-          const escapedValue = value.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-          htmlContent = htmlContent.replace(placeholder, escapedValue || '');
+          // Only escape if it looks like it contains HTML tags
+          if (value.includes('<script') || value.includes('javascript:')) {
+            safeValue = value.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+          } else {
+            safeValue = value;
+          }
         } else {
-          htmlContent = htmlContent.replace(placeholder, value || '');
+          safeValue = value || '';
         }
-        console.log(`🔄 Replaced ${matches} instances of {{${key}}}`);
+        htmlContent = htmlContent.replace(placeholder, safeValue);
+        console.log(`🔄 Replaced ${matches} instances of {{${key}}} with "${safeValue}"`);
       }
     }
 
@@ -652,6 +658,45 @@ function generateFallbackTemplate(templateName, data, errorMessage) {
       </body>
       </html>
     `;
+  }
+}
+
+/**
+ * Test function to debug placeholder replacement
+ * Call this function to test if template data is properly replaced
+ */
+function testPlaceholderReplacement() {
+  try {
+    console.log('Testing placeholder replacement...');
+
+    // Sample test data
+    const testData = {
+      DOCUMENT_NAME: 'Test_Document.pdf',
+      LAST_MODIFIED: '2024-01-15 10:30 AM',
+      DOCUMENT_TYPE: 'PDF Document',
+      FILE_ID: 'test123',
+      FILE_URL_DIRECT: 'https://drive.google.com/file/d/test123/view'
+    };
+
+    // Test the loadTemplateSimple function
+    const result = loadTemplateSimple('welcome-template', testData);
+
+    // Check if placeholders are replaced
+    const hasPlaceholder = result.includes('{{DOCUMENT_NAME}}') || result.includes('{{LAST_MODIFIED}}');
+
+    console.log('Template Data:', JSON.stringify(testData, null, 2));
+    console.log('Has unreplaced placeholders:', hasPlaceholder);
+    console.log('Result preview:', result.substring(0, 500) + '...');
+
+    return {
+      success: !hasPlaceholder,
+      templateData: testData,
+      hasUnreplacedPlaceholders: hasPlaceholder,
+      resultPreview: result.substring(0, 500)
+    };
+  } catch (error) {
+    console.error('Test failed:', error);
+    return { success: false, error: error.message };
   }
 }
 
