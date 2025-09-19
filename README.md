@@ -1,59 +1,191 @@
-## **Cost Estimation for Report Summarization Using Google Gemini Pro**
+# 🚀 Gen AI Demo - Insight Engine Platform
 
-### **Scenario Assumptions:**
-- **Input:** 10-page PDF containing mostly numerical tables.
-- **Output:** Summarized form with commentary, around 3-4 pages.
-- **Context Size Considerations:**
-  - 1K tokens ≈ **750 words**.
-  - A full-page of dense tabular data likely contains **500-750 words**.
-  - So, **10 pages of tabular data** ≈ **5,000 - 7,500 words**.
-  - Converted to tokens: **6,700 - 10,000 tokens**.
-  - The summarization output (3-4 pages) ≈ **1,500 - 3,000 words** ≈ **2,000 - 4,000 tokens**.
-  - **Total token usage per summarization query:**
-    - **Input Tokens:** ~ **8,000 tokens**.
-    - **Output Tokens:** ~ **3,000 tokens**.
-    - **Total Tokens per query:** **11,000 tokens**.
+> **A comprehensive AI-powered document analysis and intelligence platform built with Google Apps Script, featuring dynamic UI, advanced animations, and seamless Google Drive integration.**
+
+![Project Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
+![Version](https://img.shields.io/badge/Version-2.0-blue)
+![Last Updated](https://img.shields.io/badge/Last%20Updated-September%202025-orange)
 
 ---
 
-### **Cost Calculation:**
-From the image, the cost for **Google Gemini Pro**:
-- **Input Token Cost:** $0.000125 per 1K tokens.
-- **Output Token Cost:** $0.000375 per 1K tokens.
+## 🎯 **Project Overview**
 
-#### **Cost per summarization run:**
-- **Input Token Cost:**  
-  • (8,000 / 1,000) × 0.000125 = **$0.001**
-- **Output Token Cost:**  
-  • (3,000 / 1,000) × 0.000375 = **$0.001125**
-- **Total cost per summarization:** **$0.002125 per run**
+The **Insight Engine** is a production-ready web application that transforms static document access into an intelligent, interactive experience. Built entirely with Google Apps Script, it provides:
 
----
-
-### **Monthly Cost (Running Once per Day)**
-- Runs per month: **30**
-- **Total monthly cost:**  
-  • 30 × 0.002125 = **$0.06375** ≈ **6.4 cents**
-
-This is a **very low cost (~$0.06 per month)** because the number of tokens used per query is **not excessive** compared to large-scale chatbot use cases.
+- **🎨 Dynamic UI**: Headers automatically display actual document names with stunning anime.js animations
+- **🧠 AI Integration**: Welcome users to the "Insight Engine" with AI-powered analysis capabilities
+- **📱 Responsive Design**: Modern 3-column layout that adapts perfectly to any device
+- **🔐 Secure Access**: Direct Google Drive integration with comprehensive error handling
+- **📊 Analytics Ready**: Built-in tracking and monitoring capabilities
+- **⚡ Performance Optimized**: Fast loading with enhanced template processing
 
 ---
 
-### **Scaling Considerations**
-If scaled up for **100 reports per day**, the cost would be:
-- **Daily Cost:**  
-  • 100 × 0.002125 = **$0.2125**
-- **Monthly Cost:**  
-  • 0.2125 × 30 = **$6.38**
+## ✨ **Key Features**
 
-So, running **100 reports per day for a month** would cost **$6.38 per month**.
+### 🎪 **Enhanced User Experience**
+- **Dynamic Headers**: Document names replace generic portal titles
+- **Welcome Branding**: "Welcome to Insight Engine" messaging
+- **Advanced Animations**: Staggered loading effects with elastic, bounce, and scale animations
+- **Interactive Buttons**: Hover and click feedback with smooth transitions
+- **Responsive Layout**: 3-column design (sidebar, main content, news feed)
+
+### 🔧 **Technical Excellence**
+- **Template System**: Fixed placeholder replacement with robust error handling
+- **Multi-URL Support**: Handles various Google Drive URL formats
+- **Analytics Integration**: Google Sheets logging and tracking
+- **Performance Optimized**: Efficient code with caching and optimizations
+- **Mobile-First Design**: Perfect experience across all screen sizes
+
+### 🎨 **Modern Interface**
+- **Anime.js Integration**: Professional animations and transitions
+- **Verizon Brand Colors**: Consistent corporate styling
+- **3-Column Layout**: What's Inside | Main Content | News Headlines
+- **Visual Hierarchy**: Clear information architecture with icon usage
 
 ---
 
-### **Final Summary**
-- **Single report summarization (10 input pages, 3-4 output pages) costs ~ $0.0021 per run.**
-- **Running this once per day for a month costs ~ $0.064 (6.4 cents).**
-- **Scaling up to 100 reports per day costs ~ $6.38 per month.**
+## 📁 **Repository Structure**
 
-This is a **cost-effective** implementation for automated LLM-based summarization. Would you like to tweak these numbers for different use cases or add additional complexity like **multi-document processing**?
+This repository contains a curated collection of AI/ML projects, with the **Insight Engine** as the flagship production application:
+
+```
+📦 Gen-AI-demo/
+├── 🎯 Insight Engine Tracking/     # 🚀 MAIN PROJECT - Production Ready
+│   ├── code.gs                     # Backend application (2,100+ lines)
+│   ├── welcome-template.html       # Enhanced UI with animations
+│   ├── error-template.html         # Error handling
+│   └── README.md                   # Project documentation
+├── 01-Web-Apps-Google-Scripts/     # Additional Google Apps Script projects
+├── 02-AI-ML-Projects/              # Jupyter notebooks and Python scripts
+├── 03-Business-Intelligence-Tools/ # BI documentation and tools
+├── 04-Prompt-Engineering-Resources/# Prompt engineering guides
+├── 05-Workshop-Training-Materials/ # Training and workshop content
+├── 06-Use-Cases-Documentation/     # Business use cases
+├── 07-Personal-Documentation/      # Development notes and tasks
+├── 08-Configuration-Files/         # Auth and config files
+└── 09-Sample-Data-Assets/          # Sample data and resources
+```
+
+---
+
+## 🚀 **Quick Start Guide**
+
+### 1. **Deploy the Insight Engine**
+```bash
+# Clone the repository
+git clone https://github.com/yashumani/Gen-AI-demo.git
+
+# Navigate to the main project
+cd "Gen-AI-demo/Insight Engine Tracking"
+```
+
+### 2. **Google Apps Script Setup**
+1. Open [Google Apps Script](https://script.google.com)
+2. Create a new project
+3. Copy `code.gs` content to the script editor
+4. Add HTML files: `welcome-template.html`, `error-template.html`
+5. Deploy as web app with "Anyone" access
+
+### 3. **Test the Application**
+```
+https://your-webapp-url/exec?URL=https://drive.google.com/file/d/YOUR_FILE_ID/view
+```
+
+### 4. **Configure Analytics (Optional)**
+- Create a Google Sheet for logging
+- Update the SPREADSHEET_ID in `code.gs`
+- Enable tracking in the configuration
+
+---
+
+## 🎨 **Animation Features**
+
+The enhanced UI includes sophisticated animations powered by **anime.js**:
+
+- **Header**: Scale animation with elastic bounce effect
+- **Content Sections**: Staggered slide-up animations with expo easing
+- **Sidebars**: Slide-in from left/right with smooth transitions
+- **Buttons**: Interactive hover and click feedback
+- **News Items**: Individual fade-in effects with staggered timing
+- **Column Headers**: 3D rotation effects
+- **Title**: Continuous pulse animation with glowing text effects
+
+---
+
+## 💡 **Use Cases**
+
+### 📊 **Business Intelligence**
+- Automated report generation and analysis
+- Executive dashboard creation
+- KPI monitoring and visualization
+- Data quality management
+
+### 🤖 **AI Integration**
+- Gemini AI-powered document analysis
+- Automated prompt generation
+- Intelligent document summarization
+- Context-aware insights
+
+### 📈 **Enterprise Solutions**
+- Secure document portals
+- User access tracking
+- Performance monitoring
+- Scalable web applications
+
+---
+
+## 🛠️ **Technical Stack**
+
+- **Backend**: Google Apps Script (JavaScript)
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Animations**: Anime.js library
+- **Storage**: Google Drive integration
+- **Analytics**: Google Sheets
+- **Deployment**: Google Cloud Platform
+
+---
+
+## 📊 **Project Statistics**
+
+| Component | Lines of Code | Status |
+|-----------|---------------|--------|
+| **Backend (code.gs)** | 2,100+ | ✅ Production Ready |
+| **Frontend Templates** | 1,000+ | ✅ Enhanced with Animations |
+| **Documentation** | 500+ | ✅ Comprehensive |
+| **Total Project** | 3,600+ | ✅ Fully Operational |
+
+---
+
+## 🔄 **Recent Updates (September 2025)**
+
+- ✅ **Dynamic Headers**: Document names now appear in header instead of generic text
+- ✅ **Insight Engine Branding**: "Welcome to Insight Engine" messaging added
+- ✅ **Anime.js Integration**: Advanced animations with staggered effects
+- ✅ **Enhanced Buttons**: Interactive feedback and improved text
+- ✅ **Template Fixes**: Resolved placeholder replacement issues
+- ✅ **Performance Optimization**: Improved loading times and responsiveness
+
+---
+
+## 📞 **Support & Documentation**
+
+- **Main Documentation**: `Insight Engine Tracking/README.md`
+- **Production Guide**: `Insight Engine Tracking/PRODUCTION-README.md`
+- **Repository Inventory**: `INVENTORY_INDEX.md`
+- **GitHub Issues**: [Report bugs or request features](https://github.com/yashumani/Gen-AI-demo/issues)
+
+---
+
+## 🏆 **Project Status: Production Ready**
+
+The Insight Engine platform is fully deployed, tested, and ready for enterprise use. With its modern interface, advanced animations, and robust backend, it represents a comprehensive solution for intelligent document access and analysis.
+
+**Ready to transform your document workflow with AI-powered insights!** 🚀
+
+---
+
+*Maintained by: Yashu Sharma*
+*Repository: [yashumani/Gen-AI-demo](https://github.com/yashumani/Gen-AI-demo)*
+*Last Updated: September 19, 2025*
 

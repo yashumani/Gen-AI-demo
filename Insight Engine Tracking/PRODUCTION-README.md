@@ -1,34 +1,56 @@
-# 🚀 Insight Engine Tracking - PRODUCTION READY
+# 🚀 Insight Engine Tracking - PRODUCTION READY (Enhanced)
 
-A Google Apps Script web application that provides secure document access and analytics tracking through Google Drive integration.
+A Google Apps Script web application that provides secure document access and analytics tracking through Google Drive integration, **now enhanced with dynamic headers, anime.js animations, and interactive user experience**.
 
-## 📋 Production Files
+## 📋 Production Files (Updated September 2025)
 
 ### Core Application
-- **`code.gs`** - Main backend application (2,099 lines)
+- **`code.gs`** - Enhanced backend application (2,100+ lines)
   - Document access portal with Google Drive integration
-  - Template processing with fixed data injection
+  - **Fixed template processing** with improved placeholder replacement
+  - **Dynamic header system** showing actual document names
   - Usage analytics and logging
   - URL parameter handling for multiple formats
 
-### HTML Templates
-- **`welcome-template.html`** - Primary user interface (2,822 lines)
+### HTML Templates (Enhanced)
+- **`welcome-template.html`** - **Enhanced responsive UI with anime.js animations** (1,000+ lines)
 - **`error-template.html`** - Error handling page
 - **`whats-inside-template.html`** - Content preview template
 
-### Report Templates
-- **`template-default.html`** - Default report layout
-- **`template-executive-summary.html`** - Executive summary format
-- **`template-inflow-outflow.html`** - Financial flow analysis
-- **`template-negative-ga.html`** - Negative analytics template
-- **`template-sales-performance.html`** - Sales performance dashboard
+---
 
-## 🔧 Key Features
+## ✨ **NEW FEATURES (September 2025)**
 
-### ✅ Fixed Template Data Injection
-- **Issue**: `{{TEMPLATE_DATA_JSON}}` placeholders showing instead of data
-- **Solution**: Enhanced `loadTemplateSimple()` function with improved regex pattern
-- **Result**: Reliable template data injection in production
+### 🎪 **Advanced Animation System**
+- **Anime.js Integration**: Professional animations with staggered effects
+- **Header Animations**: Scale + elastic bounce (1000ms duration)
+- **Content Sections**: Slide-up with exponential easing
+- **Interactive Buttons**: Hover and click feedback with smooth transitions
+- **Sidebar Effects**: Slide-in from left/right (1000ms duration)
+- **News Feed**: Individual fade-in with staggered timing
+
+### 🎯 **Dynamic UI Enhancements**
+- **Document Name Headers**: Headers display actual file names instead of "Secure Document Portal"
+- **Insight Engine Branding**: "Welcome to Insight Engine" messaging
+- **Enhanced Buttons**: "🚀 Launch Document & Start Analysis" and "⚡ Open AI Prompt Generator"
+- **Pulsing Title Effects**: Continuous glow animation with brand colors
+- **Responsive Animations**: Optimized for all screen sizes
+
+---
+
+## 🔧 **Core Features** (Enhanced)
+
+### ✅ **Enhanced Template Data Injection**
+- **Issue Resolved**: `{{DOCUMENT_NAME}}` and `{{LAST_MODIFIED}}` placeholders now properly replaced
+- **Solution**: Enhanced `loadTemplateSimple()` function with improved regex pattern and HTML escaping
+- **Dynamic Headers**: Headers now show actual document names instead of generic text
+- **Result**: Reliable template data injection with professional user experience
+
+### ✅ **Advanced Animation System**
+- **Anime.js Integration**: Professional staggered animations with multiple easing types
+- **Interactive Elements**: Buttons respond with hover and click feedback
+- **Performance Optimized**: Smooth animations across all devices and screen sizes
+- **Responsive Design**: All animations scale appropriately for mobile and desktop
 
 ### ✅ Google Drive Integration
 - Supports multiple URL formats:

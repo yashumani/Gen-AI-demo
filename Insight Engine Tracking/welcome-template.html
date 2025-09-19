@@ -106,6 +106,7 @@
             0% {
                 text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
             }
+
             100% {
                 text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(238, 0, 0, 0.3);
             }
@@ -323,7 +324,8 @@
                 <div class="info-section">
                     <h5>What's New</h5>
                     <p>This weekly report now includes <strong>Fixed Wireless Access (FWA)</strong> and updated
-                        <strong>Second Line Activity</strong> metrics.</p>
+                        <strong>Second Line Activity</strong> metrics.
+                    </p>
                 </div>
                 <div class="info-section">
                     <h5>Key Sections</h5>
@@ -353,10 +355,14 @@
             </div>
             <div class="insight-engine-overview">
                 <h4>🚀 About the Insight Engine</h4>
-                <p>The Insight Engine is your AI-powered document analysis platform. After opening your report, leverage the integrated Gemini Sidebar in Google Workspace and our advanced Prompt Generator to unlock instant, intelligent insights from your data. Transform static reports into interactive, actionable intelligence.</p>
+                <p>The Insight Engine is your AI-powered document analysis platform. After opening your report, leverage
+                    the integrated Gemini Sidebar in Google Workspace and our advanced Prompt Generator to unlock
+                    instant, intelligent insights from your data. Transform static reports into interactive, actionable
+                    intelligence.</p>
             </div>
             <div class="action-buttons-section">
-                <button class="access-btn" id="accessBtn" onclick="openDocument('{{FILE_URL_DIRECT}}')">🚀 Launch Document & Start Analysis</button>
+                <button class="access-btn" id="accessBtn" onclick="openDocument('{{FILE_URL_DIRECT}}')">🚀 Launch
+                    Document & Start Analysis</button>
                 <a href="#" class="prompt-generator-btn">⚡ Open AI Prompt Generator</a>
             </div>
         </div>
@@ -461,7 +467,7 @@
                     opacity: [0, 1],
                     scale: [0.8, 1],
                     duration: 800,
-                    delay: anime.stagger(200, {start: 700}),
+                    delay: anime.stagger(200, { start: 700 }),
                     easing: 'easeOutBack'
                 });
 
@@ -490,7 +496,7 @@
                     translateY: [20, 0],
                     opacity: [0, 1],
                     duration: 600,
-                    delay: anime.stagger(100, {start: 800}),
+                    delay: anime.stagger(100, { start: 800 }),
                     easing: 'easeOutExpo'
                 });
 
@@ -500,7 +506,7 @@
                     rotateY: [90, 0],
                     opacity: [0, 1],
                     duration: 800,
-                    delay: anime.stagger(150, {start: 600}),
+                    delay: anime.stagger(150, { start: 600 }),
                     easing: 'easeOutExpo'
                 });
             }
