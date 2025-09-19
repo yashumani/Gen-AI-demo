@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <title>Gemini Prompt Generator Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+      body {
+        font-family: "Verizon NHG TX", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        margin: 0;
+        padding: 20px;
+        line-height: 1.6;
+        color: #333;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+      
+      /* Background animation particles */
+      .bg-particle {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: float 6s ease-in-out infinite;
+      }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+        50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+      }
+      
+      .dashboard-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 25px;
+        max-width: 1400px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+      
+      .panel {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      
+      .panel:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+      }
+      
+      .generator-panel {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .generator-panel h1 {
+        position: sticky;
+        top: -30px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        margin: -30px -30px 30px -30px;
+        padding: 30px 30px 20px 30px;
+        border-radius: 20px 20px 0 0;
+        z-index: 10;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+      
+      .prompts-panel {
+        grid-column: 2;
+        grid-row: 1;
+        max-height: 60vh;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .prompts-panel h2 {
+        position: sticky;
+        top: -30px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        margin: -30px -30px 20px -30px;
+        padding: 25px 30px 15px 30px;
+        border-radius: 20px 20px 0 0;
+        z-index: 10;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+      
+      .feedback-panel {
+        grid-column: 2;
+        grid-row: 2;
+        max-height: 50vh;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .feedback-panel .submission-section h2 {
+        position: sticky;
+        top: -30px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        margin: -30px -30px 25px -30px;
+        padding: 25px 30px 15px 30px;
+        border-radius: 20px 20px 0 0;
+        z-index: 10;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+      
+      /* Custom scrollbar */
+      .prompts-panel::-webkit-scrollbar,
+      .feedback-panel::-webkit-scrollbar,
+      .generator-panel::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      .prompts-panel::-webkit-scrollbar-track,
+      .feedback-panel::-webkit-scrollbar-track,
+      .generator-panel::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.1);
+        border-radius: 10px;
+      }
+      
+      .prompts-panel::-webkit-scrollbar-thumb,
+      .feedback-panel::-webkit-scrollbar-thumb,
+      .generator-panel::-webkit-scrollbar-thumb {
+        background: linear-gradient(45deg, #CD040B, #ff4757);
+        border-radius: 10px;
+      }
+      
+      .generator-content {
+        flex: 1;
+        overflow-y: auto;
+        padding-right: 5px;
+      }
+      
+      .prompts-content {
+        flex: 1;
+        overflow-y: auto;
+        padding-right: 5px;
+      }
+      
+      .feedback-content {
+        flex: 1;
+        overflow-y: auto;
+        padding-right: 5px;
+      }
+      
+      h1 {
+        font-size: 28px;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      h1::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #CD040B, #ff4757);
+        transition: all 0.8s ease;
+        transform: translateX(-50%);
+      }
+      
+      h1.animated::before {
+        width: 100px;
+      }
+      
+      .title-icon {
+        font-size: 32px;
+        color: #CD040B;
+        margin-right: 15px;
+        display: inline-block;
+        animation: pulse 2s infinite;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+      }
+       h2 {
+        font-size: 18px;
+        color: #2c3e50;
+        margin-top: 0;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      h2 i {
+        color: #CD040B;
+        font-size: 20px;
+      }
+      
+      h3 {
+        font-size: 16px;
+        color: #34495e;
+        margin-top: 25px;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+      
+      .form-section {
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      
+      .form-section.animate-in {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      
+      .explanation-text {
+        margin-top: 10px;
+        padding: 12px 15px;
+        background: rgba(205, 4, 11, 0.05);
+        border-left: 3px solid #CD040B;
+        border-radius: 0 8px 8px 0;
+        font-size: 13px;
+        color: #2c3e50;
+        line-height: 1.5;
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+      
+      .explanation-text.show {
+        opacity: 1;
+        max-height: 200px;
+        margin-bottom: 5px;
+      }
+      
+      .explanation-text strong {
+        color: #CD040B;
+        font-weight: 600;
+      }
+      
+      label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #2c3e50;
+      }
+      
+      label i {
+        color: #CD040B;
+        font-size: 16px;
+      }
+      
+      select, textarea {
+        width: 100%;
+        padding: 15px;
+        font-family: inherit;
+        font-size: 14px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+      }
+      
+      select:focus, textarea:focus {
+        outline: none;
+        border-color: #CD040B;
+        box-shadow: 0 0 0 3px rgba(205, 4, 11, 0.1);
+        transform: translateY(-2px);
+      }
+      
+      textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+      
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: linear-gradient(135deg, #CD040B, #ff4757);
+        color: #ffffff;
+        padding: 15px 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        margin-top: 15px;
+        width: 100%;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(205, 4, 11, 0.3);
+      }
+      
+      button:active {
+        transform: translateY(0);
+      }
+      
+      button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s ease;
+      }
+      
+      button:hover::before {
+        left: 100%;
+      }
+      #result-container {
+        margin-top: auto;
+        padding-top: 25px;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      
+      #result-container.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      #generated-prompt {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 15px;
+        border: 2px solid #e2e8f0;
+        padding: 20px;
+        white-space: pre-wrap;
+        font-size: 14px;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        font-family: 'Monaco', 'Consolas', monospace;
+        line-height: 1.6;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      #generated-prompt::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #CD040B, #ff4757, #CD040B);
+        background-size: 200% 100%;
+        animation: shimmer 2s linear infinite;
+      }
+      
+      @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+      
+      #copy-btn {
+        background: linear-gradient(135deg, #6c757d, #495057);
+        color: #ffffff;
+        padding: 12px 25px;
+        font-size: 14px;
+        width: 100%;
+        position: relative;
+      }
+      
+      #copy-btn:hover {
+        background: linear-gradient(135deg, #495057, #343a40);
+      }
+      
+      #copy-btn.copied {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        animation: successPulse 0.6s ease;
+      }
+      
+      @keyframes successPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+      
+      .prompt-suggestion {
+        background: rgba(255, 255, 255, 0.8);
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 15px 20px;
+        font-size: 14px;
+        color: #2c3e50;
+        text-align: left;
+        font-style: italic;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      
+      .prompt-suggestion.animate-in {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      
+      .prompt-suggestion:hover {
+        background: rgba(205, 4, 11, 0.05);
+        border-color: #CD040B;
+        transform: translateX(-5px) translateY(-2px);
+        box-shadow: 0 8px 25px rgba(205, 4, 11, 0.15);
+      }
+      
+      .prompt-suggestion::before {
+        content: '💡';
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 18px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      .prompt-suggestion:hover::before {
+        opacity: 1;
+      }
+      .submission-section {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        margin-top: 0;
+        padding: 0;
+        position: relative;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+      
+      .submission-section::before {
+        display: none;
+      }
+      
+      .submission-section h2 {
+        margin-top: 0;
+        margin-bottom: 25px;
+        text-align: center;
+        font-size: 18px;
+        color: #CD040B;
+        position: relative;
+      }
+      
+      .submission-section h2::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(90deg, #CD040B, #ff4757);
+        border-radius: 2px;
+      }
+      
+      .submission-intro {
+        background: rgba(205, 4, 11, 0.05);
+        border-left: 4px solid #CD040B;
+        padding: 15px 20px;
+        margin-bottom: 25px;
+        border-radius: 0 10px 10px 0;
+        font-size: 14px;
+        color: #2c3e50;
+      }
+      
+      .submission-intro p {
+        margin: 0;
+        line-height: 1.6;
+      }
+      
+      .submit-btn {
+        background: linear-gradient(135deg, #CD040B, #ff4757) !important;
+        transform: scale(1.02);
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        box-shadow: 0 8px 20px rgba(205, 4, 11, 0.3);
+      }
+      
+      .submit-btn:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 12px 30px rgba(205, 4, 11, 0.4);
+      }
+      
+      #form-message {
+        margin-top: 15px;
+        font-weight: 600;
+        padding: 12px 20px;
+        border-radius: 10px;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+      }
+      
+      #form-message.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      #form-message.success {
+        background: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+        border: 2px solid #28a745;
+      }
+      
+      #form-message.error {
+        background: rgba(220, 53, 69, 0.1);
+        color: #dc3545;
+        border: 2px solid #dc3545;
+      }
+      
+      .how-to-use-section {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        margin-bottom: 30px;
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      
+      .how-to-use-section.animate-in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      .how-to-use-section summary {
+        font-weight: 600;
+        font-size: 16px;
+        padding: 20px 25px;
+        cursor: pointer;
+        outline: none;
+        color: #2c3e50;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+      }
+      
+      .how-to-use-section summary:hover {
+        color: #CD040B;
+      }
+      
+      .how-to-use-section summary::before {
+        content: '📚';
+        font-size: 20px;
+      }
+      
+      .how-to-use-content {
+        padding: 0 25px 25px 25px;
+        animation: fadeInUp 0.5s ease;
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .how-to-use-content ol {
+        padding-left: 25px;
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.8;
+      }
+      
+      .how-to-use-content li {
+        margin-bottom: 12px;
+        padding-left: 10px;
+        position: relative;
+      }
+      
+      .how-to-use-content li::before {
+        content: '✨';
+        position: absolute;
+        left: -20px;
+        top: 0;
+      }
+      
+      /* Loading animation */
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(205, 4, 11, 0.3);
+        border-radius: 50%;
+        border-top-color: #CD040B;
+        animation: spin 1s ease-in-out infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      
+      /* Responsive design */
+      @media (max-width: 1200px) {
+        .dashboard-container {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto auto;
+          gap: 20px;
+        }
+        
+        .generator-panel {
+          grid-column: 1;
+          grid-row: 1;
+        }
+        
+        .generator-panel h1 {
+          position: static;
+          margin: -30px -30px 30px -30px;
+          padding: 30px 30px 20px 30px;
+          border-radius: 20px 20px 0 0;
+        }
+        
+        .prompts-panel {
+          grid-column: 1;
+          grid-row: 2;
+          max-height: 50vh;
+        }
+        
+        .prompts-panel h2 {
+          position: static;
+          margin: -30px -30px 20px -30px;
+          padding: 25px 30px 15px 30px;
+          border-radius: 20px 20px 0 0;
+        }
+        
+        .feedback-panel {
+          grid-column: 1;
+          grid-row: 3;
+          max-height: 40vh;
+        }
+        
+        .feedback-panel .submission-section h2 {
+          position: static;
+          margin: -30px -30px 25px -30px;
+          padding: 25px 30px 15px 30px;
+          border-radius: 20px 20px 0 0;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .panel {
+          padding: 20px;
+        }
+        
+        .generator-panel h1,
+        .prompts-panel h2,
+        .feedback-panel .submission-section h2 {
+          margin: -20px -20px 20px -20px;
+          padding: 20px 20px 15px 20px;
+        }
+        
+        h1 {
+          font-size: 24px;
+        }
+        
+        .prompts-panel,
+        .feedback-panel {
+          max-height: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <details class="how-to-use-section">
+        <summary><i class="fas fa-lightbulb"></i>How to Use This Generator</summary>
+        <div class="how-to-use-content">
+            <ol>
+                <li><strong>Start by Selecting a Report:</strong> Choose the report you are analyzing from the first dropdown. This will load the relevant suggested prompts on the right.</li>
+                <li><strong>Filter the Prompt Library:</strong> Select a "Question Type" to filter the library and see specific examples for the kind of question you want to ask.</li>
+                <li><strong>Build Your Prompt:</strong> Use the generator on the left to build your own detailed prompt. You can type your own topic or click a suggested prompt on the right to auto-fill the "Metric or Topic" field.</li>
+                <li><strong>Refine Your Prompt:</strong> Adjust the "Act As" and "Format Output For" dropdowns to tailor the prompt to your specific needs.</li>
+                <li><strong>Copy and Use:</strong> Once your prompt is generated at the bottom, click the "Copy Prompt" button and paste it into the Gemini sidebar next to your report.</li>
+            </ol>
+        </div>
+    </details>
+    <div class="dashboard-container">
+        <div class="panel generator-panel">
+            <h1><i class="fas fa-robot title-icon"></i>Gemini Prompt Generator</h1>
+            <div class="generator-content">
+                <div class="form-section">
+                    <label for="report-name"><i class="fas fa-file-alt"></i>1. Select Report:</label>
+                    <select id="report-name">
+                        <option value="Negative GA">📋 Negative GA Report</option>
+                        <option value="Inflow and Outflow">📋 Inflow and Outflow Report</option>
+                        <option value="VCG VVO Performance">📋 VCG VVO Performance Report</option>
+                        <option value="OneEx Total">📋 OneEx Total Report</option>
+                        <option value="Wireline Daily Driver">📋 Wireline Daily Driver Report</option>
+                    </select>
+                </div>
+
+                <div class="form-section">
+                    <label for="question-type"><i class="fas fa-question-circle"></i>2. Select Question Type:</label>
+                    <select id="question-type">
+                        <option value="find the value of">🔍 Find a Specific Value</option>
+                        <option value="summarize the key trends for">📊 Summarize Key Trends</option>
+                        <option value="provide a brief commentary on">💬 Generate Commentary</option>
+                        <option value="compare the performance of">⚖️ Compare Performance</option>
+                        <option value="explain the definition of">📚 Explain a Definition</option>
+                    </select>
+                </div>
+
+                <div class="form-section">
+                    <label for="metric-input"><i class="fas fa-edit"></i>3. Enter Metric or Topic:</label>
+                    <textarea id="metric-input" placeholder="e.g., 'Gross Adds for the Visible brand' or select a prompt from the library"></textarea>
+                </div>
+                
+                <div class="form-section">
+                    <label for="persona"><i class="fas fa-user-tie"></i>4. Act As:</label>
+                    <select id="persona">
+                        <option value="a data analyst">📊 Data Analyst</option>
+                        <option value="an executive">👔 Executive</option>
+                        <option value="a channel manager">📱 Channel Manager</option>
+                        <option value="a marketing manager">📢 Marketing Manager</option>
+                        <option value="a financial analyst">💰 Financial Analyst</option>
+                        <option value="an operations lead">⚙️ Operations Lead</option>
+                        <option value="a customer experience specialist">🤝 Customer Experience Specialist</option>
+                    </select>
+                    <div id="persona-explanation" class="explanation-text"></div>
+                </div>
+
+                <div class="form-section">
+                    <label for="output-format"><i class="fas fa-format-list-bulleted"></i>5. Format Output For:</label>
+                    <select id="output-format">
+                        <option value="as a simple analysis">📝 Simple Analysis</option>
+                        <option value="as a short paragraph">📄 Short Paragraph</option>
+                        <option value="as a bulleted list">📋 Bulleted List</option>
+                        <option value="for a team email">📧 Team Email</option>
+                        <option value="as a script for a Google Vids presentation">🎥 Google Vids Prompt</option>
+                    </select>
+                    <div id="format-explanation" class="explanation-text"></div>
+                </div>
+
+                <div id="result-container">
+                  <label><i class="fas fa-magic"></i>Generated Prompt:</label>
+                  <p id="generated-prompt"></p>
+                  <button id="copy-btn"><i class="fas fa-copy"></i>Copy Prompt</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel prompts-panel">
+            <h2><i class="fas fa-lightbulb"></i>Suggested Prompts Library</h2>
+            <div class="prompts-content">
+                <div id="prompts-library">
+                    <!-- Suggested prompts will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel feedback-panel">
+            <div class="submission-section">
+                <h2><i class="fas fa-paper-plane"></i>Submit Your Questions or Feedback</h2>
+                <div class="feedback-content">
+                    <div class="submission-intro">
+                        <p><i class="fas fa-info-circle" style="color: #CD040B; margin-right: 8px;"></i>
+                        Help us improve the prompt library by submitting new questions or providing feedback on your experience.</p>
+                    </div>
+                    <form id="submission-form">
+                        <div class="form-section">
+                            <label for="submission-type"><i class="fas fa-tags"></i>Submission Type:</label>
+                            <select id="submission-type">
+                                <option value="Find a Specific Value">🔍 Question: Find a Specific Value</option>
+                                <option value="Summarize Key Trends">📊 Question: Summarize Key Trends</option>
+                                <option value="Generate Commentary">💬 Question: Generate Commentary</option>
+                                <option value="Compare Performance">⚖️ Question: Compare Performance</option>
+                                <option value="Explain a Definition">📚 Question: Explain a Definition</option>
+                                <option value="Feedback">💭 Feedback</option>
+                            </select>
+                        </div>
+                        <div class="form-section">
+                            <label for="submission-text"><i class="fas fa-comment"></i>Your Question or Feedback:</label>
+                            <textarea id="submission-text" required placeholder="Please describe your question or share your feedback about the prompt generator..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i>Submit</button>
+                        <div id="form-message"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      // --- GLOBAL STORE ---
+      let suggestedPrompts = {};
+
+      // --- DOM ELEMENTS ---
+      const reportSelect = document.getElementById('report-name');
+      const questionTypeSelect = document.getElementById('question-type');
+      const metricInput = document.getElementById('metric-input');
+      const personaSelect = document.getElementById('persona');
+      const outputFormatSelect = document.getElementById('output-format');
+      const resultContainer = document.getElementById('result-container');
+      const generatedPromptEl = document.getElementById('generated-prompt');
+      const copyBtn = document.getElementById('copy-btn');
+      const promptsLibrary = document.getElementById('prompts-library');
+      const submissionForm = document.getElementById('submission-form');
+      const formMessage = document.getElementById('form-message');
+      const personaExplanation = document.getElementById('persona-explanation');
+      const formatExplanation = document.getElementById('format-explanation');
+
+      // --- EXPLANATION DATA ---
+      const personaExplanations = {
+        "a data analyst": "<strong>Data Analyst:</strong> Focuses on technical accuracy, statistical insights, and data-driven conclusions. Responses will include specific numbers, trends, and analytical interpretation of the data.",
+        "an executive": "<strong>Executive:</strong> Provides high-level strategic insights and business implications. Responses will focus on key takeaways, business impact, and actionable recommendations for leadership decisions.",
+        "a channel manager": "<strong>Channel Manager:</strong> Emphasizes channel performance, customer acquisition/retention metrics, and operational efficiency. Responses will highlight channel-specific insights and optimization opportunities.",
+        "a marketing manager": "<strong>Marketing Manager:</strong> Focuses on campaign performance, customer segments, and marketing ROI. Responses will include insights on customer behavior, acquisition costs, and marketing effectiveness.",
+        "a financial analyst": "<strong>Financial Analyst:</strong> Emphasizes revenue impact, cost analysis, and financial performance metrics. Responses will focus on profitability, financial trends, and budget implications.",
+        "an operations lead": "<strong>Operations Lead:</strong> Focuses on process efficiency, operational metrics, and performance optimization. Responses will highlight operational bottlenecks, efficiency gains, and process improvements.",
+        "a customer experience specialist": "<strong>Customer Experience Specialist:</strong> Emphasizes customer satisfaction, journey optimization, and experience metrics. Responses will focus on customer pain points, satisfaction drivers, and experience improvements."
+      };
+
+      const formatExplanations = {
+        "as a simple analysis": "<strong>Simple Analysis:</strong> Provides a straightforward, concise explanation with key findings. <em>Example: 'The data shows a 15% increase in customer satisfaction, driven primarily by improved response times.'</em>",
+        "as a short paragraph": "<strong>Short Paragraph:</strong> Delivers insights in a flowing, narrative format suitable for reports or summaries. <em>Example: 'Customer satisfaction metrics reveal positive trends this quarter, with scores increasing from 3.2 to 3.7 out of 5...'</em>",
+        "as a bulleted list": "<strong>Bulleted List:</strong> Organizes information into clear, scannable bullet points for easy consumption. <em>Example: '• Satisfaction increased 15% • Response time improved by 2 minutes • Top driver: faster resolution'</em>",
+        "for a team email": "<strong>Team Email:</strong> Formats the response for professional email communication with appropriate tone and structure. <em>Example: 'Hi team, I wanted to share some positive updates from our latest customer satisfaction data...'</em>",
+        "as a script for a Google Vids presentation": "<strong>Google Vids Script:</strong> Creates a structured script with scene descriptions and voiceover text, optimized for video presentation to executives. <em>Example: 'Scene 1: [Chart showing satisfaction trends] Voiceover: Our customer satisfaction has improved significantly...'</em>"
+      };
+
+      // --- ANIMATION FUNCTIONS ---
+      function createBackgroundParticles() {
+        const particles = 15;
+        for (let i = 0; i < particles; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'bg-particle';
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.top = Math.random() * 100 + '%';
+          particle.style.width = particle.style.height = (Math.random() * 4 + 2) + 'px';
+          particle.style.animationDelay = Math.random() * 6 + 's';
+          particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+          document.body.appendChild(particle);
+        }
+      }
+
+      function animateOnLoad() {
+        // Animate how-to-use section
+        setTimeout(() => {
+          document.querySelector('.how-to-use-section').classList.add('animate-in');
+        }, 100);
+
+        // Animate panels with different timing for better visual flow
+        anime({
+          targets: '.generator-panel',
+          opacity: [0, 1],
+          translateY: [30, 0],
+          duration: 800,
+          easing: 'easeOutExpo',
+          delay: 300
+        });
+        
+        anime({
+          targets: '.prompts-panel',
+          opacity: [0, 1],
+          translateY: [30, 0],
+          duration: 800,
+          easing: 'easeOutExpo',
+          delay: 500
+        });
+        
+        anime({
+          targets: '.feedback-panel',
+          opacity: [0, 1],
+          translateY: [30, 0],
+          duration: 800,
+          easing: 'easeOutExpo',
+          delay: 700
+        });
+
+        // Animate form sections
+        anime({
+          targets: '.form-section',
+          opacity: [0, 1],
+          translateX: [-20, 0],
+          delay: anime.stagger(100, {start: 800}),
+          duration: 600,
+          easing: 'easeOutExpo',
+          complete: function() {
+            document.querySelectorAll('.form-section').forEach(el => {
+              el.classList.add('animate-in');
+            });
+          }
+        });
+
+        // Animate title
+        setTimeout(() => {
+          document.querySelector('h1').classList.add('animated');
+        }, 1200);
+      }
+
+      function animatePromptGeneration() {
+        const container = document.getElementById('result-container');
+        container.classList.add('show');
+        
+        anime({
+          targets: '#generated-prompt',
+          scale: [0.9, 1],
+          opacity: [0.5, 1],
+          duration: 500,
+          easing: 'easeOutElastic(1, .8)'
+        });
+      }
+
+      function animatePromptSuggestions() {
+        const suggestions = document.querySelectorAll('.prompt-suggestion');
+        
+        anime({
+          targets: suggestions,
+          opacity: [0, 1],
+          translateX: [20, 0],
+          delay: anime.stagger(50),
+          duration: 400,
+          easing: 'easeOutExpo',
+          complete: function() {
+            suggestions.forEach(el => el.classList.add('animate-in'));
+          }
+        });
+      }
+
+      function showMessage(message, type) {
+        formMessage.textContent = message;
+        formMessage.className = `show ${type}`;
+        formMessage.classList.add('show');
+        
+        anime({
+          targets: formMessage,
+          scale: [0.8, 1],
+          duration: 300,
+          easing: 'easeOutBack'
+        });
+      }
+
+      function showPersonaExplanation(personaValue) {
+        const explanation = personaExplanations[personaValue];
+        if (explanation) {
+          personaExplanation.innerHTML = explanation;
+          personaExplanation.classList.add('show');
+          
+          anime({
+            targets: personaExplanation,
+            opacity: [0, 1],
+            translateY: [-10, 0],
+            duration: 300,
+            easing: 'easeOutQuad'
+          });
+        }
+      }
+
+      function showFormatExplanation(formatValue) {
+        const explanation = formatExplanations[formatValue];
+        if (explanation) {
+          formatExplanation.innerHTML = explanation;
+          formatExplanation.classList.add('show');
+          
+          anime({
+            targets: formatExplanation,
+            opacity: [0, 1],
+            translateY: [-10, 0],
+            duration: 300,
+            easing: 'easeOutQuad'
+          });
+        }
+      }
+
+      // --- CORE FUNCTIONS ---
+      function displayPrompts(questionTypeKey) {
+        promptsLibrary.innerHTML = ''; // Clear existing prompts
+        const prompts = suggestedPrompts[questionTypeKey] || [];
+        
+        if (prompts.length === 0) {
+            promptsLibrary.innerHTML = '<p style="font-style:italic; color:#888; text-align: center; padding: 20px;"><i class="fas fa-info-circle"></i> No suggested prompts for this category.</p>';
+            return;
+        }
+
+        prompts.forEach((promptText, index) => {
+            const promptDiv = document.createElement('div');
+            promptDiv.className = 'prompt-suggestion';
+            promptDiv.innerHTML = `<i class="fas fa-quote-left" style="color: #CD040B; margin-right: 8px;"></i>"${promptText}"`;
+            promptDiv.onclick = function() {
+              // Animate click feedback
+              anime({
+                targets: promptDiv,
+                scale: [1, 0.95, 1],
+                duration: 200,
+                easing: 'easeInOutQuad'
+              });
+              
+              const coreMetric = promptText.match(/'([^']+)'/);
+              metricInput.value = coreMetric ? coreMetric[1] : promptText;
+              
+              // Animate the input field
+              anime({
+                targets: metricInput,
+                backgroundColor: ['#fff', '#f0f9ff', '#fff'],
+                duration: 1000,
+                easing: 'easeInOutQuad'
+              });
+              
+              generatePrompt();
+            };
+            promptsLibrary.appendChild(promptDiv);
+        });
+        
+        // Animate new prompts
+        animatePromptSuggestions();
+      }
+
+      function fetchAndDisplayPrompts(reportKey) {
+          promptsLibrary.innerHTML = '<div style="text-align: center; padding: 40px;"><div class="loading"></div><p style="margin-top: 15px; color: #888;">Loading prompts...</p></div>';
+          questionTypeSelect.disabled = true;
+
+          google.script.run
+              .withSuccessHandler(function(promptsData) {
+                  if (promptsData.error) {
+                      promptsLibrary.innerHTML = `<p style="color:#dc3545; text-align: center; padding: 20px;"><i class="fas fa-exclamation-triangle"></i> ${promptsData.error}</p>`;
+                  } else {
+                    suggestedPrompts = promptsData;
+                    displayPrompts(questionTypeSelect.value);
+                  }
+                  questionTypeSelect.disabled = false;
+              })
+              .withFailureHandler(function(error) {
+                  promptsLibrary.innerHTML = `<p style="color:#dc3545; text-align: center; padding: 20px;"><i class="fas fa-times-circle"></i> Error: ${error.message}</p>`;
+                  questionTypeSelect.disabled = false;
+              })
+              .getSuggestedPrompts(reportKey);
+      }
+      
+      function generatePrompt() {
+        if (metricInput.value.trim() === '') {
+            resultContainer.style.display = 'none';
+            resultContainer.classList.remove('show');
+            return;
+        }
+        
+        const reportName = reportSelect.options[reportSelect.selectedIndex].text.replace(/^[📊📈📋]\s/, '');
+        const questionType = questionTypeSelect.value;
+        const metric = metricInput.value;
+        const persona = personaSelect.value;
+        const outputFormat = outputFormatSelect.value;
+
+        let prompt;
+        if (outputFormat === 'as a script for a Google Vids presentation') {
+            prompt = `Create a script for a short Google Vids scene. As ${persona}, I need to explain the key insights from the '${reportName}' regarding '${metric}'. The output should be formatted as a scene description with on-screen text and a voiceover, suitable for a presentation to executives.`;
+        } else {
+            prompt = `As ${persona}, using the '${reportName}', ${questionType} '${metric}'. Present the answer ${outputFormat}.`;
+        }
+        
+        generatedPromptEl.textContent = prompt;
+        resultContainer.style.display = 'block';
+        
+        // Animate the result
+        animatePromptGeneration();
+      }
+
+      function copyToClipboard(text, button) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.top = "-9999px";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          const originalText = button.innerHTML;
+          button.innerHTML = '<i class="fas fa-check"></i>Copied!';
+          button.classList.add('copied');
+          
+          setTimeout(() => { 
+            button.innerHTML = originalText;
+            button.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('Unable to copy', err);
+        }
+        document.body.removeChild(textArea);
+      }
+
+      // --- EVENT LISTENERS ---
+      reportSelect.addEventListener('change', function() {
+        questionTypeSelect.selectedIndex = 0;
+        metricInput.value = '';
+        resultContainer.style.display = 'none';
+        resultContainer.classList.remove('show');
+        
+        // Animate dropdown change
+        anime({
+          targets: this,
+          scale: [1, 1.02, 1],
+          duration: 300,
+          easing: 'easeInOutQuad'
+        });
+        
+        fetchAndDisplayPrompts(this.value);
+      });
+
+      questionTypeSelect.addEventListener('change', function() {
+          // Animate dropdown change
+          anime({
+            targets: this,
+            scale: [1, 1.02, 1],
+            duration: 300,
+            easing: 'easeInOutQuad'
+          });
+          
+          displayPrompts(this.value);
+      });
+
+      // Enhanced form field animations
+      [metricInput, personaSelect, outputFormatSelect].forEach(el => {
+          el.addEventListener('change', generatePrompt);
+          el.addEventListener('focus', function() {
+            anime({
+              targets: this.parentElement,
+              scale: [1, 1.02],
+              duration: 200,
+              easing: 'easeOutQuad'
+            });
+          });
+          el.addEventListener('blur', function() {
+            anime({
+              targets: this.parentElement,
+              scale: [1.02, 1],
+              duration: 200,
+              easing: 'easeOutQuad'
+            });
+          });
+      });
+
+      // Persona explanation
+      personaSelect.addEventListener('change', function() {
+        showPersonaExplanation(this.value);
+      });
+
+      // Format explanation
+      outputFormatSelect.addEventListener('change', function() {
+        showFormatExplanation(this.value);
+      });
+      
+      copyBtn.addEventListener('click', function() {
+        copyToClipboard(generatedPromptEl.textContent, this);
+      });
+
+      submissionForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.querySelector('.submit-btn');
+        
+        // Enhanced animate submit button
+        anime({
+          targets: submitBtn,
+          scale: [1, 0.92, 1.05],
+          duration: 400,
+          easing: 'easeInOutQuad'
+        });
+        
+        // Add pulsing effect while submitting
+        submitBtn.style.animation = 'pulse 1s infinite';
+        
+        showMessage("Submitting...", "");
+        
+        const formData = {
+            reportName: reportSelect.value,
+            submissionType: document.getElementById('submission-type').value,
+            submissionText: document.getElementById('submission-text').value
+        };
+
+        google.script.run.withSuccessHandler(function(response) {
+          submitBtn.style.animation = ''; // Remove pulsing
+          
+          if (response.success) {
+            showMessage(response.message, "success");
+            document.getElementById('submission-text').value = "";
+            
+            // Celebrate successful submission
+            anime({
+              targets: '.feedback-panel',
+              scale: [1, 1.02, 1],
+              duration: 600,
+              easing: 'easeInOutQuad'
+            });
+            
+            // Animate form reset
+            anime({
+              targets: '#submission-text',
+              backgroundColor: ['#f0f9ff', '#fff'],
+              duration: 1000,
+              easing: 'easeInOutQuad'
+            });
+          } else {
+            showMessage(response.message, "error");
+          }
+        }).withFailureHandler(function(error) {
+          submitBtn.style.animation = ''; // Remove pulsing
+          showMessage("Error: " + error.message, "error");
+        }).submitUserQuestion(formData);
+      });
+
+      // --- INITIALIZATION ---
+      document.addEventListener('DOMContentLoaded', function() {
+        createBackgroundParticles();
+        animateOnLoad();
+        fetchAndDisplayPrompts(reportSelect.value);
+        
+        // Show initial explanations
+        showPersonaExplanation(personaSelect.value);
+        showFormatExplanation(outputFormatSelect.value);
+      });
+
+    </script>
+  </body>
+</html>

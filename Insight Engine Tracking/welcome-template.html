@@ -1,0 +1,2821 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document Access Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Anime.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body { 
+            font-family: "Verizon NHG TX", Arial, Helvetica, sans-serif;
+            line-height: 1.4; 
+            margin: 0; 
+            padding: 15px;
+            background-color: #F6F6F6; 
+            font-size: 11px; 
+            color: #333333;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .main-layout {
+            display: flex;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: flex-start;
+            justify-content: center;
+            min-height: calc(100vh - 30px);
+        }
+        
+        .document-container { 
+            background-color: #FFFFFF; 
+            padding: 15px; 
+            max-width: 1400px;
+            width: 100%;
+            height: calc(100vh - 30px);
+            max-height: calc(100vh - 30px);
+            margin: 0 auto; 
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: fadeIn 0.8s ease-in;
+            display: grid;
+            grid-template-columns: 320px 1fr 300px;
+            gap: 20px;
+            overflow: hidden;
+        }
+        
+        .main-content {
+            min-width: 0;
+            height: calc(100vh - 60px);
+            max-height: calc(100vh - 60px);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 0 10px;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        
+        .sidebar {
+            background: #F6F6F6;
+            border: 1px solid #D8DADA;
+            border-radius: 8px;
+            padding: 15px;
+            height: calc(100vh - 60px);
+            max-height: calc(100vh - 60px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .whats-inside {
+            background: #F6F6F6;
+            border: 1px solid #D8DADA;
+            border-radius: 8px;
+            padding: 15px;
+            height: calc(100vh - 60px);
+            max-height: calc(100vh - 60px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .whats-inside-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #EE0000;
+        }
+        
+        .whats-inside-header h4 {
+            margin: 0;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000000;
+        }
+        
+        .info-section {
+            background-color: #F6F6F6;
+            border-left: 4px solid #EE0000;
+            padding: 12px 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .info-section h5 {
+            margin: 0 0 8px 0;
+            font-size: 11px;
+            font-weight: bold;
+            color: #000000;
+        }
+        
+        .info-section p {
+            margin: 0 0 8px 0;
+            font-size: 10px;
+            color: #333333;
+            line-height: 1.4;
+        }
+        
+        .info-section p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-section strong {
+            color: #EE0000;
+            font-weight: bold;
+        }
+        
+        .toc-section {
+            margin-top: 15px;
+        }
+        
+        .toc-section h5 {
+            margin: 0 0 10px 0;
+            font-size: 11px;
+            font-weight: bold;
+            color: #000000;
+            border-bottom: 1px solid #D8DADA;
+            padding-bottom: 5px;
+        }
+        
+        .toc-list {
+            padding-left: 15px;
+            margin: 0;
+            font-size: 9px;
+            line-height: 1.4;
+        }
+        
+        .toc-list li {
+            margin-bottom: 4px;
+            color: #555555;
+        }
+        
+        .toc-list li strong {
+            color: #000000;
+            font-weight: bold;
+            font-size: 10px;
+        }
+        
+        .toc-list ol {
+            margin: 4px 0;
+            padding-left: 15px;
+        }
+        
+        .toc-list ol li {
+            font-size: 9px;
+            color: #555555;
+        }
+        
+        .news-section {
+            margin-bottom: 20px;
+        }
+        
+        .news-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #EE0000;
+        }
+        
+        .news-header h4 {
+            margin: 0;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000000;
+        }
+        
+        .news-banner {
+            background: #EE0000;
+            border-radius: 6px;
+            padding: 8px 0;
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+            height: 35px;
+        }
+        
+        .news-ticker {
+            display: flex;
+            white-space: nowrap;
+        }
+        
+        .news-ticker-item {
+            color: #FFFFFF;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            flex-shrink: 0;
+            opacity: 0.9;
+        }
+        
+        .news-ticker-item:hover {
+            opacity: 1;
+            text-shadow: 0 0 8px rgba(255,255,255,0.5);
+        }
+        
+        .news-ticker-separator {
+            color: #ffcccc;
+            padding: 0 10px;
+            flex-shrink: 0;
+        }
+        
+        .news-item {
+            background-color: #FFFFFF;
+            border: 1px solid #D8DADA;
+            border-left: 3px solid #EE0000;
+            border-radius: 4px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 1; /* Changed from 0 to 1 for immediate visibility */
+            transform: translateY(0); /* Changed from translateY(20px) for immediate visibility */
+        }
+        
+        .news-item.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .news-item:hover {
+            box-shadow: 0 2px 8px rgba(238, 0, 0, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        .news-item.expanded {
+            border-left: 4px solid #EE0000;
+            box-shadow: 0 4px 12px rgba(238, 0, 0, 0.15);
+        }
+        
+        .news-story-full {
+            display: none;
+            background-color: #F6F6F6;
+            border: 1px solid #D8DADA;
+            border-radius: 6px;
+            padding: 0;
+            margin-top: 10px;
+            overflow: hidden;
+            opacity: 0;
+            max-height: 0;
+        }
+        
+        .news-story-full.show {
+            display: block;
+        }
+        
+        .document-container {
+            opacity: 1; /* Changed from 0 to 1 to ensure visibility by default */
+            transform: translateY(0); /* Changed from translateY(30px) to prevent hiding */
+        }
+        
+        .document-container.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .story-content {
+            font-size: 10px;
+            line-height: 1.5;
+            color: #333333;
+            margin-bottom: 10px;
+        }
+        
+        .story-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #D8DADA;
+            padding-top: 10px;
+        }
+        
+        .close-story {
+            background: #EE0000;
+            color: #FFFFFF;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 9px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .close-story:hover {
+            background: #CC0000;
+        }
+        
+        .news-title {
+            font-size: 10px;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        
+        .news-excerpt {
+            font-size: 9px;
+            color: #333333;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+        
+        .news-meta {
+            font-size: 8px;
+            color: #555555;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .news-source {
+            font-weight: bold;
+            color: #EE0000;
+        }
+        
+        .news-loading {
+            text-align: center;
+            padding: 20px;
+            color: #555555;
+            font-size: 10px;
+        }
+        
+        .news-error {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 4px;
+            padding: 12px;
+            text-align: center;
+            color: #dc2626;
+            font-size: 10px;
+        }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* CRITICAL: Emergency visibility rules to prevent UI disappearing */
+        /* These rules override any animation states that might hide the UI */
+        .document-container, 
+        .main-content,
+        .sidebar,
+        .whats-inside,
+        .file-info-section,
+        .insight-engine-overview,
+        .action-buttons-section,
+        .insight-engine-info,
+        .security-info,
+        .feedback-section,
+        .info-section,
+        .toc-section {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+        }
+        
+        /* Override the initial hidden state after 1 second */
+        .document-container {
+            animation: forceVisible 1s ease-in forwards !important;
+        }
+        
+        @keyframes forceVisible {
+            0% { 
+                opacity: 0; 
+                visibility: hidden; 
+                transform: translateY(30px); 
+            }
+            50% { 
+                opacity: 0.5; 
+                visibility: visible; 
+                transform: translateY(15px); 
+            }
+            100% { 
+                opacity: 1 !important; 
+                visibility: visible !important; 
+                transform: none !important; 
+            }
+        }
+        
+        .header { 
+            background-color: #EE0000; 
+            color: #FFFFFF; 
+            padding: 15px 20px;
+            text-align: center; 
+            margin: -10px -10px 15px -10px;
+            border-radius: 8px 8px 0 0;
+            flex-shrink: 0;
+        }
+        
+        .header h1 { 
+            margin: 0 0 8px 0; 
+            font-size: 20px; 
+            font-weight: bold; 
+            line-height: 1.2;
+        }
+
+        .header .tagline {
+            margin: 0;
+            font-size: 14px;
+            font-weight: normal;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .highlight-phrase {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-shadow: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .content { 
+            padding: 10px 5px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            max-width: 600px;
+            width: 100%;
+            min-height: auto;
+            flex: 1;
+            overflow-y: hidden;
+        }
+        
+        .content h3 { 
+            color: #000000; 
+            border-bottom: 1px solid #D8DADA;
+            padding-bottom: 3px; 
+            margin-top: 15px; 
+            margin-bottom: 8px;
+            font-size: 14px; 
+            font-weight: bold;
+        }
+        
+        .document-info { 
+            background-color: #F6F6F6; 
+            border-left: 4px solid #EE0000;
+            padding: 15px 20px; 
+            margin: 20px 0; 
+            border-radius: 4px;
+        }
+        
+        .document-info h4 { 
+            margin: 0 0 10px 0; 
+            font-size: 12px; 
+            font-weight: bold;
+            color: #000000;
+        }
+        
+        .doc-name { 
+            font-size: 14px; 
+            font-weight: bold; 
+            color: #000000;
+            margin-bottom: 8px; 
+            word-wrap: break-word;
+        }
+        
+        .doc-desc { 
+            font-size: 11px; 
+            color: #333333; 
+            margin: 0;
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .detail-item {
+            background-color: #F6F6F6;
+            padding: 10px 12px;
+            border-radius: 4px;
+            border-left: 2px solid #EE0000;
+        }
+        
+        .detail-label {
+            font-size: 10px;
+            color: #555555;
+            font-weight: bold;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .detail-value {
+            font-size: 11px;
+            color: #000000;
+            font-weight: bold;
+        }
+        
+        .file-owner-section {
+            grid-column: 1 / -1;
+        }
+        
+        .insight-engine-info {
+            background: linear-gradient(135deg, #e8f4fd 0%, #f0f9ff 100%);
+            border: 1px solid #bfdbfe;
+            border-left: 4px solid #3b82f6;
+            border-radius: 4px;
+            padding: 12px 15px;
+            margin: 0;
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .insight-engine-overview {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #0ea5e9;
+            border-left: 4px solid #0ea5e9;
+            border-radius: 6px;
+            padding: 15px 20px;
+            margin: 0 0 12px 0;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .insight-engine-overview h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            font-weight: bold;
+            color: #0c4a6e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .overview-text {
+            font-size: 10px;
+            color: #333333;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+
+        .platform-benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 10px;
+            border-radius: 4px;
+            border-left: 2px solid #0ea5e9;
+        }
+
+        .benefit-icon {
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .benefit-content {
+            flex: 1;
+        }
+
+        .benefit-content strong {
+            display: block;
+            color: #000000;
+            font-size: 9px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .benefit-content p {
+            margin: 0;
+            font-size: 8px;
+            color: #555555;
+            line-height: 1.3;
+        }
+        
+        .insight-engine-info h4 {
+            margin: 0 0 8px 0;
+            font-size: 10px;
+            font-weight: bold;
+            color: #1e40af;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .insight-steps {
+            margin: 6px 0;
+        }
+        
+        .insight-step {
+            font-size: 8px;
+            color: #374151;
+            margin: 3px 0;
+            padding-left: 12px;
+            position: relative;
+        }
+        
+        .insight-step::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-size: 6px;
+        }
+        
+        .gemini-tip {
+            background-color: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 3px;
+            padding: 6px 8px;
+            margin-top: 6px;
+            font-size: 8px;
+            color: #92400e;
+        }
+        
+        .gemini-tip strong {
+            color: #78350f;
+        }
+        
+        .access-section { 
+            text-align: center; 
+            margin: 0; 
+        }
+        
+        .access-btn { 
+            display: inline-block; 
+            background-color: #EE0000; 
+            color: #FFFFFF;
+            padding: 12px 30px; 
+            border-radius: 5px; 
+            font-weight: bold;
+            font-size: 14px; 
+            text-decoration: none; 
+            border: none; 
+            cursor: pointer;
+            transition: background-color 0.2s ease; 
+            margin-bottom: 10px;
+        }
+        
+        .access-btn:hover { 
+            background-color: #CC0000; 
+        }
+        
+        .access-btn:disabled {
+            background-color: #D8DADA;
+            cursor: not-allowed;
+        }
+        
+        .action-buttons-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin: 10px 0;
+            width: 100%;
+        }
+        
+        .prompt-generator-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #4A4A4A 0%, #2E2E2E 100%);
+            color: #FFFFFF;
+            padding: 10px 24px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        
+        .prompt-generator-btn:hover {
+            background: linear-gradient(135deg, #3A3A3A 0%, #1E1E1E 100%);
+            border-color: #EE0000;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .security-info { 
+            background-color: #F6F6F6; 
+            border: 1px solid #D8DADA;
+            border-radius: 4px; 
+            padding: 8px 12px; 
+            text-align: center;
+            margin: 0;
+            width: 100%;
+            max-width: 350px;
+        }
+        
+        .security-info p { 
+            margin: 0; 
+            font-size: 9px; 
+            color: #555555;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 4px;
+        }
+        
+        /* File Information Section */
+        .file-info-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 1px solid #cbd5e1;
+            border-left: 4px solid #EE0000;
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin: 8px 0;
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+        
+        .file-info-section h4 {
+            margin: 0 0 8px 0;
+            font-size: 12px;
+            font-weight: bold;
+            color: #000000;
+        }
+        
+        .file-metadata {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        
+        .file-date, .file-name {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 9px;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+        
+        /* Feedback Section */
+        .feedback-section {
+            background: linear-gradient(135deg, #fef7ed 0%, #fed7aa 100%);
+            border: 1px solid #f59e0b;
+            border-left: 4px solid #f59e0b;
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin: 8px 0 0 0;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+        
+        .feedback-section h4 {
+            margin: 0 0 8px 0;
+            font-size: 11px;
+            font-weight: bold;
+            color: #92400e;
+        }
+        
+        .feedback-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .feedback-btn {
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .feedback-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .feedback-btn.thumbs-up:hover {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+        }
+        
+        .feedback-btn.thumbs-down:hover {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+        }
+        
+        .feedback-received {
+            text-align: center;
+            padding: 10px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            border-radius: 6px;
+        }
+        
+        .feedback-received span {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .feedback-received p {
+            margin: 0;
+            color: #065f46;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Ensure all content sections are properly visible */
+        .file-info-section,
+        .insight-engine-overview,
+        .action-buttons-section,
+        .insight-engine-info,
+        .security-info,
+        .feedback-section {
+            flex-shrink: 0;
+            margin-bottom: 8px;
+        }
+        
+        .content > *:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Ensure minimum spacing between sections */
+        .content > * + * {
+            margin-top: 8px;
+        }
+        
+        /* Loading animation */
+        .loading {
+            opacity: 0.7;
+        }
+        
+        /* Custom scrollbar styling */
+        .main-content::-webkit-scrollbar,
+        .sidebar::-webkit-scrollbar,
+        .whats-inside::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .main-content::-webkit-scrollbar-track,
+        .sidebar::-webkit-scrollbar-track,
+        .whats-inside::-webkit-scrollbar-track {
+            background: #F6F6F6;
+            border-radius: 3px;
+        }
+        
+        .main-content::-webkit-scrollbar-thumb,
+        .sidebar::-webkit-scrollbar-thumb,
+        .whats-inside::-webkit-scrollbar-thumb {
+            background: #EE0000;
+            border-radius: 3px;
+            opacity: 0.7;
+        }
+        
+        .main-content::-webkit-scrollbar-thumb:hover,
+        .sidebar::-webkit-scrollbar-thumb:hover,
+        .whats-inside::-webkit-scrollbar-thumb:hover {
+            background: #CC0000;
+            opacity: 1;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (min-width: 1400px) {
+            .document-container {
+                grid-template-columns: 350px 1fr 320px;
+                gap: 25px;
+                max-width: 1500px;
+            }
+            
+            .content {
+                max-width: 800px;
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .document-container {
+                grid-template-columns: 300px 1fr 280px;
+                gap: 15px;
+                max-width: 1200px;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .document-container {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                height: calc(100vh - 30px);
+                max-height: calc(100vh - 30px);
+                overflow: hidden;
+            }
+            .whats-inside, .sidebar {
+                order: unset;
+                height: calc(25vh);
+                max-height: calc(25vh);
+                padding: 10px;
+                overflow-y: auto;
+            }
+            .main-content {
+                height: calc(50vh);
+                max-height: calc(50vh);
+                overflow: hidden;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+                height: 100vh;
+                overflow: hidden;
+            }
+            .document-container {
+                max-width: 100%;
+                padding: 5px;
+                grid-template-columns: 1fr;
+                gap: 8px;
+                height: calc(100vh - 10px);
+                max-height: calc(100vh - 10px);
+                overflow: hidden;
+            }
+            .whats-inside, .sidebar {
+                padding: 8px;
+                height: calc(30vh);
+                max-height: calc(30vh);
+                overflow-y: auto;
+            }
+            .main-content {
+                height: calc(40vh);
+                max-height: calc(40vh);
+                overflow: hidden;
+            }
+            .header {
+                padding: 8px 8px;
+                margin: -5px -5px 10px -5px;
+            }
+            .header h1 {
+                font-size: 14px;
+            }
+            .access-btn {
+                padding: 8px 15px;
+                font-size: 11px;
+            }
+            .action-buttons-section {
+                gap: 5px;
+                margin: 8px 0;
+            }
+            .prompt-generator-btn {
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+            .file-metadata {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .feedback-buttons {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .feedback-btn {
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <!-- What's Inside Container - Dynamically populated by backend -->
+        <div class="whats-inside" id="whatsInsideContainer">
+            <div class="whats-inside-header">
+                <span>📋</span>
+                <h4>What's Inside</h4>
+            </div>
+            <!-- This content will be populated by backend-provided HTML -->
+            <div id="whats-inside-content">
+                <div class="loading-placeholder">
+                    <p>Loading report-specific content...</p>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <h1>Welcome to Insight Engine</h1>
+                <p class="tagline"><span class="highlight-phrase">Go Beyond the Numbers: Analyze This Report with Gemini</span></p>
+            </div>
+            <div class="content">
+                <!-- Action Buttons Section -->
+                <div class="action-buttons-section">
+                    <button class="access-btn primary" onclick="accessDocument()" id="accessBtn">
+                        Open the report with Gemini 🚀
+                    </button>
+                    <a href="https://script.google.com/a/macros/verizon.com/s/AKfycbw4kLz4XXvbFSSBPavb-w-NToOAebrmdXHbCPsI1rChcf-N2qrEYNCDhqeo2uZokFGL/exec" 
+                       target="_blank" class="prompt-generator-btn" onclick="trackPromptGeneratorClick()" id="promptGeneratorBtn">
+                        Prompt Generator 🎯
+                    </a>
+                    <div style="margin-top: 8px; padding: 8px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px; font-size: 9px; color: #856404;">
+                        <strong>💡 Tip:</strong> If document won't open, add your file URL: <br>
+                        <code style="font-size: 8px;">?fileUrl=YOUR_DRIVE_URL</code> or <code style="font-size: 8px;">?URL=YOUR_DRIVE_URL</code>
+                    </div>
+                </div>
+                <!-- File Information Section - Now directly below buttons -->
+                <div class="file-info-section" id="fileInfoSection">
+                    <div class="file-details">
+                        <h4 id="reportTitle">📊 {{DOCUMENT_TYPE}}</h4>
+                        <div class="file-metadata">
+                            <span class="file-date" id="fileDate">📅 {{LAST_MODIFIED}}</span>
+                            <span class="file-name" id="fileName">📋 {{DOCUMENT_NAME}}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Insight Engine Overview Section -->
+                <div class="insight-engine-overview">
+                    <h4>🚀 Welcome to the Insight Engine Platform</h4>
+                    <p class="overview-text">Transform static reports into dynamic, conversational AI experiences. Our platform moves you from consuming "plain cheese pizza" (static data) to enjoying a full-service "pizzeria" experience with curated prompts and AI-powered analysis.</p>
+                    <div class="platform-benefits">
+                        <div class="benefit-item">
+                            <span class="benefit-icon">⚡</span>
+                            <div class="benefit-content">
+                                <strong>Instant Insights</strong>
+                                <p>Skip manual analysis - get immediate answers to complex business questions</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">🎯</span>
+                            <div class="benefit-content">
+                                <strong>Expert-Curated Prompts</strong>
+                                <p>Access professionally designed analysis templates for consistent results</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">🔒</span>
+                            <div class="benefit-content">
+                                <strong>Secure & Grounded</strong>
+                                <p>All analysis stays within your secure Google Workspace environment</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="insight-engine-info">
+                    <h4>🤖 How to Use the Insight Engine</h4>
+                    <div class="insight-steps">
+                        <div class="insight-step">Click <strong>"Open the report with Gemini"</strong> above to open your report in Google Drive</div>
+                        <div class="insight-step">Open the <strong>Gemini Sidebar</strong> in Google Workspace (AI assistant panel)</div>
+                        <div class="insight-step">Use the <strong>Prompt Generator WebApp</strong> to create optimized analysis prompts</div>
+                        <div class="insight-step">Copy generated prompts into Gemini for intelligent report analysis</div>
+                        <div class="insight-step">Get instant insights on trends, metrics, and performance data</div>
+                    </div>
+                    <div class="gemini-tip">
+                        <strong>💡 Pro Tip:</strong> The Insight Engine works best with executive reports, financial data, and performance metrics. Use specific prompts for accurate analysis!
+                    </div>
+                </div>
+                <!-- Feedback Section -->
+                <div class="feedback-section">
+                    <h4>📝 How was your experience?</h4>
+                    <div class="feedback-buttons">
+                        <button class="feedback-btn thumbs-up" onclick="trackFeedback(true)">
+                            👍 Great!
+                        </button>
+                        <button class="feedback-btn thumbs-down" onclick="trackFeedback(false)">
+                            👎 Needs Work
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- News Sidebar -->
+        <div class="sidebar">
+            <div class="news-section">
+                <div class="news-header">
+                    <span>📰</span>
+                    <h4>Latest Headlines</h4>
+                </div>
+                <div class="news-banner">
+                    <div class="news-ticker" id="newsTicker">
+                        <span class="news-ticker-item">✅ Portal Active • 📊 Ready for Use • 🚀 {{DOCUMENT_TYPE}} Available</span>
+                    </div>
+                </div>
+                <div id="newsContainer">
+                    <div class="news-item">
+                        <h5>Document Portal Ready</h5>
+                        <p>Your {{DOCUMENT_TYPE}} is available for analysis and insights.</p>
+                        <small>{{TIMESTAMP}} • Document Portal</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <script>
+        // Template data injected by backend (will be replaced during processing)
+        // First check if backend properly replaced the placeholder
+        window.templateData = null;
+        
+        try {
+            // This line will be replaced by backend with actual JSON data
+            // If not replaced, it will cause a syntax error which we catch
+            eval('window.templateData = {{TEMPLATE_DATA_JSON}};');
+            if (window.templateData && typeof window.templateData === 'object') {
+                console.log('✅ Backend template data loaded successfully');
+            }
+        } catch (e) {
+            console.warn('Backend template data not available:', e.message);
+            window.templateData = null;
+        }
+        
+        // Enhanced fallback data with URL parameter extraction
+        if (!window.templateData || typeof window.templateData !== 'object') {
+            console.warn('Using fallback template data with URL parameter extraction');
+            
+            // Try to extract URL from current page URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlFromParams = urlParams.get('URL') || urlParams.get('fileUrl') || urlParams.get('url') || urlParams.get('file');
+            
+            window.templateData = {
+                FILE_URL: urlFromParams || null,
+                FILE_URL_DIRECT: urlFromParams || null,
+                FILE_URL_VIEW: urlFromParams || null, 
+                FILE_URL_EDIT: urlFromParams || null,
+                FILE_URL_PREVIEW: urlFromParams || null,
+                DOCUMENT_NAME: 'Executive Report Document',
+                DOCUMENT_TYPE: 'Document',
+                FILE_ID: urlFromParams ? extractFileIdFromUrl(urlFromParams) : null,
+                LAST_MODIFIED: new Date().toLocaleDateString(),
+                FILE_OWNER: 'Document Owner',
+                TIMESTAMP: new Date().toISOString(),
+                _fallbackMode: true
+            };
+            
+            console.log('Fallback template data created:', window.templateData);
+        }
+        
+        // IMMEDIATE CONTENT POPULATION - Run as soon as template data is ready
+        // This prevents loading states from appearing at all
+        function immediateContentPopulation() {
+            console.log('🚀 Running immediate content population');
+            
+            // Since template placeholders are now replaced by backend, 
+            // we only need to handle fallback cases and dynamic content
+            
+            // Hide any remaining loading elements that might have been missed
+            const loadingElements = document.querySelectorAll('.news-loading, [id*="Loading"], [class*="loading"]');
+            loadingElements.forEach(el => {
+                if (el.textContent && el.textContent.toLowerCase().includes('loading')) {
+                    el.style.display = 'none';
+                    console.log('Hid loading element:', el);
+                }
+            });
+            
+            // Show main content containers
+            const containers = document.querySelectorAll('.document-container, .main-layout');
+            containers.forEach(el => {
+                if (el) {
+                    el.style.opacity = '1';
+                    el.style.display = 'block';
+                }
+            });
+            
+            console.log('✅ Immediate content population complete');
+        }
+        
+        // Call immediate population
+        immediateContentPopulation();
+        
+        // Also call it when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', immediateContentPopulation);
+        } else {
+            immediateContentPopulation();
+        }
+        
+        // CRITICAL: Call immediate content population right after template data setup
+        // This happens before DOM is even ready to eliminate any loading states
+        console.log('🚀 CALLING IMMEDIATE CONTENT POPULATION');
+        setTimeout(showImmediateContent, 0); // Run immediately but allow template data to be set first
+        
+        // Debug function to check template data
+        function debugTemplateData() {
+            console.log('=== Template Data Debug ===');
+            console.log('window.templateData:', window.templateData);
+            console.log('FILE_URL_DIRECT:', window.templateData?.FILE_URL_DIRECT);
+            console.log('DOCUMENT_NAME:', window.templateData?.DOCUMENT_NAME);
+            console.log('Fallback mode:', window.templateData?._fallbackMode);
+        }
+        
+        // Call debug function
+        debugTemplateData();
+        
+        // Configuration
+        const TRACKING_ENABLED = true; // Production setting - enable tracking
+        
+        // Usage tracking variables
+        let sessionStartTime = Date.now();
+        let clickCount = 0;
+        let pageLoadTime = Date.now();
+        let userFeedback = null;
+        
+        // SIMPLIFIED: Load dynamic content from backend
+        function loadDynamicContent() {
+            console.log('🎯 Loading dynamic content from backend data');
+            
+            // Get the What's Inside HTML content from backend
+            const whatsInsideHtml = window.templateData?.WHATS_INSIDE_HTML || null;
+            const reportType = window.templateData?.REPORT_TYPE || 'Standard Report';
+            
+            if (whatsInsideHtml) {
+                // Inject the backend-provided HTML directly
+                const contentContainer = document.getElementById('whats-inside-content');
+                if (contentContainer) {
+                    contentContainer.innerHTML = whatsInsideHtml;
+                    console.log(`✅ Loaded ${reportType} content successfully`);
+                } else {
+                    console.error('❌ What\'s Inside content container not found');
+                }
+            } else {
+                console.warn('⚠️ No What\'s Inside HTML provided by backend, using fallback');
+                loadFallbackContent();
+            }
+        }
+        
+        // Fallback content if backend doesn't provide specific template
+        function loadFallbackContent() {
+            const contentContainer = document.getElementById('whats-inside-content');
+            if (contentContainer) {
+                contentContainer.innerHTML = `
+                    <div class="info-section">
+                        <h5>📊 Report Information</h5>
+                        <p>This document contains important business insights and analytics.</p>
+                        <p>Please review the content carefully for key metrics and trends.</p>
+                        <div class="access-button-container">
+                            <button onclick="accessDocument()" class="access-btn">
+                                📄 Open Report
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Function to extract filename from URL
+        function extractFilenameFromUrl(url) {
+            try {
+                const urlObj = new URL(url);
+                const pathParts = urlObj.pathname.split('/');
+                const filename = pathParts[pathParts.length - 1];
+                return decodeURIComponent(filename);
+            } catch (error) {
+                return "Unknown Report";
+            }
+        }
+        
+        // Function to extract date from filename
+        function extractDateFromFilename(filename) {
+            // Look for date patterns like 2025-09-12, 09-12-2025, etc.
+            const datePatterns = [
+                /(\d{4})-(\d{2})-(\d{2})/,  // YYYY-MM-DD
+                /(\d{2})-(\d{2})-(\d{4})/,  // MM-DD-YYYY
+                /(\d{4})(\d{2})(\d{2})/     // YYYYMMDD
+            ];
+            
+            for (const pattern of datePatterns) {
+                const match = filename.match(pattern);
+                if (match) {
+                    try {
+                        let year, month, day;
+                        if (pattern === datePatterns[0]) { // YYYY-MM-DD
+                            [, year, month, day] = match;
+                        } else if (pattern === datePatterns[1]) { // MM-DD-YYYY
+                            [, month, day, year] = match;
+                        } else { // YYYYMMDD
+                            [, year, month, day] = [match[0], match[1], match[2], match[3]];
+                        }
+                        
+                        const date = new Date(year, month - 1, day);
+                        return date.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                    } catch (error) {
+                        return "Recent";
+                    }
+                }
+            }
+            return "Recent";
+        }
+        
+        // Usage tracking functions
+        function trackClick(elementType, elementId = null) {
+            // Check if tracking is enabled
+            if (!TRACKING_ENABLED) {
+                return 'TRACKING_DISABLED';
+            }
+            
+            clickCount++;
+            const trackingData = {
+                sessionId: sessionStartTime,
+                timestamp: Date.now(),
+                clickType: elementType,
+                elementId: elementId,
+                totalClicks: clickCount,
+                sessionDuration: Date.now() - sessionStartTime
+            };
+            
+            // Send to backend (will implement google.script.run call)
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                    .withFailureHandler(function(error) {
+                        // Silently handle tracking errors
+                    })
+                    .recordUsageMetrics('click', trackingData);
+            }
+        }
+        
+        function trackFeedback(isPositive) {
+            userFeedback = isPositive;
+            const trackingData = {
+                sessionId: sessionStartTime,
+                timestamp: Date.now(),
+                feedback: isPositive ? 'thumbs_up' : 'thumbs_down',
+                sessionDuration: Date.now() - sessionStartTime,
+                totalClicks: clickCount
+            };
+            
+            // Send to backend
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                    .withFailureHandler(function(error) {
+                        // Silently handle tracking errors
+                    })
+                    .recordUsageMetrics('feedback', trackingData);
+            }
+            
+            // Update UI to show feedback was recorded
+            const feedbackSection = document.querySelector('.feedback-section');
+            if (feedbackSection) {
+                feedbackSection.innerHTML = `
+                    <div class="feedback-received">
+                        <span>${isPositive ? '👍' : '👎'}</span>
+                        <p>Thank you for your feedback!</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function trackSessionEnd() {
+            const trackingData = {
+                sessionId: sessionStartTime,
+                timestamp: Date.now(),
+                sessionDuration: Date.now() - sessionStartTime,
+                totalClicks: clickCount,
+                userFeedback: userFeedback,
+                pageLoadTime: pageLoadTime
+            };
+            
+            // Send to backend
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                    .withFailureHandler(function(error) {
+                        // Silently handle tracking errors
+                    })
+                    .recordUsageMetrics('session_end', trackingData);
+            }
+        }
+        
+        // Track session end on page unload
+        window.addEventListener('beforeunload', trackSessionEnd);
+        
+        // Report content configurations
+        const reportConfigs = {
+            "Negative GA": {
+                whatsnew: "The following metrics have been removed from this report: Stand-alone FWA accounts, Second Line Activity, Channel Mix - postpaid gross adds, Step Up / Down Ratio, ARD, Device Protection Attach Rate, VZ Protect Home, Device Protection, and VMP Add.",
+                whatsinside: [
+                    {
+                        title: "Fixed Wireless Access (FWA)",
+                        content: "VCG FWA volume consolidates traditional line activations. Total and VBG FWA volume consolidates both traditional and IoT-based line activations."
+                    },
+                    {
+                        title: "Upgrades",
+                        content: "For Consumer upgrades, performance exceeding forecast/cv is now displayed as a positive value. For Total Wireless and Business upgrades, this calculation remains unchanged (performance exceeding forecast/cv is negative)."
+                    }
+                ],
+                toc: [
+                    {
+                        title: "Total - Wireless, Total - Areas",
+                        items: ["Postpaid customer growth", "Postpaid port activity", "Total port activity", "Volume mix (direct / indirect)"]
+                    },
+                    {
+                        title: "Consumer, Total - Areas, Wireless",
+                        items: ["Postpaid customer growth", "Postpaid port activity", "Postpaid customer growth by channel"]
+                    },
+                    {
+                        title: "Total - VVO, Total - Areas",
+                        items: ["Prepaid customer growth"]
+                    },
+                    {
+                        title: "Business, Total - Areas, Wireless",
+                        items: ["Postpaid customer growth", "Postpaid port activity", "Postpaid customer growth by channel"]
+                    }
+                ]
+            },
+            "Inflow and Outflow": {
+                whatsnew: "Enhanced tracking of customer movement patterns with new visualization tools. Added real-time flow metrics and improved segmentation analysis.",
+                whatsinside: [
+                    {
+                        title: "Customer Flow Analytics",
+                        content: "Comprehensive analysis of customer acquisition and churn patterns across all channels and customer segments."
+                    },
+                    {
+                        title: "Retention Metrics",
+                        content: "Deep dive into customer lifetime value, retention rates, and churn prediction models with actionable insights."
+                    }
+                ],
+                toc: [
+                    {
+                        title: "Executive Summary",
+                        items: ["Key flow metrics", "Trend analysis", "Strategic recommendations"]
+                    },
+                    {
+                        title: "Inflow Analysis",
+                        items: ["New customer acquisition", "Channel performance", "Conversion rates"]
+                    },
+                    {
+                        title: "Outflow Analysis",
+                        items: ["Churn patterns", "Risk segments", "Retention strategies"]
+                    },
+                    {
+                        title: "Predictive Insights",
+                        items: ["Flow forecasting", "Risk modeling", "Opportunity identification"]
+                    }
+                ]
+            },
+            "VCG VVO Performance": {
+                whatsnew: "Updated performance indicators with enhanced granularity. New KPI dashboards and comparative analysis tools integrated.",
+                whatsinside: [
+                    {
+                        title: "Performance Metrics",
+                        content: "Comprehensive VCG and VVO performance indicators including revenue, customer satisfaction, and operational efficiency metrics."
+                    },
+                    {
+                        title: "Comparative Analysis",
+                        content: "Side-by-side performance comparison with historical data, industry benchmarks, and competitive positioning."
+                    }
+                ],
+                toc: [
+                    {
+                        title: "VCG Performance Overview",
+                        items: ["Revenue metrics", "Customer growth", "Market share analysis"]
+                    },
+                    {
+                        title: "VVO Performance Tracking",
+                        items: ["Operational efficiency", "Service quality metrics", "Customer experience scores"]
+                    },
+                    {
+                        title: "Competitive Positioning",
+                        items: ["Market comparison", "Performance benchmarks", "Strategic insights"]
+                    }
+                ]
+            },
+            "OneEx Total": {
+                whatsnew: "Consolidated OneEx reporting with unified metrics across all business units. Enhanced drill-down capabilities and real-time data integration.",
+                whatsinside: [
+                    {
+                        title: "Unified Analytics",
+                        content: "Complete OneEx ecosystem performance including cross-platform metrics, user engagement, and revenue optimization insights."
+                    },
+                    {
+                        title: "Integration Metrics",
+                        content: "Platform integration success rates, API performance, and system reliability metrics across all OneEx touchpoints."
+                    }
+                ],
+                toc: [
+                    {
+                        title: "Platform Overview",
+                        items: ["Total user engagement", "Revenue performance", "System health metrics"]
+                    },
+                    {
+                        title: "Cross-Platform Analytics",
+                        items: ["Integration performance", "Data flow metrics", "User journey analysis"]
+                    },
+                    {
+                        title: "Optimization Insights",
+                        items: ["Performance bottlenecks", "Growth opportunities", "Technical recommendations"]
+                    }
+                ]
+            },
+            "Wireline Daily Driver": {
+                whatsnew: "Daily operational metrics with real-time alerts and predictive maintenance indicators. Enhanced network performance tracking.",
+                whatsinside: [
+                    {
+                        title: "Daily Operations",
+                        content: "Comprehensive daily performance metrics including network health, service delivery, and operational efficiency indicators."
+                    },
+                    {
+                        title: "Predictive Analytics",
+                        content: "Advanced analytics for network optimization, maintenance scheduling, and proactive issue resolution."
+                    }
+                ],
+                toc: [
+                    {
+                        title: "Network Performance",
+                        items: ["Daily health metrics", "Performance indicators", "Alert summaries"]
+                    },
+                    {
+                        title: "Service Delivery",
+                        items: ["Customer impact analysis", "Service level metrics", "Quality indicators"]
+                    },
+                    {
+                        title: "Operational Insights",
+                        items: ["Efficiency metrics", "Resource utilization", "Optimization opportunities"]
+                    }
+                ]
+            }
+        };
+
+        function loadReportContent(reportType) {
+            console.log('=== Loading Report Content ===');
+            console.log('Report type:', reportType);
+            
+            try {
+                const config = reportConfigs[reportType];
+                console.log('Config found:', !!config);
+                
+                if (!config) {
+                    console.warn(`Config not found for "${reportType}", loading default`);
+                    const reportContentEl = document.getElementById('reportContent');
+                    if (reportContentEl) {
+                        reportContentEl.innerHTML = `
+                            <div class="info-section">
+                                <h5>Loading Alternative Report Content</h5>
+                                <p>The requested report configuration "${reportType}" is not available. Loading default content...</p>
+                            </div>
+                        `;
+                    }
+                    // Load default content (Negative GA)
+                    loadReportContent("Negative GA");
+                    return;
+                }
+
+                let contentHTML = '';
+
+                // What's New section
+                if (config.whatsnew) {
+                    contentHTML += `
+                        <div class="info-section">
+                            <h5>What's New:</h5>
+                            <p>${config.whatsnew}</p>
+                        </div>
+                    `;
+                }
+
+                // What's Inside sections
+                if (config.whatsinside && config.whatsinside.length > 0) {
+                    contentHTML += `<div class="info-section"><h5>What's Inside:</h5>`;
+                    config.whatsinside.forEach((section, index) => {
+                        const marginTop = index > 0 ? ' style="margin-top:10px;"' : '';
+                        contentHTML += `
+                            <p${marginTop}><strong>${section.title}:</strong><br>
+                            ${section.content}</p>
+                        `;
+                    });
+                    contentHTML += `</div>`;
+                }
+
+                // Table of Contents
+                if (config.toc && config.toc.length > 0) {
+                    contentHTML += `
+                        <div class="toc-section">
+                            <h5>Table of Contents:</h5>
+                            <ol class="toc-list">
+                    `;
+                    config.toc.forEach(section => {
+                        contentHTML += `
+                            <li>
+                                <strong>${section.title}</strong>
+                                <ol type="a">
+                        `;
+                        section.items.forEach(item => {
+                            contentHTML += `<li>${item}</li>`;
+                        });
+                        contentHTML += `
+                                </ol>
+                            </li>
+                        `;
+                    });
+                    contentHTML += `
+                            </ol>
+                        </div>
+                    `;
+                }
+
+                // Ensure we have some content
+                if (!contentHTML.trim()) {
+                    console.warn('No content generated, providing fallback');
+                    contentHTML = `
+                        <div class="info-section">
+                            <h5>Report Content</h5>
+                            <p>This report contains comprehensive business insights and analytics data. The content has been successfully loaded and is ready for viewing.</p>
+                        </div>
+                        <div class="toc-section">
+                            <h5>Document Overview:</h5>
+                            <ul class="toc-list">
+                                <li>Executive Summary</li>
+                                <li>Key Performance Metrics</li>
+                                <li>Data Analysis</li>
+                                <li>Recommendations</li>
+                            </ul>
+                        </div>
+                    `;
+                }
+
+                const reportContentEl = document.getElementById('reportContent');
+                if (reportContentEl) {
+                    reportContentEl.innerHTML = contentHTML;
+                    console.log('Report content loaded successfully');
+                } else {
+                    console.error('reportContent element not found');
+                }
+                
+            } catch (loadReportError) {
+                console.error('Report loading error:', loadReportError);
+                // Enhanced fallback content if loading fails
+                const reportContentEl = document.getElementById('reportContent');
+                if (reportContentEl) {
+                    reportContentEl.innerHTML = `
+                        <div class="info-section">
+                            <h5>Report Content Available</h5>
+                            <p>Your report content is ready for viewing. This document contains important business insights and data analysis.</p>
+                        </div>
+                        <div class="toc-section">
+                            <h5>Report Includes:</h5>
+                            <ul class="toc-list">
+                                <li><strong>Performance Analytics:</strong> Key metrics and trends</li>
+                                <li><strong>Data Insights:</strong> Comprehensive analysis results</li>
+                                <li><strong>Executive Summary:</strong> High-level findings</li>
+                                <li><strong>Actionable Recommendations:</strong> Next steps and strategies</li>
+                            </ul>
+                        </div>
+                    `;
+                    console.log('Fallback report content loaded');
+                }
+            }
+        }
+
+        function accessDocument() {
+            const btn = document.getElementById('accessBtn');
+            
+            // 1. Track the click if tracking is enabled
+            if (TRACKING_ENABLED) {
+                trackClick('report_access_button', 'accessBtn');
+            }
+            
+            // 2. Get file URLs from multiple sources
+            const templateUrls = getFileUrls();
+            let fileUrl = getFileUrl();
+            
+            // 3. Build priority list of URLs to try
+            const urlsToTry = [
+                templateUrls.direct,    // Best for most files
+                templateUrls.edit,      // Good for Google Workspace files
+                fileUrl,                // User-provided or detected URL
+                templateUrls.view,      // Fallback view URL
+                templateUrls.primary,   // Original template URL
+                templateUrls.preview    // Last resort
+            ].filter(url => url && url !== "{{FILE_URL}}" && url.trim() !== "" && !url.includes("{{"));
+            
+            if (urlsToTry.length === 0) {
+                btn.innerHTML = '❌ No URL Found';
+                setTimeout(() => {
+                    btn.innerHTML = 'Open the report with Gemini 🚀';
+                    alert('🚨 No valid file URL found. Please ensure the document URL is properly configured.');
+                }, 2000);
+                return;
+            }
+            
+            // 4. Show countdown overlay
+            showCountdownOverlay(urlsToTry);
+        }
+        
+        function showCountdownOverlay(urlsToTry) {
+            // Create countdown overlay
+            const overlay = document.createElement('div');
+            overlay.id = 'countdownOverlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 10000;
+                color: white;
+                font-family: 'Segoe UI', Arial, sans-serif;
+            `;
+            
+            const countdownContent = document.createElement('div');
+            countdownContent.style.cssText = `
+                text-align: center;
+                padding: 40px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border-radius: 20px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                max-width: 400px;
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            // Add CSS animation
+            if (!document.getElementById('countdownStyles')) {
+                const style = document.createElement('style');
+                style.id = 'countdownStyles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateY(-50px); opacity: 0; }
+                        to { transform: translateY(0); opacity: 1; }
+                    }
+                    @keyframes pulse {
+                        0%, 100% { transform: scale(1); }
+                        50% { transform: scale(1.1); }
+                    }
+                    .countdown-number {
+                        font-size: 4rem;
+                        font-weight: bold;
+                        color: #fff;
+                        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+                        animation: pulse 1s ease-in-out;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            countdownContent.innerHTML = `
+                <div style="margin-bottom: 20px;">
+                    <h2 style="margin: 0; font-size: 1.5rem;">🚀 Opening Document</h2>
+                    <p style="margin: 10px 0; opacity: 0.9;">You're leaving this page in...</p>
+                </div>
+                <div class="countdown-number" id="countdownNumber">3</div>
+                <div style="margin-top: 20px;">
+                    <button onclick="cancelCountdown()" style="
+                        background: rgba(255,255,255,0.2);
+                        color: white;
+                        border: 2px solid white;
+                        padding: 10px 20px;
+                        border-radius: 25px;
+                        cursor: pointer;
+                        font-size: 14px;
+                        transition: all 0.3s ease;
+                    " onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                        Cancel & Stay Here
+                    </button>
+                </div>
+            `;
+            
+            overlay.appendChild(countdownContent);
+            document.body.appendChild(overlay);
+            
+            // Countdown logic
+            let countdownValue = 3;
+            const countdownElement = document.getElementById('countdownNumber');
+            
+            const countdownInterval = setInterval(() => {
+                countdownValue--;
+                if (countdownValue > 0) {
+                    countdownElement.textContent = countdownValue;
+                    // Add animation class
+                    countdownElement.style.animation = 'none';
+                    setTimeout(() => {
+                        countdownElement.style.animation = 'pulse 1s ease-in-out';
+                    }, 10);
+                } else {
+                    clearInterval(countdownInterval);
+                    countdownElement.textContent = "Opening...";
+                    countdownElement.style.animation = 'pulse 0.5s ease-in-out infinite';
+                    
+                    // Open the document after countdown
+                    setTimeout(() => {
+                        overlay.remove();
+                        openDocumentWithFallback(urlsToTry);
+                    }, 500);
+                }
+            }, 1000);
+            
+            // Store interval ID for cancellation
+            window.countdownInterval = countdownInterval;
+            window.countdownOverlay = overlay;
+        }
+        
+        function cancelCountdown() {
+            if (window.countdownInterval) {
+                clearInterval(window.countdownInterval);
+            }
+            if (window.countdownOverlay) {
+                window.countdownOverlay.remove();
+            }
+            
+            // Reset button
+            const btn = document.getElementById('accessBtn');
+            btn.innerHTML = 'Open the report with Gemini 🚀';
+            btn.disabled = false;
+            
+            // Show cancellation message
+            setTimeout(() => {
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #28a745;
+                    color: white;
+                    padding: 15px 25px;
+                    border-radius: 10px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                    z-index: 9999;
+                    font-family: 'Segoe UI', Arial, sans-serif;
+                    animation: slideIn 0.3s ease-out;
+                `;
+                toast.textContent = '✅ Stayed on current page';
+                document.body.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
+            }, 100);
+        }
+        
+        function openDocumentWithFallback(urlsToTry) {
+            // Try opening the first (best) URL in a new tab
+            const primaryUrl = urlsToTry[0];
+            
+            try {
+                // Attempt to open in new tab
+                const newWindow = window.open(primaryUrl, '_blank', 'noopener,noreferrer');
+                
+                if (newWindow && !newWindow.closed && typeof newWindow.closed !== 'undefined') {
+                    showSuccessToast('Document opened in new tab! 🚀');
+                } else {
+                    // Fallback: try other URLs
+                    tryFallbackUrls(urlsToTry);
+                }
+            } catch (error) {
+                tryFallbackUrls(urlsToTry);
+            }
+        }
+        
+        function tryFallbackUrls(urlsToTry) {
+            // Try each URL with different strategies
+            let urlIndex = 0;
+            
+            function attemptNextUrl() {
+                if (urlIndex >= urlsToTry.length) {
+                    showErrorToast('❌ Unable to open document. Please check the URL or contact support.');
+                    return;
+                }
+                
+                const currentUrl = urlsToTry[urlIndex];
+                
+                // Try different opening methods
+                const methods = [
+                    () => window.open(currentUrl, '_blank'),
+                    () => window.open(currentUrl, '_self'),
+                    () => {
+                        const link = document.createElement('a');
+                        link.href = currentUrl;
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }
+                ];
+                
+                try {
+                    methods[0](); // Try first method
+                    showSuccessToast(`Document opened with fallback method! 🚀`);
+                } catch (error) {
+                    // Try next URL
+                    urlIndex++;
+                    if (urlIndex < urlsToTry.length) {
+                        setTimeout(attemptNextUrl, 500);
+                    } else {
+                        showErrorToast('❌ All opening methods failed. Please try accessing the document manually.');
+                    }
+                }
+            }
+            
+            attemptNextUrl();
+        }
+        
+        function showSuccessToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #28a745;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 9999;
+                font-family: 'Segoe UI', Arial, sans-serif;
+                animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 4000);
+        }
+        
+        function showErrorToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #dc3545;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 9999;
+                font-family: 'Segoe UI', Arial, sans-serif;
+                animation: slideIn 0.3s ease-out;
+                max-width: 300px;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+        
+        function trackPromptGeneratorClick() {
+            trackClick('prompt_generator_link', 'promptGeneratorBtn');
+        }
+        
+        // Provide immediate fallback news content
+        function provideFallbackNews() {
+            const newsContainer = document.getElementById('newsContainer');
+            const newsTicker = document.getElementById('newsTicker');
+            
+            console.log('Providing fallback news content');
+            
+            // Sample news data for fallback
+            const fallbackNews = [
+                {
+                    title: "Enterprise Analytics Dashboard Updates",
+                    summary: "New features and improvements have been rolled out to enhance data visualization and reporting capabilities.",
+                    fullStory: "The latest updates to our enterprise analytics platform include improved dashboard performance, new visualization options, and enhanced data export capabilities. These changes are designed to provide better insights and more efficient workflows for business users.",
+                    date: new Date().toLocaleDateString(),
+                    source: "System Update"
+                },
+                {
+                    title: "Monthly Performance Review Available",
+                    summary: "The latest monthly performance metrics and insights are now ready for review.",
+                    fullStory: "This month's performance review includes key metrics across all business units, trend analysis, and strategic recommendations for continued growth. Access your personalized dashboard for detailed breakdowns.",
+                    date: new Date().toLocaleDateString(),
+                    source: "Performance Analytics"
+                },
+                {
+                    title: "Data Quality Improvements",
+                    summary: "Enhanced data validation and cleansing processes have been implemented.",
+                    fullStory: "Recent improvements to our data pipeline ensure higher quality analytics and more reliable reporting. These enhancements reduce data inconsistencies and improve overall system reliability.",
+                    date: new Date().toLocaleDateString(),
+                    source: "Data Operations"
+                }
+            ];
+            
+            if (newsContainer && newsTicker) {
+                // Clear loading messages
+                newsContainer.innerHTML = '';
+                newsTicker.innerHTML = '';
+                
+                // Create ticker HTML
+                let tickerHTML = '';
+                fallbackNews.forEach((item, index) => {
+                    tickerHTML += `
+                        <span class="news-ticker-item" onclick="showStory(${index})" data-story-id="${index}">
+                            ${item.title}
+                        </span>
+                        <span class="news-ticker-separator">•</span>
+                    `;
+                });
+                newsTicker.innerHTML = tickerHTML;
+                
+                // Create news items
+                fallbackNews.forEach((item, index) => {
+                    const newsItem = document.createElement('div');
+                    newsItem.className = 'news-item loaded'; // Add loaded class immediately
+                    newsItem.setAttribute('data-story-id', index);
+                    newsItem.onclick = function() { toggleStory(index); };
+                    
+                    newsItem.innerHTML = `
+                        <div class="news-title">${item.title}</div>
+                        <div class="news-excerpt">${item.summary}</div>
+                        <div class="news-meta">
+                            <span class="news-source">${item.source}</span>
+                            <span>${item.date}</span>
+                        </div>
+                        <div class="news-story-full" id="story-${index}">
+                            <div class="story-content" style="padding: 15px;">
+                                <strong>Full Story:</strong><br>
+                                ${item.fullStory}<br><br>
+                                <strong>Source:</strong> ${item.source}<br>
+                                <strong>Published:</strong> ${item.date}
+                            </div>
+                            <div class="story-actions" style="padding: 0 15px 15px 15px;">
+                                <button class="close-story" onclick="closeStory(${index}); event.stopPropagation();">Close</button>
+                            </div>
+                        </div>
+                    `;
+                    newsContainer.appendChild(newsItem);
+                });
+                
+                // Start ticker animation
+                try {
+                    startTickerAnimation();
+                } catch (animError) {
+                    console.warn('Ticker animation failed:', animError);
+                }
+                
+                // Store fallback news data
+                window.newsData = fallbackNews;
+                
+                console.log('Fallback news content loaded successfully');
+            }
+        }
+        
+        // Load news headlines with enhanced fallback
+        function loadNewsHeadlines() {
+            const newsContainer = document.getElementById('newsContainer');
+            const newsTicker = document.getElementById('newsTicker');
+            
+            // Check if google.script.run is available (Google Apps Script environment)
+            if (typeof google !== 'undefined' && google.script && google.script.run) {
+                google.script.run
+                    .withSuccessHandler(function(newsItems) {
+                        if (newsItems && newsItems.length > 0) {
+                            // Clear containers
+                            newsContainer.innerHTML = '';
+                            newsTicker.innerHTML = '';
+                            
+                            // Create ticker items
+                            let tickerHTML = '';
+                            newsItems.forEach(function(item, index) {
+                                tickerHTML += `
+                                    <span class="news-ticker-item" onclick="showStory(${index})" data-story-id="${index}">
+                                        ${item.title}
+                                    </span>
+                                    <span class="news-ticker-separator">•</span>
+                                `;
+                            });
+                            newsTicker.innerHTML = tickerHTML;
+                            
+                            // Start ticker animation
+                            startTickerAnimation();
+                            
+                            // Create expandable news items
+                            newsItems.forEach(function(item, index) {
+                                const newsItem = document.createElement('div');
+                                newsItem.className = 'news-item';
+                                newsItem.setAttribute('data-story-id', index);
+                                newsItem.onclick = function() { toggleStory(index); };
+                                
+                                newsItem.innerHTML = `
+                                    <div class="news-title">${item.title}</div>
+                                    <div class="news-excerpt">${item.summary}</div>
+                                    <div class="news-meta">
+                                        <span class="news-source">${item.source}</span>
+                                        <span>${item.date}</span>
+                                    </div>
+                                    <div class="news-story-full" id="story-${index}">
+                                        <div class="story-content" style="padding: 15px;">
+                                            <strong>Full Story:</strong><br>
+                                            ${item.fullStory || item.summary}<br><br>
+                                            <strong>Source:</strong> ${item.source}<br>
+                                            <strong>Published:</strong> ${item.date}
+                                        </div>
+                                        <div class="story-actions" style="padding: 0 15px 15px 15px;">
+                                            <button class="close-story" onclick="closeStory(${index}); event.stopPropagation();">Close</button>
+                                        </div>
+                                    </div>
+                                `;
+                                newsContainer.appendChild(newsItem);
+                            });
+                            
+                            // Animate news items in sequence
+                            animateNewsItems();
+                            
+                            // Store news data globally for easy access
+                            window.newsData = newsItems;
+                            
+                        } else {
+                            newsContainer.innerHTML = '<div class="news-error">No news items available</div>';
+                            newsTicker.innerHTML = '<div class="news-loading">No headlines available</div>';
+                        }
+                    })
+                    .withFailureHandler(function(error) {
+                        newsContainer.innerHTML = '<div class="news-error">Unable to load news headlines</div>';
+                        newsTicker.innerHTML = '<div class="news-loading">Unable to load ticker</div>';
+                    })
+                    .getNewsHeadlines();
+            } else {
+                // Fallback for non-Google Apps Script environments
+                newsContainer.innerHTML = '<div class="news-loading">News service initializing...</div>';
+                newsTicker.innerHTML = '<div class="news-loading">Loading headlines...</div>';
+            }
+        }
+        
+        // Start ticker animation with Anime.js
+        function startTickerAnimation() {
+            const ticker = document.querySelector('.news-ticker');
+            if (!ticker) return;
+            
+            // Reset position
+            ticker.style.transform = 'translateX(100%)';
+            
+            // Create infinite scrolling animation
+            anime({
+                targets: ticker,
+                translateX: '-100%',
+                duration: 45000,
+                easing: 'linear',
+                loop: true
+            });
+        }
+        
+        // Animate news items with staggered entrance
+        function animateNewsItems() {
+            const newsItems = document.querySelectorAll('.news-item');
+            
+            anime({
+                targets: newsItems,
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 600,
+                delay: anime.stagger(150),
+                easing: 'easeOutQuart'
+            });
+        }
+        
+        // Enhanced story show animation
+        function showStory(storyId) {
+            // Close any open stories first
+            closeAllStories();
+            
+            // Show the selected story with animation
+            const storyElement = document.getElementById(`story-${storyId}`);
+            const newsItem = document.querySelector(`[data-story-id="${storyId}"]`);
+            
+            if (storyElement && newsItem) {
+                storyElement.classList.add('show');
+                newsItem.classList.add('expanded');
+                
+                // Animate story expansion
+                anime({
+                    targets: storyElement,
+                    opacity: [0, 1],
+                    maxHeight: [0, 200],
+                    padding: [0, 15],
+                    duration: 500,
+                    easing: 'easeOutQuart'
+                });
+                
+                // Animate news item highlight
+                anime({
+                    targets: newsItem,
+                    borderLeftWidth: ['3px', '4px'],
+                    boxShadow: ['0 2px 8px rgba(238, 0, 0, 0.1)', '0 4px 12px rgba(238, 0, 0, 0.15)'],
+                    duration: 300,
+                    easing: 'easeOutQuart'
+                });
+                
+                // Smooth scroll to item
+                newsItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+        
+        // Enhanced toggle story animation
+        function toggleStory(storyId) {
+            const storyElement = document.getElementById(`story-${storyId}`);
+            const newsItem = document.querySelector(`[data-story-id="${storyId}"]`);
+            
+            if (storyElement && newsItem) {
+                if (storyElement.classList.contains('show')) {
+                    closeStory(storyId);
+                } else {
+                    closeAllStories();
+                    showStoryWithAnimation(storyId);
+                }
+            }
+        }
+        
+        // Show story with full animation
+        function showStoryWithAnimation(storyId) {
+            const storyElement = document.getElementById(`story-${storyId}`);
+            const newsItem = document.querySelector(`[data-story-id="${storyId}"]`);
+            
+            if (storyElement && newsItem) {
+                storyElement.classList.add('show');
+                newsItem.classList.add('expanded');
+                
+                // Animate expansion
+                anime({
+                    targets: storyElement,
+                    opacity: [0, 1],
+                    maxHeight: [0, 200],
+                    duration: 500,
+                    easing: 'easeOutQuart'
+                });
+                
+                // Animate news item
+                anime({
+                    targets: newsItem,
+                    borderLeftWidth: ['3px', '4px'],
+                    boxShadow: ['0 2px 8px rgba(238, 0, 0, 0.1)', '0 4px 12px rgba(238, 0, 0, 0.15)'],
+                    duration: 300,
+                    easing: 'easeOutQuart'
+                });
+            }
+        }
+        
+        // Enhanced close animation
+        function closeStory(storyId) {
+            const storyElement = document.getElementById(`story-${storyId}`);
+            const newsItem = document.querySelector(`[data-story-id="${storyId}"]`);
+            
+            if (storyElement && newsItem) {
+                // Animate collapse
+                anime({
+                    targets: storyElement,
+                    opacity: [1, 0],
+                    maxHeight: [200, 0],
+                    duration: 300,
+                    easing: 'easeInQuart',
+                    complete: function() {
+                        storyElement.classList.remove('show');
+                    }
+                });
+                
+                // Reset news item style
+                anime({
+                    targets: newsItem,
+                    borderLeftWidth: ['4px', '3px'],
+                    boxShadow: ['0 4px 12px rgba(238, 0, 0, 0.15)', '0 2px 8px rgba(238, 0, 0, 0.1)'],
+                    duration: 200,
+                    easing: 'easeInQuart',
+                    complete: function() {
+                        newsItem.classList.remove('expanded');
+                    }
+                });
+            }
+        }
+        
+        // Close all stories with animation
+        function closeAllStories() {
+            const openStories = document.querySelectorAll('.news-story-full.show');
+            const expandedItems = document.querySelectorAll('.news-item.expanded');
+            
+            openStories.forEach(function(story, index) {
+                const storyId = story.id.replace('story-', '');
+                setTimeout(() => closeStory(storyId), index * 50);
+            });
+        }
+        
+        // Page load animation with fallback
+        function animatePageLoad() {
+            try {
+                // Check if anime.js is available
+                if (typeof anime === 'undefined') {
+                    // Fallback: Just make elements visible without animation
+                    const elements = document.querySelectorAll('.document-container, .whats-inside, .header, .file-info-section, .insight-engine-overview, .action-buttons-section, .insight-engine-info, .security-info, .feedback-section');
+                    elements.forEach(el => {
+                        if (el) {
+                            el.style.opacity = '1';
+                            el.style.transform = 'none';
+                        }
+                    });
+                    return;
+                }
+
+                // Animate main container (start visible)
+                anime({
+                    targets: '.document-container',
+                    opacity: [1, 1], // Keep visible throughout
+                    translateY: [10, 0],
+                    duration: 400,
+                    easing: 'easeOutQuart'
+                });
+                
+                // Animate what's inside container (start visible)
+                anime({
+                    targets: '.whats-inside',
+                    opacity: [1, 1], // Keep visible throughout
+                    translateX: [-10, 0],
+                    duration: 300,
+                    delay: 100,
+                    easing: 'easeOutQuart'
+                });
+                
+                // Animate header (start visible)
+                anime({
+                    targets: '.header',
+                    opacity: [1, 1], // Keep visible throughout
+                    translateY: [-10, 0],
+                    duration: 300,
+                    delay: 50,
+                    easing: 'easeOutQuart'
+                });
+                
+                // Animate content sections (start visible)
+                anime({
+                    targets: ['.file-info-section', '.insight-engine-overview', '.action-buttons-section', '.insight-engine-info', '.security-info', '.feedback-section'],
+                    opacity: [1, 1], // Keep visible throughout
+                    translateY: [10, 0],
+                    duration: 300,
+                    delay: anime.stagger(50, {start: 150}),
+                    easing: 'easeOutQuart'
+                });
+                // Animate sidebar (start visible)
+                anime({
+                    targets: '.sidebar',
+                    opacity: [1, 1], // Keep visible throughout
+                    translateX: [10, 0],
+                    duration: 300,
+                    delay: 200,
+                    easing: 'easeOutQuart'
+                });
+                
+                // Animate what's inside content sections (start visible)
+                anime({
+                    targets: ['.info-section', '.toc-section'],
+                    opacity: [1, 1], // Keep visible throughout
+                    translateY: [8, 0],
+                    duration: 250,
+                    delay: anime.stagger(40, {start: 250}),
+                    easing: 'easeOutQuart'
+                });
+                
+            } catch (animationError) {
+                // Fallback if animations fail - make everything visible
+                console.warn('Animation failed, using fallback visibility');
+                const elements = document.querySelectorAll('.document-container, .whats-inside, .sidebar, .header, .file-info-section, .insight-engine-overview, .action-buttons-section, .insight-engine-info, .security-info, .feedback-section, .info-section, .toc-section');
+                elements.forEach(el => {
+                    if (el) {
+                        el.style.opacity = '1';
+                        el.style.transform = 'none';
+                        el.style.visibility = 'visible';
+                        el.style.display = 'block';
+                    }
+                });
+            }
+        }
+        
+        // Function to get multiple file URL formats from template
+        function getFileUrls() {
+            // Get URLs from template variables set by Apps Script backend
+            return {
+                direct: window.templateData?.FILE_URL_DIRECT || null,
+                view: window.templateData?.FILE_URL_VIEW || null,
+                edit: window.templateData?.FILE_URL_EDIT || null,
+                preview: window.templateData?.FILE_URL_PREVIEW || null,
+                primary: window.templateData?.FILE_URL || null
+            };
+        }
+
+        // File URL detection and fallback mechanisms
+        function getFileUrl() {
+            // Try multiple sources for the file URL
+            // Note: In Google Apps Script, URL parameters are processed by backend, not available in frontend
+            const urlSources = [
+                // 1. Check template data first (primary source from backend)
+                () => {
+                    if (window.templateData) {
+                        return window.templateData.FILE_URL_DIRECT || 
+                               window.templateData.FILE_URL || 
+                               window.templateData.FILE_URL_VIEW || 
+                               window.templateData.FILE_URL_EDIT;
+                    }
+                    return null;
+                },
+                // 2. Check getFileUrls function (fallback for template variables)
+                () => {
+                    const templateUrls = getFileUrls();
+                    return templateUrls.direct || templateUrls.primary || templateUrls.view || templateUrls.edit;
+                },
+                // 3. Check window object
+                () => window.fileUrl,
+                // 4. Check for data attributes on body
+                () => document.body.getAttribute('data-file-url'),
+                // 5. Check URL parameters (fallback, mainly for testing)
+                () => {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    return urlParams.get('fileUrl') || urlParams.get('url') || urlParams.get('file') || urlParams.get('URL');
+                },
+                // 6. Check hash parameters
+                () => {
+                    const hash = window.location.hash.substring(1);
+                    if (hash.includes('fileUrl=')) {
+                        return hash.split('fileUrl=')[1].split('&')[0];
+                    }
+                    return null;
+                }
+            ];
+            
+            for (const getUrl of urlSources) {
+                try {
+                    const url = getUrl();
+                    if (url && url.trim() !== "" && url !== "{{FILE_URL}}" && !url.includes("{{")) {
+                        return decodeURIComponent(url);
+                    }
+                } catch (error) {
+                    // Error handling
+                }
+            }
+            
+            return null;
+        }
+
+        // Function to construct Google Drive direct link from various URL formats
+        function processGoogleDriveUrl(url) {
+            if (!url || typeof url !== 'string') return null;
+            
+            // Handle various Google Drive URL formats
+            const drivePatterns = [
+                // Regular sharing link: https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+                {
+                    pattern: /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/,
+                    replacement: 'https://drive.google.com/file/d/$1/view'
+                },
+                // Open link: https://drive.google.com/open?id=FILE_ID
+                {
+                    pattern: /drive\.google\.com\/open\?id=([a-zA-Z0-9_-]+)/,
+                    replacement: 'https://drive.google.com/file/d/$1/view'
+                },
+                // Direct file link: https://docs.google.com/document/d/FILE_ID/edit
+                {
+                    pattern: /(docs|sheets|slides)\.google\.com\/(document|spreadsheets|presentation)\/d\/([a-zA-Z0-9_-]+)/,
+                    replacement: 'https://$1.google.com/$2/d/$3/edit'
+                }
+            ];
+            
+            for (const pattern of drivePatterns) {
+                const match = url.match(pattern.pattern);
+                if (match) {
+                    const processedUrl = url.replace(pattern.pattern, pattern.replacement);
+                    return processedUrl;
+                }
+            }
+            
+            // If it's already a valid URL, return as-is
+            if (url.startsWith('http')) {
+                return url;
+            }
+            
+            return null;
+        }
+        
+        // Immediate content loading to prevent "loading..." states
+        function showImmediateContent() {
+            console.log('🚀 EMERGENCY: Showing immediate content to eliminate all loading states');
+            
+            // IMMEDIATE POPULATION - Replace ALL loading text instantly
+            const reportTitleEl = document.getElementById('reportTitle');
+            const fileDateEl = document.getElementById('fileDate');
+            const fileNameEl = document.getElementById('fileName');
+            const reportContentEl = document.getElementById('reportContent');
+            const newsContainer = document.getElementById('newsContainer');
+            const newsTicker = document.getElementById('newsTicker');
+            
+            // Get document name from template data or use fallback
+            const documentName = window.templateData?.DOCUMENT_NAME || 'Executive Report Document';
+            const documentType = window.templateData?.DOCUMENT_TYPE || 'Document';
+            const lastModified = window.templateData?.LAST_MODIFIED || new Date().toLocaleDateString();
+            
+            // FORCE UPDATE: Replace loading content immediately
+            if (reportTitleEl) {
+                reportTitleEl.innerHTML = `� ${documentType}`;
+                reportTitleEl.style.opacity = '1';
+                reportTitleEl.style.display = 'block';
+            }
+            
+            if (fileDateEl) {
+                fileDateEl.innerHTML = `📅 ${lastModified}`;
+                fileDateEl.style.opacity = '1';
+                fileDateEl.style.display = 'block';
+            }
+            
+            if (fileNameEl) {
+                fileNameEl.innerHTML = `📋 ${documentName}`;
+                fileNameEl.style.opacity = '1';
+                fileNameEl.style.display = 'block';
+            }
+            
+            // FORCE REPORT CONTENT
+            if (reportContentEl) {
+                reportContentEl.innerHTML = `
+                    <div class="info-section" style="opacity: 1; display: block;">
+                        <h5>✅ Document Ready for Access</h5>
+                        <p>Your ${documentType.toLowerCase()} is loaded and ready for viewing. Click the access button below to open the document in Google Drive.</p>
+                        <div class="document-stats">
+                            <div class="stat-item">
+                                <strong>Document Type:</strong> ${documentType}
+                            </div>
+                            <div class="stat-item">
+                                <strong>Last Modified:</strong> ${lastModified}
+                            </div>
+                            <div class="stat-item">
+                                <strong>Status:</strong> <span style="color: green;">Ready to Access</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-section" style="opacity: 1; display: block;">
+                        <p><strong>Next Steps:</strong> Use the "Access Report" button to open your document. The portal will track your access for analytics purposes.</p>
+                    </div>
+                `;
+                reportContentEl.style.opacity = '1';
+                reportContentEl.style.display = 'block';
+            }
+            
+            // FORCE NEWS CONTENT
+            if (newsContainer) {
+                newsContainer.innerHTML = `
+                    <div class="news-section" style="opacity: 1;">
+                        <h4>📰 Business Updates</h4>
+                        <div class="news-item">
+                            <h5>Document Portal Active</h5>
+                            <p>The Insight Engine document portal is operational and ready for use. Access tracking and analytics are enabled.</p>
+                            <small>Today • System Status</small>
+                        </div>
+                        <div class="news-item">
+                            <h5>Report Analytics Available</h5>
+                            <p>Usage metrics and access patterns are being collected to provide insights into document engagement.</p>
+                            <small>Today • Analytics</small>
+                        </div>
+                    </div>
+                `;
+                newsContainer.style.opacity = '1';
+                newsContainer.style.display = 'block';
+            }
+            
+            // FORCE NEWS TICKER
+            if (newsTicker) {
+                newsTicker.innerHTML = `
+                    <div class="ticker-content" style="opacity: 1;">
+                        <span>✅ Portal Active</span>
+                        <span>📊 Analytics Enabled</span>
+                        <span>🔒 Secure Access</span>
+                        <span>📈 Performance Tracking</span>
+                    </div>
+                `;
+                newsTicker.style.opacity = '1';
+                newsTicker.style.display = 'block';
+            }
+            
+            // Hide any remaining loading elements
+            const loadingElements = document.querySelectorAll('.news-loading, .loading');
+            loadingElements.forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show all major containers
+            document.querySelectorAll('.document-container, .news-sidebar, .report-section, .main-layout').forEach(el => {
+                if (el) {
+                    el.style.opacity = '1';
+                    el.style.display = el.style.display === 'none' ? 'block' : el.style.display || 'block';
+                }
+            });
+            
+            console.log('✅ Emergency content display complete - Template placeholders handled by backend');
+        }
+        
+        // Call immediate content function right after DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', showImmediateContent);
+        } else {
+            showImmediateContent();
+        }        // Initialize tracking and other UI elements (non-report specific)
+        function initializeTrackingAndUI() {
+            console.log('🔧 Initializing tracking and UI');
+            
+            // Initialize any non-report specific functionality
+            // This could include tracking setup, UI event handlers, etc.
+            
+            // Add keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                try {
+                    if (e.ctrlKey || e.metaKey) {
+                        // Allow browser shortcuts
+                        return;
+                    }
+                    
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        if (e.target.tagName === 'BUTTON') {
+                            return; // Let buttons handle their own events
+                        } else {
+                            e.preventDefault();
+                            // Don't automatically redirect - require explicit button click
+                        }
+                    }
+                } catch (keyError) {
+                    // Silently handle keyboard event errors
+                }
+            });
+            
+            console.log('✅ Tracking and UI initialization completed');
+        }
+
+        // Add keyboard navigation and load content on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                console.log('=== Page Load with Backend Data ===');
+                
+                // Use the new simplified initialization
+                initializePage();
+                
+                // Update UI with backend-provided file information
+                const reportTitleEl = document.getElementById('reportTitle');
+                const fileDateEl = document.getElementById('fileDate');
+                const fileNameEl = document.getElementById('fileName');
+                
+                const reportType = window.templateData?.REPORT_TYPE || 'Executive Report';
+                const lastModified = window.templateData?.LAST_MODIFIED || new Date().toLocaleDateString();
+                const documentName = window.templateData?.DOCUMENT_NAME || 'Executive Report Document';
+                
+                if (reportTitleEl) {
+                    reportTitleEl.textContent = `📊 ${reportType}`;
+                    reportTitleEl.style.opacity = '1';
+                }
+                if (fileDateEl) {
+                    fileDateEl.textContent = `📅 ${lastModified}`;
+                    fileDateEl.style.opacity = '1';
+                }
+                if (fileNameEl) {
+                    fileNameEl.textContent = `📋 ${documentName}`;
+                    fileNameEl.style.opacity = '1';
+                }
+                
+                console.log('✅ Page initialization completed with backend data');
+                } catch (reportLoadError) {
+                    console.warn('Report loading error:', reportLoadError);
+                    // Load default content as fallback
+                    loadReportContent("OneEx Total");
+                }
+                
+                // Track page load
+                try {
+                    trackClick('page_load', 'initial');
+                    pageLoadTime = Date.now() - pageLoadTime;
+                } catch (trackError) {
+                    // Silently handle tracking errors
+                }
+                
+                // Start page load animation
+                try {
+                    animatePageLoad();
+                } catch (animError) {
+                    // Silently handle animation errors
+                }
+                
+                // Load news headlines with faster fallback
+                setTimeout(() => {
+                    try {
+                        loadNewsHeadlines();
+                    } catch (newsError) {
+                        console.warn('News loading error:', newsError);
+                        // Provide immediate fallback news content
+                        provideFallbackNews();
+                    }
+                }, 500); // Reduced delay
+                
+                // Also provide fallback news if loading takes too long
+                setTimeout(() => {
+                    const newsContainer = document.getElementById('newsContainer');
+                    if (newsContainer && (newsContainer.textContent.includes('Loading') || newsContainer.textContent.includes('initializing'))) {
+                        console.log('News loading timeout, providing fallback');
+                        provideFallbackNews();
+                    }
+                }, 3000); // Provide fallback after 3 seconds max
+                
+                // Add click tracking to various elements
+                document.addEventListener('click', function(e) {
+                    try {
+                        if (e.target.classList.contains('news-item')) {
+                            trackClick('news_item', e.target.dataset.storyId);
+                        } else if (e.target.classList.contains('news-ticker-item')) {
+                            trackClick('news_ticker', e.target.dataset.storyId);
+                        }
+                    } catch (clickError) {
+                        // Silently handle click tracking errors
+                    }
+                });
+                
+                // Keyboard navigation - prevent accidental redirects
+                document.addEventListener('keydown', function(e) {
+                    try {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            // Only trigger action if the access button is focused
+                            if (e.target.id === 'accessBtn' && !preventRedirect) {
+                                e.preventDefault();
+                                accessDocument();
+                            } else if (e.target.tagName !== 'BUTTON') {
+                                e.preventDefault();
+                                // Don't automatically redirect - require explicit button click
+                            }
+                        }
+                    } catch (keyError) {
+                        // Silently handle keyboard event errors
+                    }
+                });
+                
+            } catch (initError) {
+                // If initialization fails completely, show a basic UI
+                document.body.innerHTML = `
+                    <div style="padding: 20px; font-family: Arial, sans-serif; text-align: center;">
+                        <h2>Document Access Portal</h2>
+                        <p>The portal is loading. If this message persists, please refresh the page.</p>
+                        <button onclick="window.location.reload()" style="padding: 10px 20px; font-size: 16px;">Refresh Page</button>
+                    </div>
+                `;
+            }
+        });
+        
+        // EMERGENCY UI VISIBILITY FAILSAFE
+        // This function ensures the UI is ALWAYS visible, regardless of animation failures
+        function forceUIVisible() {
+            const criticalElements = document.querySelectorAll(`
+                .document-container, 
+                .main-content, 
+                .sidebar, 
+                .whats-inside, 
+                .header,
+                .file-info-section, 
+                .insight-engine-overview, 
+                .action-buttons-section,
+                .insight-engine-info,
+                .security-info,
+                .feedback-section,
+                .info-section,
+                .toc-section
+            `);
+            
+            criticalElements.forEach(element => {
+                if (element) {
+                    element.style.opacity = '1';
+                    element.style.visibility = 'visible';
+                    element.style.transform = 'none';
+                    element.style.display = element.tagName.toLowerCase() === 'span' ? 'inline' : 'block';
+                    element.classList.add('loaded'); // Add loaded class if needed
+                }
+            });
+            
+            // Remove any problematic styles from body
+            document.body.style.overflow = 'auto';
+            document.body.style.height = 'auto';
+        }
+        
+        // Run the emergency visibility function after a short delay
+        setTimeout(forceUIVisible, 500);
+        
+        // Also run it if the page seems stuck (after 2 seconds)
+        setTimeout(() => {
+            const mainContainer = document.querySelector('.document-container');
+            if (!mainContainer || getComputedStyle(mainContainer).opacity === '0') {
+                console.warn('UI appears hidden, forcing visibility');
+                forceUIVisible();
+            }
+        }, 2000);
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document Access Error</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        body { 
+            font-family: "Verizon NHG TX", "Segoe UI", Arial, Helvetica, sans-serif;
+            line-height: 1.5; 
+            margin: 0; 
+            padding: 20px;
+            background: linear-gradient(135deg, #FDF2F2 0%, #FED7D7 100%);
+            color: #333333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .error-container { 
+            background-color: #ffffff; 
+            padding: 0;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto; 
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+            overflow: hidden;
+            animation: shake 0.6s ease-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .header { 
+            background: linear-gradient(135deg, #E53E3E 0%, #C53030 100%);
+            color: #ffffff; 
+            padding: 24px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 { 
+            margin: 0; 
+            font-size: 22px; 
+            font-weight: 700; 
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .error-info { 
+            background: linear-gradient(135deg, #FFF5F5 0%, #FED7D7 100%);
+            border-left: 4px solid #E53E3E;
+            padding: 24px;
+            margin: 20px 0;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .error-info::before {
+            content: '⚠️';
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 24px;
+        }
+        
+        .error-info h4 { 
+            margin: 0 0 16px 0; 
+            font-size: 16px; 
+            font-weight: 600;
+            color: #C53030;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .error-info p { 
+            margin: 0; 
+            font-size: 14px; 
+            color: #4A5568; 
+            line-height: 1.6;
+        }
+        
+        .error-details {
+            background: #F7FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #2D3748;
+        }
+        
+        .suggestions {
+            background: linear-gradient(135deg, #F0FFF4 0%, #C6F6D5 100%);
+            border-left: 4px solid #38A169;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .suggestions h4 {
+            color: #2F855A;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .suggestions ul {
+            margin: 0;
+            padding-left: 20px;
+            color: #2D3748;
+        }
+        
+        .suggestions li {
+            margin-bottom: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        .action-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #38A169 0%, #2F855A 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(56, 161, 105, 0.3);
+        }
+        
+        .contact-btn:hover {
+            background: linear-gradient(135deg, #2F855A 0%, #276749 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(56, 161, 105, 0.4);
+        }
+        
+        .footer { 
+            margin-top: 30px; 
+            padding: 20px 30px; 
+            border-top: 1px solid #E2E8F0;
+            font-size: 12px; 
+            color: #4A5568; 
+            background: linear-gradient(135deg, #F7FAFC 0%, #EDF2F7 100%);
+            text-align: center;
+            margin-left: -30px;
+            margin-right: -30px;
+            margin-bottom: -30px;
+        }
+        
+        .footer strong { 
+            color: #2D3748; 
+            font-weight: 600; 
+        }
+        
+        .footer .timestamp {
+            margin-top: 8px;
+            font-size: 11px;
+            opacity: 0.7;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .error-container {
+                max-width: 100%;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 18px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="header">
+            <h1>🚫 Document Access Error</h1>
+        </div>
+        
+        <div class="content">
+            <div class="error-info">
+                <h4>⚠️ Access Denied</h4>
+                <p>Sorry, the document you are looking for could not be accessed. This could be due to several reasons including insufficient permissions, file unavailability, or security restrictions.</p>
+            </div>
+            
+            <div class="error-details">
+                <strong>Error Details:</strong><br>
+                {{ERROR_MESSAGE}}
+            </div>
+            
+            <div class="suggestions">
+                <h4>💡 Possible Solutions</h4>
+                <ul>
+                    <li>Verify that you have the correct permissions to access this document</li>
+                    <li>Check if the document link is still valid and hasn't expired</li>
+                    <li>Ensure you're signed in with the correct Google account</li>
+                    <li>Contact the document owner to request access</li>
+                    <li>Try refreshing the page and accessing again</li>
+                </ul>
+            </div>
+            
+            <div class="action-section">
+                <a href="mailto:support@company.com?subject=Document Access Issue&body=I'm having trouble accessing a document. Error details: {{ERROR_MESSAGE}}" class="contact-btn">
+                    <span>📧</span>
+                    <span>Contact Support</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Verizon Enterprise Document Security Portal</strong></p>
+            <p>If you believe this is an error, please contact your system administrator</p>
+            <div class="timestamp">Error occurred: {{TIMESTAMP}}</div>
+        </div>
+    </div>
+    
+    <script>
+        // Add some interactive feedback
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-focus on contact button for accessibility
+            setTimeout(() => {
+                const contactBtn = document.querySelector('.contact-btn');
+                if (contactBtn) {
+                    contactBtn.focus();
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
