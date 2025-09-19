@@ -38,6 +38,162 @@
             gap: 25px;
             height: calc(100vh - 40px);
             max-height: 800px;
+            position: relative;
+        }
+
+        /* --- Floating News Headlines Container --- */
+        .news-headlines-float {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 60px;
+            max-width: 400px;
+        }
+
+        .news-toggle-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border: none;
+            color: white;
+            padding: 16px 20px;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border-radius: 0;
+        }
+
+        .news-toggle-btn:hover {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            transform: translateY(-1px);
+        }
+
+        .news-toggle-btn:active {
+            transform: translateY(0);
+            transition: transform 0.1s ease;
+        }
+
+        .news-toggle-btn::after {
+            content: '▼';
+            font-size: 12px;
+            opacity: 0.8;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .news-toggle-btn.expanded::after {
+            transform: rotate(180deg);
+        }
+
+        .news-content {
+            background: rgba(255, 255, 255, 0.98);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .news-content.expanded {
+            max-height: 400px;
+        }
+
+        .news-headline-item {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .news-headline-item:hover {
+            background: #f8f9fa;
+        }
+
+        .news-headline-item:last-child {
+            border-bottom: none;
+        }
+
+        .headline-title {
+            font-weight: bold;
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .headline-meta {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .headline-summary {
+            font-size: 12px;
+            color: #555;
+            line-height: 1.4;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .headline-summary.expanded {
+            max-height: 200px;
+            margin-bottom: 10px;
+        }
+
+        .headline-actions {
+            display: flex;
+            gap: 8px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .headline-actions.expanded {
+            max-height: 50px;
+        }
+
+        .action-btn {
+            background: #EE0000;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .action-btn:hover {
+            background: #d10000;
+            transform: translateY(-1px);
+        }
+
+        .action-btn.secondary {
+            background: #333;
+        }
+
+        .action-btn.secondary:hover {
+            background: #000;
+        }
+
+        .news-empty {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
         }
 
         /* --- Column Styles --- */
@@ -289,6 +445,43 @@
             .main-content {
                 order: 1;
             }
+
+            /* Mobile-specific news headlines styling */
+            .news-headlines-float {
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                max-width: calc(100vw - 20px);
+                min-width: 50px;
+                border-radius: 12px;
+            }
+
+            .news-toggle-btn {
+                font-size: 12px;
+                padding: 14px 16px;
+                font-weight: 600;
+            }
+
+            .news-content.expanded {
+                max-height: 60vh;
+            }
+
+            .headline-title {
+                font-size: 12px;
+            }
+
+            .headline-meta {
+                font-size: 10px;
+            }
+
+            .headline-summary {
+                font-size: 11px;
+            }
+
+            .action-btn {
+                font-size: 10px;
+                padding: 5px 10px;
+            }
         }
 
         /* Custom Scrollbar */
@@ -314,6 +507,19 @@
 
 <body>
     <div class="document-container">
+        <!-- Floating News Headlines Container -->
+        <div class="news-headlines-float" id="newsHeadlinesFloat">
+            <button class="news-toggle-btn" id="newsToggleBtn">
+                <span>📰 Latest Headlines</span>
+                <span class="news-toggle-icon" id="newsToggleIcon">▼</span>
+            </button>
+            <div class="news-content" id="newsContent">
+                <div id="newsHeadlinesList">
+                    <!-- News headlines will be populated here -->
+                </div>
+            </div>
+        </div>
+
         <!-- "What's Inside" Column -->
         <div class="whats-inside">
             <div class="column-header">
@@ -405,17 +611,19 @@
             // Load news data from template data or use mock data
             let newsItems = [];
 
+            // Get news headlines from Google Sheets data only
             if (window.templateData && window.templateData.NEWS_HEADLINES) {
                 newsItems = window.templateData.NEWS_HEADLINES;
+                // Populate the floating news headlines
+                populateFloatingNews(newsItems);
+                // Initialize floating news functionality
+                initializeFloatingNews();
             } else {
-                // Mock news data for preview
-                newsItems = [
-                    { title: "Verizon CFO discusses turning AI into a revenue source", source: "Fortune", date: "Sep 16, 2025" },
-                    { title: "Settlement reached with California on Frontier deal", source: "Light Reading", date: "Sep 16, 2025" },
-                    { title: "19th consecutive year of dividend growth announced", source: "VZMail", date: "Sep 05, 2025" },
-                    { title: "New iPhone SE 2025 deals now available", source: "Tech Radar", date: "Sep 01, 2025" },
-                    { title: "Thriving Forward: New wellness workshops for employees", source: "About You News", date: "Aug 28, 2025" }
-                ];
+                // Hide news container if no data available
+                const newsContainer = document.getElementById('newsContainer');
+                if (newsContainer) {
+                    newsContainer.style.display = 'none';
+                }
             }
 
             const newsContainer = document.getElementById('newsContainer');
@@ -542,6 +750,156 @@
                 });
             }
         });
+
+        // --- Floating News Headlines Functions ---
+        function populateFloatingNews(newsItems) {
+            const newsHeadlinesList = document.getElementById('newsHeadlinesList');
+
+            if (!newsItems || newsItems.length === 0) {
+                newsHeadlinesList.innerHTML = '<div class="news-empty">No news headlines available</div>';
+                return;
+            }
+
+            let newsHtml = '';
+            newsItems.forEach((item, index) => {
+                const summary = item.summary || item.fullStory || 'No summary available';
+                const fullStory = item.fullStory || item.summary || 'Full story not available';
+
+                newsHtml += `
+                    <div class="news-headline-item" data-index="${index}">
+                        <div class="headline-title">${item.title}</div>
+                        <div class="headline-meta">${item.source} • ${item.date}</div>
+                        <div class="headline-summary" id="summary-${index}">
+                            ${fullStory}
+                        </div>
+                        <div class="headline-actions" id="actions-${index}">
+                            <a href="https://www.google.com/search?q=${encodeURIComponent(item.title + ' ' + item.source)}"
+                               target="_blank" class="action-btn">
+                                🔍 Google Search
+                            </a>
+                            <button class="action-btn secondary" onclick="shareHeadline('${item.title}', '${item.source}')">
+                                📤 Share
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            newsHeadlinesList.innerHTML = newsHtml;
+        }
+
+        function initializeFloatingNews() {
+            const newsToggleBtn = document.getElementById('newsToggleBtn');
+            const newsContent = document.getElementById('newsContent');
+            const newsToggleIcon = document.getElementById('newsToggleIcon');
+            let isExpanded = false;
+
+            // Toggle news container
+            newsToggleBtn.addEventListener('click', () => {
+                isExpanded = !isExpanded;
+
+                if (isExpanded) {
+                    newsContent.classList.add('expanded');
+                    newsToggleIcon.classList.add('expanded');
+                    newsToggleIcon.textContent = '▲';
+
+                    // Animate the expansion
+                    if (typeof anime !== 'undefined') {
+                        anime({
+                            targets: '.news-headlines-float',
+                            scale: [0.95, 1],
+                            duration: 300,
+                            easing: 'easeOutBack'
+                        });
+                    }
+                } else {
+                    newsContent.classList.remove('expanded');
+                    newsToggleIcon.classList.remove('expanded');
+                    newsToggleIcon.textContent = '▼';
+
+                    // Collapse all expanded headlines
+                    document.querySelectorAll('.headline-summary.expanded').forEach(summary => {
+                        summary.classList.remove('expanded');
+                    });
+                    document.querySelectorAll('.headline-actions.expanded').forEach(actions => {
+                        actions.classList.remove('expanded');
+                    });
+                }
+            });
+
+            // Add click handlers for individual headlines
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.news-headline-item') && !e.target.closest('.action-btn')) {
+                    const headlineItem = e.target.closest('.news-headline-item');
+                    const index = headlineItem.getAttribute('data-index');
+                    const summary = document.getElementById(`summary-${index}`);
+                    const actions = document.getElementById(`actions-${index}`);
+
+                    const isCurrentlyExpanded = summary.classList.contains('expanded');
+
+                    // Collapse all other headlines first
+                    document.querySelectorAll('.headline-summary.expanded').forEach(otherSummary => {
+                        if (otherSummary !== summary) {
+                            otherSummary.classList.remove('expanded');
+                        }
+                    });
+                    document.querySelectorAll('.headline-actions.expanded').forEach(otherActions => {
+                        if (otherActions !== actions) {
+                            otherActions.classList.remove('expanded');
+                        }
+                    });
+
+                    // Toggle current headline
+                    if (isCurrentlyExpanded) {
+                        summary.classList.remove('expanded');
+                        actions.classList.remove('expanded');
+                    } else {
+                        summary.classList.add('expanded');
+                        actions.classList.add('expanded');
+
+                        // Animate the expansion
+                        if (typeof anime !== 'undefined') {
+                            anime({
+                                targets: headlineItem,
+                                backgroundColor: ['#f8f9fa', '#fff'],
+                                duration: 200,
+                                easing: 'easeOutQuad'
+                            });
+                        }
+                    }
+                }
+            });
+
+            // Initialize with floating animation
+            if (typeof anime !== 'undefined') {
+                anime({
+                    targets: '.news-headlines-float',
+                    translateY: [-20, 0],
+                    opacity: [0, 1],
+                    duration: 800,
+                    delay: 1000,
+                    easing: 'easeOutExpo'
+                });
+            }
+        }
+
+        function shareHeadline(title, source) {
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: `Check out this news: ${title} - ${source}`,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: copy to clipboard
+                const shareText = `${title} - ${source}\n${window.location.href}`;
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('Headline copied to clipboard!');
+                }).catch(() => {
+                    alert('Unable to share. Please copy manually:\n' + shareText);
+                });
+            }
+        }
     </script>
 </body>
 
