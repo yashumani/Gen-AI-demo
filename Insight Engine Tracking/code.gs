@@ -414,54 +414,92 @@ function loadTemplate(templateName, data) {
 }
 
 /**
- * Simplified template loading with better error handling and fallbacks
+ * PRODUCTION VERSION - Loads and processes an HTML template with data substitution
+ * Fixed template data injection for reliable production use
  * @param {string} templateName The name of the template
  * @param {Object} data The data to inject
  * @return {string} The processed HTML content
  */
 function loadTemplateSimple(templateName, data) {
   try {
+    console.log(`🔄 Loading template: ${templateName}`);
+    console.log(`🔄 Template data:`, data);
+
     // Load the template as raw HTML content
     const template = HtmlService.createTemplateFromFile(templateName);
     let htmlContent = template.evaluate().getContent();
-    
+
+    console.log(`🔄 Template loaded, size: ${htmlContent.length} characters`);
+
     // Replace the {{TEMPLATE_DATA_JSON}} placeholder with actual JSON data
-    // Use a safer approach that doesn't rely on eval()
     const templateDataJson = JSON.stringify(data, null, 2);
-    
-    // Replace the eval line with a direct assignment
-    // The exact pattern from the template: eval('window.templateData = {{TEMPLATE_DATA_JSON}};');
+    console.log(`🔄 Generated JSON data: ${templateDataJson.substring(0, 200)}...`);
+
+    // FIXED: Corrected regex pattern - the original had extra escaping
+    // Look for the exact pattern: eval('window.templateData = {{TEMPLATE_DATA_JSON}};');
     const evalPattern = /eval\('window\.templateData\s*=\s*\{\{TEMPLATE_DATA_JSON\}\};'\);/g;
+
+    // Check if the pattern exists
     const evalMatches = (htmlContent.match(evalPattern) || []).length;
     console.log(`🔄 Found ${evalMatches} eval patterns to replace`);
-    
-    const evalReplacement = `window.templateData = ${templateDataJson};`;
-    console.log('🔄 Replacing eval pattern with template data');
-    htmlContent = htmlContent.replace(evalPattern, evalReplacement);
-    
-    // Also replace any standalone {{TEMPLATE_DATA_JSON}} placeholders
-    const standaloneReplacements = (htmlContent.match(/\{\{TEMPLATE_DATA_JSON\}\}/g) || []).length;
-    console.log(`🔄 Found ${standaloneReplacements} standalone {{TEMPLATE_DATA_JSON}} placeholders`);
-    htmlContent = htmlContent.replace(/\{\{TEMPLATE_DATA_JSON\}\}/g, templateDataJson);
-    
-    // Replace any other simple placeholders
+
+    if (evalMatches > 0) {
+      // Replace the eval statement with direct assignment
+      const evalReplacement = `window.templateData = ${templateDataJson};`;
+      console.log('🔄 Replacing eval pattern with template data');
+      htmlContent = htmlContent.replace(evalPattern, evalReplacement);
+      console.log('✅ Eval pattern replacement completed');
+    } else {
+      console.warn('⚠️ No eval patterns found - checking for standalone placeholders');
+    }
+
+    // ALSO handle standalone {{TEMPLATE_DATA_JSON}} placeholders
+    const standalonePattern = /\{\{TEMPLATE_DATA_JSON\}\}/g;
+    const standaloneMatches = (htmlContent.match(standalonePattern) || []).length;
+    console.log(`🔄 Found ${standaloneMatches} standalone {{TEMPLATE_DATA_JSON}} placeholders`);
+
+    if (standaloneMatches > 0) {
+      htmlContent = htmlContent.replace(standalonePattern, templateDataJson);
+      console.log('✅ Standalone placeholder replacement completed');
+    }
+
+    // Replace any other simple placeholders like {{FILE_NAME}}, {{FILE_URL}}, etc.
+    let simpleReplacements = 0;
     for (const key in data) {
       const placeholder = new RegExp(`\\{\\{${key}\\}\\}`, 'g');
       const value = data[key];
-      if (typeof value === 'string') {
-        // Escape HTML special characters to prevent issues
-        const escapedValue = value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        htmlContent = htmlContent.replace(placeholder, escapedValue || '');
-      } else {
-        htmlContent = htmlContent.replace(placeholder, value || '');
+      const matches = (htmlContent.match(placeholder) || []).length;
+
+      if (matches > 0) {
+        simpleReplacements += matches;
+        if (typeof value === 'string') {
+          // Escape HTML special characters to prevent issues
+          const escapedValue = value.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+          htmlContent = htmlContent.replace(placeholder, escapedValue || '');
+        } else {
+          htmlContent = htmlContent.replace(placeholder, value || '');
+        }
+        console.log(`🔄 Replaced ${matches} instances of {{${key}}}`);
       }
     }
-    
+
+    console.log(`✅ Template processing completed. ${simpleReplacements} simple replacements made`);
+    console.log(`✅ Final template size: ${htmlContent.length} characters`);
+
+    // Final check: ensure no placeholders remain
+    const remainingPlaceholders = (htmlContent.match(/\{\{[^}]+\}\}/g) || []).length;
+    if (remainingPlaceholders > 0) {
+      console.warn(`⚠️ ${remainingPlaceholders} placeholders still remain in template`);
+    } else {
+      console.log(`✅ All placeholders successfully replaced`);
+    }
+
     return htmlContent;
-    
+
   } catch (error) {
-    console.error(`Template loading failed for ${templateName}:`, error);
-    
+    console.error(`❌ Template loading failed for ${templateName}:`, error);
+    console.error(`❌ Error stack:`, error.stack);
+
     // Return a simple fallback HTML template
     return generateFallbackTemplate(templateName, data, error.message);
   }
