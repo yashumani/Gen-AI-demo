@@ -214,6 +214,6 @@ If you don't need company news, consider removing the entire sidebar to simplify
 
 ---
 
-*Document created: September 19, 2025*  
-*Analysis of: Insight Engine News Headlines Feature*  
+*Document created: September 19, 2025*
+*Analysis of: Insight Engine News Headlines Feature*
 *Status: Ready for Implementation*
