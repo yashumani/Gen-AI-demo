@@ -276,6 +276,17 @@ function doGet(e) {
     // Generate multiple URL formats for better compatibility
     const fileUrls = generateFileUrls(fileId, file);
 
+    // Fetch news headlines from Google Sheets
+    let newsHeadlines = [];
+    try {
+      newsHeadlines = getNewsHeadlines();
+      console.log(`Successfully loaded ${newsHeadlines.length} news headlines`);
+    } catch (newsError) {
+      console.error('Error loading news headlines:', newsError);
+      // Use fallback headlines if Google Sheets is unavailable
+      newsHeadlines = getFallbackNewsHeadlines();
+    }
+
     // Enhanced template data with report-specific content
     const templateData = {
       DOCUMENT_NAME: fileName || 'Executive Report Document',
@@ -292,7 +303,9 @@ function doGet(e) {
       // NEW: Report-specific data
       REPORT_TYPE: reportConfig.displayName,
       REPORT_CONFIG_KEY: reportConfig.configKey,
-      WHATS_INSIDE_HTML: whatsInsideHtml  // Inject the dynamic template content
+      WHATS_INSIDE_HTML: whatsInsideHtml,  // Inject the dynamic template content
+      // RESTORED: News headlines from Google Sheets
+      NEWS_HEADLINES: newsHeadlines
     };
 
     // Load and render the appropriate template based on view mode
@@ -1277,6 +1290,47 @@ function getFallbackNewsHeadlines() {
       source: "System Error"
     }
   ];
+}
+
+/**
+ * Test function to verify Google Sheets news integration
+ * @return {Object} Test results with headlines data
+ */
+function testNewsHeadlinesIntegration() {
+  console.log("🔄 Testing Google Sheets news integration...");
+  
+  try {
+    // Test the news headlines function
+    const headlines = getNewsHeadlines();
+    
+    const result = {
+      success: true,
+      headlinesCount: headlines.length,
+      headlines: headlines,
+      timestamp: new Date().toLocaleString(),
+      message: `Successfully loaded ${headlines.length} headlines from Google Sheets`
+    };
+    
+    console.log("✅ News integration test passed");
+    console.log(`📰 Loaded ${headlines.length} headlines`);
+    
+    // Log first headline as sample
+    if (headlines.length > 0) {
+      console.log(`📰 Sample headline: ${headlines[0].title}`);
+    }
+    
+    return result;
+    
+  } catch (error) {
+    console.error("❌ News integration test failed:", error);
+    
+    return {
+      success: false,
+      error: error.toString(),
+      timestamp: new Date().toLocaleString(),
+      message: "Failed to load headlines from Google Sheets"
+    };
+  }
 }
 
 // ========================================

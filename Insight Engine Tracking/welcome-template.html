@@ -608,33 +608,33 @@
 
         // --- Mock Data & Client-Side Logic for Preview ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Load news data from template data or use mock data
+            // Load news data from template data (Google Sheets)
             let newsItems = [];
 
-            // Get news headlines from Google Sheets data only
+            // Get news headlines from Google Sheets data
             if (window.templateData && window.templateData.NEWS_HEADLINES) {
                 newsItems = window.templateData.NEWS_HEADLINES;
-                // Populate the floating news headlines
+                console.log(`Loaded ${newsItems.length} news headlines from Google Sheets`);
+                
+                // Populate both the floating news headlines and sidebar
                 populateFloatingNews(newsItems);
+                populateSidebarNews(newsItems);
+                
                 // Initialize floating news functionality
                 initializeFloatingNews();
             } else {
-                // Hide news container if no data available
+                console.warn('No news headlines available in template data');
+                // Hide news containers if no data available
                 const newsContainer = document.getElementById('newsContainer');
+                const newsHeadlinesFloat = document.getElementById('newsHeadlinesFloat');
+                
                 if (newsContainer) {
-                    newsContainer.style.display = 'none';
+                    newsContainer.innerHTML = '<div class="news-empty">No news headlines available</div>';
+                }
+                if (newsHeadlinesFloat) {
+                    newsHeadlinesFloat.style.display = 'none';
                 }
             }
-
-            const newsContainer = document.getElementById('newsContainer');
-            let newsHtml = '';
-            newsItems.forEach(item => {
-                newsHtml += `<div class="news-item">
-                                <strong>${item.title}</strong>
-                                <em>${item.source} - ${item.date}</em>
-                             </div>`;
-            });
-            newsContainer.innerHTML = newsHtml;
 
             // Animate elements on load with enhanced anime.js effects
             if (typeof anime !== 'undefined') {
@@ -881,6 +881,25 @@
                     easing: 'easeOutExpo'
                 });
             }
+        }
+
+        function populateSidebarNews(newsItems) {
+            const newsContainer = document.getElementById('newsContainer');
+
+            if (!newsItems || newsItems.length === 0) {
+                newsContainer.innerHTML = '<div class="news-empty">No news headlines available</div>';
+                return;
+            }
+
+            let newsHtml = '';
+            newsItems.forEach(item => {
+                newsHtml += `<div class="news-item">
+                                <strong>${item.title}</strong>
+                                <em>${item.source} - ${item.date}</em>
+                             </div>`;
+            });
+            
+            newsContainer.innerHTML = newsHtml;
         }
 
         function shareHeadline(title, source) {
